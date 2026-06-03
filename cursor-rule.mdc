@@ -1,0 +1,59 @@
+---
+description: Звіт VARUS — після правок завжди publish (генерація + push на GitHub Pages)
+globs:
+  - "Reports/VARUS/**"
+alwaysApply: true
+---
+
+# VARUS — завжди push і publish
+
+**Live:** https://yuliianikolaieva.github.io/varus-report/
+
+**Розробка:** `Reports/VARUS/` (локально).
+**Публікація:** лише `index.html` → `varus-report` репо (GitHub Pages).
+
+## Обов'язково після КОЖНОЇ зміни звіту VARUS
+
+Не завершуй задачу, поки звіт не опублікований. Користувач **не** повинен натискати Run workflow вручну.
+
+### 1. Синхронізуй код
+
+Правки лише в **`Reports/VARUS/`**.
+
+### 2. Publish (пріоритет — локально)
+
+```bash
+cd "Reports/VARUS"
+./publish.sh
+```
+
+`publish.sh` = `generate_report.py` (Databricks) + commit `index.html` + `git push origin main`.
+
+### 3. Якщо `publish.sh` не вдався (токен / SSL / Databricks)
+
+Запусти workflow у `varus-report`:
+
+```bash
+gh workflow run update-report.yml --repo yuliianikolaieva/varus-report
+```
+
+Або повтори `./publish.sh` після виправлення `.env`.
+
+### 4. У фінальній відповіді
+
+- Посилання https://yuliianikolaieva.github.io/varus-report/
+- Чи успішний `publish.sh` або запущений workflow
+- Cmd+Shift+R для перегляду
+
+## SQL правила (специфічні для звіту)
+
+- Всі WHERE мають `country_code='ua'` AND `group_name='VARUS'`
+- Усі фінансові метрики — з `order_state='delivered'`
+- Партиційна колонка `order_created_date` обов'язково в WHERE
+- LIMIT обов'язково (для top-stores та per-store запитів — LIMIT 5000 або менше)
+
+## Заборонено
+
+- Залишати зміни без push у `varus-report`
+- Просити користувача Run workflow, якщо `publish.sh` міг би спрацювати
+- Комітити `.env` або `report_data.json` у git
