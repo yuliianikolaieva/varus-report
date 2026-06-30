@@ -68,7 +68,7 @@ tr:hover{background:#f9fafb}
   <div class="logo-dot">V</div>
   <div>
     <h1>VARUS — Тижневий розбір</h1>
-    <div class="subtitle">Bolt Food UA · Просідання Дніпра (тиждень 22.06 vs 15.06) та час доставки по містах</div>
+    <div class="subtitle">Bolt Food UA · Просідання Дніпра (22.06 vs 15.06), час доставки та SKU-доступність по містах</div>
   </div>
   <div class="report-meta">
     Дані: 11.05 – 22.06.2026<br>
@@ -202,9 +202,50 @@ tr:hover{background:#f9fafb}
   </div>
 </div>
 
+<!-- ════════════ SECTION 3: SKU BY WEEK ════════════ -->
+<div class="section">
+  <h2>3. SKU-доступність по тижнях</h2>
+  <div class="insight good">
+    <div class="insight-text"><b>Асортимент стабільний.</b> Медіанна доступність SKU по містах майже не змінювалась за 8 тижнів (Дніпро тримався ~13 100–13 450). Тобто спад GMV у Дніпрі на 22.06 <b>не пов'язаний зі звуженням асортименту</b> — це додатково підтверджує висновок про разовий тютюновий сплеск 15.06.</div>
+  </div>
+  <div class="grid-2" style="margin-top:6px">
+    <div class="card">
+      <h3>Середня доступність SKU на магазин по містах, по тижнях</h3>
+      <div class="chart-box"><canvas id="chartSkuCity"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Динаміка по містах (06-29 vs 05-11)</h3>
+      <table>
+        <thead><tr><th>Місто</th><th class="num">Магаз.</th><th class="num">05-11</th><th class="num">06-29</th><th class="num">Δ%</th></tr></thead>
+        <tbody id="skuCityTable"></tbody>
+      </table>
+      <div class="insight" style="margin-top:12px">
+        <div class="insight-text">Найбільша широта асортименту — Камʼянське та Дніпро (флагмани мережі). Незначне просідання в середині червня по більшості міст відновилось до 06-29.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <h3 style="margin:0">Median Available SKU по магазинах та тижнях</h3>
+      <input id="skuSearch" placeholder="Пошук магазину…" style="margin-left:auto;padding:7px 12px;font-size:12px;border:1px solid var(--border);border-radius:6px;outline:none;min-width:180px" oninput="renderSku()">
+      <select id="skuCityFilter" style="padding:7px 10px;font-size:12px;border:1px solid var(--border);border-radius:6px;cursor:pointer" onchange="renderSku()"></select>
+    </div>
+    <div style="max-height:520px;overflow:auto;border:1px solid var(--border);border-radius:8px">
+      <table>
+        <thead style="position:sticky;top:0;background:var(--card);z-index:1">
+          <tr id="skuHead"></tr>
+        </thead>
+        <tbody id="skuTable"></tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px">Δ% = 06-29 vs 05-11. Зелене — найвища, помаранчеве — найнижча доступність SKU магазину за період. Тижні: 11.05 – 29.06.2026.</div>
+  </div>
+</div>
+
 <!-- ════════════ ACTIONS ════════════ -->
 <div class="section">
-  <h2>3. Що робити</h2>
+  <h2>4. Що робити</h2>
   <div class="insight action"><div class="insight-title">1. Зняти питання «−50% Дніпро»</div><div class="insight-text">Комунікувати партнеру: це ефект бази (піковий тиждень тютюну Terea), а не падіння попиту. 22.06 — другий найкращий тиждень за 2 місяці.</div></div>
   <div class="insight action"><div class="insight-title">2. Перевірити стік Terea</div><div class="insight-text">З'ясувати, чи був на 15.06 спецзахід по тютюну і чи є зараз наявність ключових SKU (Sun Pearl, Turquoise, Purple Wave) — на 22.06 вони майже зникли з топу.</div></div>
   <div class="insight action"><div class="insight-title">3. Одеса — пріоритет №1 по доставці</div><div class="insight-text">Розбір 4 магазинів Одеси: час приготування, доступність кур'єрів, зони. Ціль — &lt; 40 хв та Late &lt; 25%.</div></div>
@@ -212,7 +253,7 @@ tr:hover{background:#f9fafb}
 </div>
 
 <div style="text-align:center;color:var(--muted);font-size:11px;margin-top:24px">
-  VARUS · Bolt Food UA · Джерела: Entity performance dynamics (PoP), Basket items, Merchant-level Overview, Commercial metrics (partners)
+  VARUS · Bolt Food UA · Джерела: Entity performance dynamics (PoP), Basket items, Merchant-level Overview, Commercial metrics (partners), curated_delivery fact_provider (SKU)
 </div>
 
 </div>
@@ -308,6 +349,72 @@ new Chart(document.getElementById('chartDelivery'),{
   options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
     annotation:{}},scales:{x:{title:{display:true,text:'хвилин'},grid:{color:'#f3f4f6'}}}}
 });
+
+// --- SKU by week ---
+const skuWeeks=['11.05','18.05','25.05','01.06','08.06','15.06','22.06','29.06'];
+const skuCity={
+  'Дніпро':[13360,13447,13339,13200,13117,13073,13110,13153],
+  'Камʼянське':[14886,14839,14750,14304,14198,14105,14042,14034],
+  'Запоріжжя':[12850,12901,12766,12702,12674,12605,12604,12628],
+  'Кривий Ріг':[10631,10687,10584,10450,10379,10338,10384,10367],
+  'Київ':[9038,8945,8769,8695,8755,8660,8706,8724],
+  'Одеса':[9033,9075,8945,8922,9002,9016,8999,8960],
+  'Павлоград':[9745,9798,9524,9340,9141,9122,9360,9363],
+  'Вишгород':[8549,8406,8309,8143,8076,8212,8192,8062],
+  'Ірпінь':[7450,7425,7258,7341,7325,7255,7386,7628],
+  'Бровари':[6952,6826,6751,6662,6754,6808,6773,6776]
+};
+const cityCounts={'Дніпро':16,'Київ':18,'Кривий Ріг':6,'Запоріжжя':4,'Одеса':4,'Камʼянське':2,'Павлоград':2,'Вишгород':1,'Ірпінь':1,'Бровари':1};
+const cityEN2UK={'Dnipro':'Дніпро','Kyiv':'Київ','Kryvyi Rih':'Кривий Ріг','Zaporizhia':'Запоріжжя','Odesa':'Одеса','Kamianske':'Камʼянське','Pavlohrad':'Павлоград','Vyshhorod':'Вишгород','Irpin':'Ірпінь','Brovary':'Бровари'};
+
+// city SKU line chart (top assortment cities)
+const skuPalette=[RED,'#b45309',GREEN,'#0891b2',BLUE,'#7c3aed'];
+new Chart(document.getElementById('chartSkuCity'),{
+  type:'line',
+  data:{labels:skuWeeks,datasets:['Камʼянське','Дніпро','Запоріжжя','Кривий Ріг','Київ','Одеса'].map((c,i)=>({
+    label:c,data:skuCity[c],borderColor:skuPalette[i],borderWidth:2,tension:.3,pointRadius:2
+  }))},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}},scales:{y:{ticks:{callback:v=>(v/1000)+'k'}}}}
+});
+
+// city SKU table
+document.getElementById('skuCityTable').innerHTML=Object.keys(skuCity)
+  .sort((a,b)=>skuCity[b][7]-skuCity[a][7]).map(c=>{
+  const s=skuCity[c];const d=(s[7]-s[0])/s[0]*100;const cls=d>=0?'up':(d<=-3?'down':'neutral');
+  return `<tr><td>${c}</td><td class="num">${cityCounts[c]}</td><td class="num">${s[0].toLocaleString('uk')}</td>`+
+    `<td class="num">${s[7].toLocaleString('uk')}</td><td class="num ${cls}" style="font-weight:700">${d>=0?'+':''}${d.toFixed(1)}%</td></tr>`;
+}).join('');
+
+// per-store SKU data
+const skuData=[{"n": "вул. Паникахи 15", "c": "Dnipro", "v": [18501, 18754, 18790, 18684, 18423, 18144, 18088, 18126]}, {"n": "5-й Зарічний, д.19", "c": "Kryvyi Rih", "v": [17563, 17517, 17428, 17295, 17231, 17277, 17213, 17235]}, {"n": "вул.20річчя Перемоги  43Д", "c": "Dnipro", "v": [17297, 17454, 17059, 16932, 16840, 16809, 16809, 16853]}, {"n": "пр. Героїв 2", "c": "Dnipro", "v": [17094, 17296, 16655, 16480, 16376, 16364, 16524, 16548]}, {"n": "вул. Яценка 2", "c": "Zaporizhia", "v": [16587, 16571, 16449, 16543, 16437, 16398, 16250, 16192]}, {"n": "бул.Будівельників 27а", "c": "Kamianske", "v": [17077, 16989, 16865, 16492, 16326, 16226, 16084, 16160]}, {"n": "вул.Марії Кюрі 5", "c": "Dnipro", "v": [16590, 16526, 16462, 16284, 16138, 16129, 16083, 16036]}, {"n": "вул.Калиновая 9А", "c": "Dnipro", "v": [16012, 16248, 16282, 16092, 15974, 15656, 15700, 15839]}, {"n": "Північно-Кільцева вулиця, 10а,", "c": "Zaporizhia", "v": [16354, 16427, 16283, 16079, 15967, 15702, 15740, 15707]}, {"n": "пр.Науки 8а", "c": "Dnipro", "v": [15977, 15612, 15602, 15338, 15213, 15262, 15276, 15388]}, {"n": "пр. Академіка Паладіна 16/39", "c": "Kyiv", "v": [15898, 15487, 15159, 15153, 15363, 15474, 15339, 15238]}, {"n": "пр. Олександра Поля, 104", "c": "Dnipro", "v": [15310, 15124, 15058, 14948, 14800, 14739, 14850, 14784]}, {"n": "вул.Глинки 2", "c": "Dnipro", "v": [14077, 14378, 14240, 14218, 14267, 14316, 14313, 14348]}, {"n": "пр. Гуляєва полковника ж.м. \"Дружний\" буд. 107/1", "c": "Odesa", "v": [14150, 14170, 14059, 13929, 14074, 14141, 14046, 14053]}, {"n": "вул.Коммунарівська буд. 8", "c": "Dnipro", "v": [13829, 14043, 14109, 13859, 13587, 13709, 13604, 13730]}, {"n": "вул. 200 річчя Кривого Рогу", "c": "Kryvyi Rih", "v": [14221, 14277, 14132, 13506, 13398, 13031, 13313, 13303]}, {"n": "Площа Шахтарської Слави 1", "c": "Kryvyi Rih", "v": [12875, 12837, 12733, 12721, 12556, 12510, 12512, 12494]}, {"n": "вул.Робоча 67", "c": "Dnipro", "v": [12505, 12579, 12454, 12218, 12158, 12025, 12135, 12268]}, {"n": "вул.Андрія Малишко,3", "c": "Kyiv", "v": [13225, 13090, 12784, 12514, 12567, 12280, 12286, 12236]}, {"n": "вул.Тараса Шевченка 7", "c": "Kamianske", "v": [12694, 12689, 12636, 12116, 12070, 11984, 12001, 11907]}, {"n": "вул Березинская 23а", "c": "Dnipro", "v": [11380, 11740, 11729, 11696, 11648, 11643, 11704, 11697]}, {"n": "вул.Васильківска 34", "c": "Kyiv", "v": [12336, 12336, 12141, 12040, 12048, 11899, 11777, 11623]}, {"n": "вул.Незалежної України 57В", "c": "Zaporizhia", "v": [11381, 11419, 11291, 11141, 11258, 11214, 11281, 11395]}, {"n": "бул. Європейський 1Д", "c": "Dnipro", "v": [11381, 11313, 11323, 11270, 11264, 11296, 11386, 11356]}, {"n": "Вулиця Героїв полку Азов, 12", "c": "Kyiv", "v": [11149, 11017, 10892, 10788, 10758, 10738, 10758, 10944]}, {"n": "Люстдорфська дорога 114", "c": "Odesa", "v": [10662, 10780, 10594, 10586, 10653, 10661, 10570, 10569]}, {"n": "вул. Волинська 37", "c": "Kyiv", "v": [10607, 10443, 10135, 10247, 10418, 10497, 10383, 10311]}, {"n": "вул.Нова 2В", "c": "Pavlohrad", "v": [10337, 10450, 10179, 10049, 10028, 9899, 10041, 10038]}, {"n": "пр. Івана Мазепи, 58", "c": "Dnipro", "v": [10090, 10125, 10046, 9883, 9910, 9836, 9786, 9876]}, {"n": "пр.Оболонський 47/42", "c": "Kyiv", "v": [9884, 9740, 9228, 9173, 9135, 8843, 9348, 9472]}, {"n": "вул. Недєліна 43", "c": "Kryvyi Rih", "v": [9332, 9493, 9294, 9170, 9187, 9145, 9233, 9203]}, {"n": "Проспект Червоної Калини 44A", "c": "Kyiv", "v": [9640, 9581, 9362, 9249, 9283, 8919, 8880, 9169]}, {"n": "вул. Драгаманова 40г", "c": "Kyiv", "v": [9125, 9207, 9057, 8931, 9101, 9097, 9092, 9043]}, {"n": "пр. Добровольського 122/1", "c": "Odesa", "v": [9040, 9082, 8950, 8949, 9020, 9027, 9156, 9038]}, {"n": "вул. Лесі Українки 30", "c": "Kyiv", "v": [8802, 8775, 8637, 8591, 8657, 8442, 8604, 8952]}, {"n": "Донецьке шосcе 9а", "c": "Dnipro", "v": [8936, 8988, 8773, 8727, 8668, 8732, 8821, 8851]}, {"n": "вул. Соборна 97А", "c": "Pavlohrad", "v": [9153, 9145, 8868, 8631, 8254, 8345, 8680, 8688]}, {"n": "пр. Металургів 42А", "c": "Kryvyi Rih", "v": [8671, 8758, 8734, 8687, 8596, 8635, 8647, 8599]}, {"n": "ул.Вишгородска 45а", "c": "Kyiv", "v": [9005, 8897, 8542, 8555, 8662, 8622, 8528, 8526]}, {"n": "Харківське Шосе 160", "c": "Kyiv", "v": [8835, 8564, 8572, 8248, 8384, 8295, 8234, 8199]}, {"n": "вул.Бажана 10-А", "c": "Kyiv", "v": [8491, 8455, 8423, 8248, 8200, 8020, 8036, 8174]}, {"n": "вул.Дніпровская 1", "c": "Vyshhorod", "v": [8549, 8406, 8309, 8143, 8076, 8212, 8192, 8062]}, {"n": "вул.Терещенко 1Е", "c": "Kryvyi Rih", "v": [7999, 8105, 7978, 8032, 7928, 7957, 7980, 7955]}, {"n": "вул. Івана Авраменко 21В", "c": "Kryvyi Rih", "v": [8127, 8164, 8089, 7986, 7926, 7870, 7887, 7860]}, {"n": "проспект Слобожанський 86", "c": "Dnipro", "v": [7655, 7771, 7685, 7533, 7592, 7494, 7653, 7671]}, {"n": "вул. Ольги Кобилянської 1В/23", "c": "Irpin", "v": [7450, 7425, 7258, 7341, 7325, 7255, 7386, 7628]}, {"n": "пр. Миколи Бажана 38", "c": "Kyiv", "v": [7921, 7861, 7832, 7729, 7813, 7687, 7741, 7622]}, {"n": "вул. Срібнокільска 11", "c": "Kyiv", "v": [7395, 7335, 7300, 7278, 7253, 7175, 7552, 7510]}, {"n": "вул.Петра Сагайдачного, 7", "c": "Zaporizhia", "v": [7076, 7188, 7039, 7044, 7033, 7107, 7145, 7217]}, {"n": "Донецьке шосcе 110", "c": "Dnipro", "v": [7130, 7208, 7158, 7038, 7008, 7016, 7030, 7078]}, {"n": "вул.Київська 239", "c": "Brovary", "v": [6952, 6826, 6751, 6662, 6754, 6808, 6773, 6776]}, {"n": "вул. Костянтинівська 2А", "c": "Kyiv", "v": [6675, 6632, 6412, 6346, 6401, 6257, 6552, 6652]}, {"n": "вул. Дача Ковалевського 91", "c": "Odesa", "v": [6514, 6492, 6393, 6433, 6423, 6456, 6400, 6321]}, {"n": "мкр Сонячний 41а", "c": "Kryvyi Rih", "v": [6260, 6342, 6281, 6202, 6212, 6276, 6283, 6287]}, {"n": "вул. Деміївська 27", "c": "Kyiv", "v": [5337, 5271, 5124, 5115, 5199, 5262, 5247, 5213]}, {"n": "вул. Тютюника 39-А", "c": "Kyiv", "v": [5236, 5215, 5200, 5280, 5262, 5263, 5261, 5188]}, {"n": "вул.Французький бульвар 22", "c": "Odesa", "v": [4797, 4851, 4727, 4713, 4842, 4797, 4823, 4820]}, {"n": "вул. Жилянська 59", "c": "Kyiv", "v": [3124, 3099, 3036, 3028, 3087, 3110, 3083, 2966]}];
+// city filter options
+const cities=[...new Set(skuData.map(s=>cityEN2UK[s.c]||s.c))].sort();
+document.getElementById('skuCityFilter').innerHTML='<option value="">Всі міста</option>'+cities.map(c=>`<option>${c}</option>`).join('');
+// header
+document.getElementById('skuHead').innerHTML='<th>Магазин</th><th>Місто</th>'+skuWeeks.map(w=>`<th class="num">${w}</th>`).join('')+'<th class="num">Δ%</th>';
+
+function renderSku(){
+  const q=document.getElementById('skuSearch').value.toLowerCase();
+  const cf=document.getElementById('skuCityFilter').value;
+  const body=document.getElementById('skuTable');
+  body.innerHTML=skuData.filter(s=>{
+    const uk=cityEN2UK[s.c]||s.c;
+    return (!q||s.n.toLowerCase().includes(q))&&(!cf||uk===cf);
+  }).map(s=>{
+    const uk=cityEN2UK[s.c]||s.c;const isDn=s.c==='Dnipro';
+    const valid=s.v.filter(x=>x!=null);const mx=Math.max(...valid),mn=Math.min(...valid);
+    const first=s.v[0],last=s.v[s.v.length-1];
+    const d=first?(last-first)/first*100:0;const dcls=d>=0?'up':(d<=-3?'down':'neutral');
+    const cells=s.v.map(v=>{
+      if(v==null)return '<td class="num">—</td>';
+      let cl='';if(v===mx)cl='cell-good';else if(v===mn)cl='cell-warn';
+      return `<td class="num ${cl}">${v.toLocaleString('uk')}</td>`;
+    }).join('');
+    return `<tr${isDn?' style="background:#fff7ed"':''}><td style="font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.n}</td>`+
+      `<td>${uk}</td>${cells}<td class="num ${dcls}" style="font-weight:700">${d>=0?'+':''}${d.toFixed(1)}%</td></tr>`;
+  }).join('');
+}
+renderSku();
 
 // --- PDF export ---
 function downloadPDF(){
