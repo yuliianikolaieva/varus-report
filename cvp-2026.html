@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VARUS · CVP звіт 2026</title>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--line:#2a2f3a;--txt:#e7eaf0;--muted:#9aa4b2;
+--accent:#34d399;--accent2:#60a5fa;--bad:#f87171;--good:#34d399;--warn:#fbbf24;--neu:#94a3b8;--promo:#f59e0b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 18px 80px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:14px}
+.badge{display:inline-block;background:rgba(52,211,153,.14);color:var(--accent);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.4px}
+h1{font-size:27px;margin:12px 0 6px}
+h2{font-size:19px;margin:30px 0 12px}
+.sub{color:var(--muted);font-size:14px}
+.tabsnav{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:3px;margin:6px 0 8px}
+.tabsnav button{background:transparent;border:none;color:var(--muted);padding:9px 18px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:700}
+.tabsnav button.active{background:var(--accent);color:#0a0d12}
+.hl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:980px){.hl{grid-template-columns:1fr}}
+.hcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.hcol h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}
+.hcol h3 .tag{width:10px;height:10px;border-radius:50%}
+.hitem{border-left:3px solid var(--line);padding:8px 12px;margin-bottom:9px;background:var(--panel2);border-radius:0 8px 8px 0}
+.hitem.crit{border-left-color:var(--bad)} .hitem.watch{border-left-color:var(--warn)} .hitem.win{border-left-color:var(--good)}
+.hitem .k{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+.hitem.crit .k{color:var(--bad)} .hitem.watch .k{color:var(--warn)} .hitem.win .k{color:var(--good)}
+.hitem .t{font-size:13px;margin-top:3px}
+.brandhead{font-size:16px;font-weight:700;margin:22px 0 8px;display:flex;align-items:center;gap:8px}
+.brandhead .tag{width:11px;height:11px;border-radius:50%}
+.brandhead .cnt{font-size:12px;color:var(--muted);font-weight:500}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:6px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--panel);color:var(--muted);font-weight:600;font-size:12px}
+tbody tr:hover td{background:var(--panel2)}
+.grp td{color:var(--accent2);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;background:var(--panel2)}
+.cell-bad{color:var(--bad)} .cell-good{color:var(--good)}
+.vd{font-weight:700;font-size:12px}.vd.up{color:var(--good)}.vd.down{color:var(--bad)}.vd.eq{color:var(--neu)}
+.legend{font-size:12px;color:var(--muted);margin:8px 0}.legend span{margin-right:15px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stbl th{cursor:pointer;user-select:none}
+.stbl td:first-child,.stbl th:first-child{text-align:left;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flag{display:inline-block;min-width:20px;text-align:center;font-weight:700;border-radius:6px;padding:1px 6px}
+.flag.f0{color:var(--good)} .flag.f1{color:var(--warn)} .flag.f2{background:rgba(248,113,113,.18);color:var(--bad)}
+.worst{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:10px;font-size:13px}
+.worst b{color:#fff}
+.periodtag{display:inline-block;background:rgba(96,165,250,.14);color:var(--accent2);font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:8px}
+footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:34px;padding-top:16px}
+</style></head><body><div class="wrap">
+<header class="top">
+  <span class="badge">BOLT FOOD · UKRAINE · ЗВІТ ДЛЯ ПАРТНЕРА</span>
+  <h1>VARUS — CVP звіт 2026</h1>
+  <div class="tabsnav" id="tabsnav">
+    <button data-tab="overview" class="active">Огляд</button>
+    <button data-tab="stores">Детальний аналіз (магазини)</button>
+  </div>
+</header>
+
+<div id="tab-overview">
+<div class="sub" style="margin-bottom:8px" id="ovSub"></div>
+<section><h2>Ключові акценти</h2><div class="hl" id="hl"></div></section>
+<section><h2>Показники по містах</h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--good)"></i>краще за середнє по продуктових мережах</span>
+    <span><i class="dot" style="background:var(--bad)"></i>гірше за середнє</span>
+    <span>«vs»: <b class="vd up">вище</b> / <b class="vd down">нижче</b> / <b class="vd eq">згідно</b></span>
+  </div>
+  <div id="tables"></div></section>
+</div>
+
+<div id="tab-stores" style="display:none">
+<div class="sub" style="margin-bottom:8px">Деталізація метрик <b>Швидкість і якість</b> по кожному магазину VARUS <span class="periodtag" id="periodTag"></span>. Клік на заголовок колонки — сортування. Колонка <b>⚠</b> — скільки метрик у магазину гірші за медіану мережі.</div>
+<details class="panel" open style="margin-bottom:14px">
+<summary style="cursor:pointer;font-weight:700;font-size:15px">Що означає кожна метрика</summary>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:9px 22px;margin-top:12px;font-size:13px">
+ <div><b>Замовлень</b> — кількість доставлених замовлень магазину за період (обсяг активності).</div>
+ <div><b>Час доставки, хв</b> — середній повний час від оформлення замовлення до вручення клієнту. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Запізнення 10+, %</b> — частка замовлень, доставлених пізніше за обіцяний час більш ніж на 10 хв. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Пізня підготовка 10+, %</b> — частка замовлень, де магазин збирав/готував замовлення довше за план понад 10 хв (зона відповідальності магазину). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Зірвані замовл., %</b> — частка замовлень, які не вдалося успішно доставити (скасовані/зірвані). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Bad Order Rate, %</b> — частка «проблемних» замовлень із будь-яким негативним інцидентом (запізнення, недоставка, скарга, низька оцінка). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Заміни товарів, %</b> — частка замовлень, де довелося замінити товар через його відсутність на полиці. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>CS-тікети, %</b> — частка замовлень, за якими клієнт звертався у підтримку Bolt. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Завершеність, %</b> — частка успішно завершених (доставлених) замовлень з усіх прийнятих. <i style="color:var(--muted)">більше = краще</i></div>
+ <div><b>Рейтинг</b> — середня оцінка магазину від клієнтів (шкала 1–5). <i style="color:var(--muted)">більше = краще</i></div>
+ <div><b>⚠</b> — скільки метрик цього магазину гірші за медіану мережі (що більше — то проблемніший магазин).</div>
+</div>
+</details>
+<section><h2>Найпроблемніші магазини</h2><div id="worst"></div></section>
+<section><h2>По магазинах (за містами)</h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--good)"></i>краще за медіану мережі</span>
+    <span><i class="dot" style="background:var(--bad)"></i>гірше за медіану мережі</span>
+  </div>
+  <div id="storeTables"></div></section>
+</div>
+
+<footer><b>Методологія.</b> Джерело: Databricks — <code>fact_order_delivery</code> (бізнес-метрики), <code>fact_provider_monthly</code> (store-level швидкість і якість), <code>fact_provider_weekly</code> (заміни товарів). Лише <code>order_state='delivered'</code>, <code>group_name='VARUS'</code>.
+  VARUS стартував на Bolt Food у травні 2026, тому показано травень–червень. Орієнтир (бенчмарк) = <span id="footBench"></span>. Групування — по містах присутності.
+  Вкладка «Детальний аналіз»: <b>Q2 2026 (кві–чер)</b>, зважене середнє по місяцях на рівні магазину; кольори та ⚠ порівнюють магазин з медіаною по магазинах мережі. <span id="genAt"></span></footer>
+</div>
+<script>
+const R={"generated_at": "2026-07-10 10:02 UTC", "months": ["2026-05", "2026-06"], "month_lbl": ["Тра", "Чер"], "group": ["Kyiv", "Dnipro", "Kryvyi Rih", "Zaporizhia", "Інші міста"], "group_lbl": {"Kyiv": "Kyiv", "Dnipro": "Dnipro", "Kryvyi Rih": "Kryvyi Rih", "Zaporizhia": "Zaporizhia", "Інші міста": "Інші міста"}, "metrics": [{"key": "GMV", "label": "GMV (€)", "dir": 1, "fmt": "eur", "promo": false, "group": "Бізнес-масштаб", "bench": 278.5, "brands": {"Kyiv": [38180, 43165], "Dnipro": [18017, 37260], "Kryvyi Rih": [5551, 5566], "Zaporizhia": [4365, 5927], "Інші міста": [6500, 9412]}}, {"key": "Orders", "label": "Замовлення", "dir": 1, "fmt": "int", "promo": false, "group": "Бізнес-масштаб", "bench": 22.9, "brands": {"Kyiv": [2993.0, 3051.0], "Dnipro": [1674.0, 2746.0], "Kryvyi Rih": [537.0, 475.0], "Zaporizhia": [383.0, 484.0], "Інші міста": [581.0, 723.0]}}, {"key": "Active Users", "label": "Активні клієнти", "dir": 1, "fmt": "int", "promo": false, "group": "Бізнес-масштаб", "bench": 7.2, "brands": {"Kyiv": [1834.0, 1703.0], "Dnipro": [1012.0, 1035.0], "Kryvyi Rih": [247.0, 207.0], "Zaporizhia": [234.0, 253.0], "Інші міста": [348.0, 384.0]}}, {"key": "New Users", "label": "Нові клієнти", "dir": 1, "fmt": "int", "promo": false, "group": "Бізнес-масштаб", "bench": 0.8, "brands": {"Kyiv": [155.0, 144.0], "Dnipro": [95.0, 113.0], "Kryvyi Rih": [27.0, 25.0], "Zaporizhia": [36.0, 42.0], "Інші міста": [45.0, 44.0]}}, {"key": "Frequency", "label": "Частота замовлень", "dir": 1, "fmt": "dec", "promo": false, "group": "Бізнес-масштаб", "bench": 3.19, "brands": {"Kyiv": [1.63, 1.79], "Dnipro": [1.65, 2.65], "Kryvyi Rih": [2.17, 2.29], "Zaporizhia": [1.64, 1.91], "Інші міста": [1.67, 1.88]}}, {"key": "Active Merchants", "label": "Активні магазини", "dir": 1, "fmt": "int", "promo": false, "group": "Бізнес-масштаб", "bench": null, "brands": {"Kyiv": [18.0, 18.0], "Dnipro": [15.0, 15.0], "Kryvyi Rih": [6.0, 6.0], "Zaporizhia": [4.0, 4.0], "Інші міста": [11.0, 11.0]}}, {"key": "AOV", "label": "Середній чек (AOV)", "dir": 1, "fmt": "eur", "promo": false, "group": "Юніт-економіка", "bench": 12.1, "brands": {"Kyiv": [13, 14], "Dnipro": [11, 14], "Kryvyi Rih": [10, 12], "Zaporizhia": [11, 12], "Інші міста": [11, 13]}}, {"key": "GMV per Merchant", "label": "GMV на магазин", "dir": 1, "fmt": "eur", "promo": false, "group": "Юніт-економіка", "bench": 278.5, "brands": {"Kyiv": [2121.1, 2398.0], "Dnipro": [1201.1, 2484.0], "Kryvyi Rih": [925.1, 927.7], "Zaporizhia": [1091.2, 1481.8], "Інші міста": [590.9, 855.6]}}, {"key": "Orders per Merchant", "label": "Замовлень на магазин", "dir": 1, "fmt": "int", "promo": false, "group": "Юніт-економіка", "bench": 22.9, "brands": {"Kyiv": [166.3, 169.5], "Dnipro": [111.6, 183.1], "Kryvyi Rih": [89.5, 79.2], "Zaporizhia": [95.8, 121.0], "Інші міста": [52.8, 65.7]}}, {"key": "Availability", "label": "Доступність магазинів, %", "dir": 1, "fmt": "pct", "promo": false, "group": "Доступність", "bench": 76.7, "brands": {"Kyiv": [98.5, 98.4], "Dnipro": [99.5, 98.9], "Kryvyi Rih": [99.8, 100.0], "Zaporizhia": [99.4, 98.6], "Інші міста": [99.8, 99.3]}}, {"key": "Total Delivery Time", "label": "Час доставки", "dir": -1, "fmt": "min", "promo": false, "group": "Швидкість і якість", "bench": 28.0, "brands": {"Kyiv": [34.41, 32.73], "Dnipro": [36.63, 38.8], "Kryvyi Rih": [29.37, 30.78], "Zaporizhia": [36.11, 35.22], "Інші міста": [39.97, 35.02]}}, {"key": "Late Delivery 10+", "label": "Запізнення (10+хв)", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 6.1, "brands": {"Kyiv": [7.9, 6.8], "Dnipro": [10.4, 12.2], "Kryvyi Rih": [6.0, 5.8], "Zaporizhia": [8.6, 11.3], "Інші міста": [13.3, 8.6]}}, {"key": "Late Prep 10+", "label": "Пізня підготовка (10+хв)", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 8.1, "brands": {"Kyiv": [8.3, 9.8], "Dnipro": [10.6, 12.1], "Kryvyi Rih": [4.7, 5.3], "Zaporizhia": [5.7, 8.5], "Інші міста": [10.8, 8.2]}}, {"key": "Failed", "label": "Зірвані замовлення", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 7.1, "brands": {"Kyiv": [8.8, 7.5], "Dnipro": [10.3, 6.2], "Kryvyi Rih": [4.4, 2.1], "Zaporizhia": [8.8, 2.4], "Інші міста": [8.1, 4.9]}}, {"key": "Bad Order Rate", "label": "Bad Order Rate", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 15.5, "brands": {"Kyiv": [23.6, 18.3], "Dnipro": [27.6, 21.3], "Kryvyi Rih": [19.4, 11.1], "Zaporizhia": [24.3, 16.9], "Інші міста": [26.1, 17.8]}}, {"key": "Replacement", "label": "Заміни товарів", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 18.7, "brands": {"Kyiv": [61.4, 46.3], "Dnipro": [62.6, 42.4], "Kryvyi Rih": [66.0, 54.3], "Zaporizhia": [65.6, 50.3], "Інші міста": [62.7, 43.7]}}, {"key": "CS Ticket", "label": "Звернення в підтримку", "dir": -1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 4.4, "brands": {"Kyiv": [10.0, 5.8], "Dnipro": [11.6, 5.7], "Kryvyi Rih": [11.2, 4.5], "Zaporizhia": [9.5, 4.8], "Інші міста": [8.5, 6.2]}}, {"key": "Completion", "label": "Завершеність", "dir": 1, "fmt": "pct", "promo": false, "group": "Швидкість і якість", "bench": 92.9, "brands": {"Kyiv": [91.2, 92.5], "Dnipro": [89.7, 93.8], "Kryvyi Rih": [95.6, 97.9], "Zaporizhia": [91.2, 97.6], "Інші міста": [91.9, 95.1]}}, {"key": "Rating", "label": "Рейтинг", "dir": 1, "fmt": "dec", "promo": false, "group": "Швидкість і якість", "bench": 4.74, "brands": {"Kyiv": [3.99, 4.4], "Dnipro": [3.92, 4.66], "Kryvyi Rih": [4.02, 4.61], "Zaporizhia": [4.13, 4.55], "Інші міста": [4.06, 4.35]}}], "highlights": {"Kyiv": [{"level": "win", "kind": "Замовлення", "text": "Обсяг замовлень 2993→3051 (Тра→Чер), зростання 2%."}, {"level": "watch", "kind": "Нові клієнти", "text": "Нові клієнти 155→144 (Тра→Чер)."}, {"level": "crit", "kind": "Де посилитись", "text": "Найбільші розриви з ринком: Завершеність (92%); Заміни товарів (54%); Час доставки (34 хв); Bad Order Rate (21%)."}], "Dnipro": [{"level": "win", "kind": "Замовлення", "text": "Обсяг замовлень 1674→2746 (Тра→Чер), зростання 64%."}, {"level": "win", "kind": "Нові клієнти", "text": "Нові клієнти 95→113 (Тра→Чер)."}, {"level": "crit", "kind": "Де посилитись", "text": "Найбільші розриви з ринком: Завершеність (92%); Заміни товарів (52%); Час доставки (38 хв); Bad Order Rate (24%)."}], "Kryvyi Rih": [{"level": "watch", "kind": "Замовлення", "text": "Обсяг замовлень 537→475 (Тра→Чер), спад 12%."}, {"level": "watch", "kind": "Нові клієнти", "text": "Нові клієнти 27→25 (Тра→Чер)."}, {"level": "crit", "kind": "Де посилитись", "text": "Найбільші розриви з ринком: Заміни товарів (60%); Час доставки (30 хв); Звернення в підтримку (8%); Рейтинг (4.31)."}], "Zaporizhia": [{"level": "win", "kind": "Замовлення", "text": "Обсяг замовлень 383→484 (Тра→Чер), зростання 26%."}, {"level": "win", "kind": "Нові клієнти", "text": "Нові клієнти 36→42 (Тра→Чер)."}, {"level": "crit", "kind": "Де посилитись", "text": "Найбільші розриви з ринком: Заміни товарів (58%); Час доставки (36 хв); Bad Order Rate (21%); Запізнення (10+хв) (10%)."}], "Інші міста": [{"level": "win", "kind": "Замовлення", "text": "Обсяг замовлень 581→723 (Тра→Чер), зростання 24%."}, {"level": "watch", "kind": "Нові клієнти", "text": "Нові клієнти 45→44 (Тра→Чер)."}, {"level": "crit", "kind": "Де посилитись", "text": "Найбільші розриви з ринком: Заміни товарів (53%); Час доставки (37 хв); Bad Order Rate (22%); Запізнення (10+хв) (11%)."}]}, "stores": [{"addr": "VARUS, вул.Андрія Малишко,3", "city": "Kyiv", "orders": 627.0, "dur": 38.5, "late": 10.86, "lateprep": 18.66, "failed": 6.7, "bad": 22.77, "replacement": 52.31, "cs": 8.33, "compl": 93.3, "rating": 4.32, "brand": "Kyiv"}, {"addr": "VARUS, пр. Академіка Паладіна 16/39", "city": "Kyiv", "orders": 595.0, "dur": 29.27, "late": 5.02, "lateprep": 1.68, "failed": 3.72, "bad": 14.24, "replacement": 53.03, "cs": 6.63, "compl": 96.28, "rating": 4.47, "brand": "Kyiv"}, {"addr": "VARUS, вул.Васильківска 34", "city": "Kyiv", "orders": 562.0, "dur": 34.82, "late": 7.23, "lateprep": 12.63, "failed": 11.64, "bad": 25.79, "replacement": 62.8, "cs": 10.38, "compl": 88.36, "rating": 4.02, "brand": "Kyiv"}, {"addr": "VARUS, вул. Тютюника 39-А", "city": "Kyiv", "orders": 544.0, "dur": 30.23, "late": 7.97, "lateprep": 8.27, "failed": 11.54, "bad": 25.69, "replacement": 53.68, "cs": 9.59, "compl": 88.46, "rating": 4.06, "brand": "Kyiv"}, {"addr": "VARUS, вул.Глинки 2", "city": "Dnipro", "orders": 517.0, "dur": 47.47, "late": 16.43, "lateprep": 6.19, "failed": 6.68, "bad": 24.91, "replacement": 26.43, "cs": 4.51, "compl": 93.32, "rating": 4.79, "brand": "Dnipro"}, {"addr": "VARUS, вул.Вишгородска 45а", "city": "Kyiv", "orders": 512.0, "dur": 32.24, "late": 6.29, "lateprep": 2.34, "failed": 7.91, "bad": 18.17, "replacement": 55.75, "cs": 6.12, "compl": 92.09, "rating": 4.26, "brand": "Kyiv"}, {"addr": "VARUS, вул. Жилянська 59", "city": "Kyiv", "orders": 491.0, "dur": 33.25, "late": 5.57, "lateprep": 6.52, "failed": 2.39, "bad": 12.13, "replacement": 39.93, "cs": 4.97, "compl": 97.61, "rating": 4.52, "brand": "Kyiv"}, {"addr": "VARUS, бул. Європейський 1Д", "city": "Dnipro", "orders": 462.0, "dur": 34.12, "late": 9.73, "lateprep": 12.77, "failed": 10.12, "bad": 25.68, "replacement": 50.36, "cs": 9.73, "compl": 89.88, "rating": 4.11, "brand": "Dnipro"}, {"addr": "VARUS, пр. Героїв 2", "city": "Dnipro", "orders": 456.0, "dur": 28.56, "late": 4.94, "lateprep": 7.02, "failed": 6.17, "bad": 18.31, "replacement": 54.93, "cs": 9.05, "compl": 93.83, "rating": 4.31, "brand": "Dnipro"}, {"addr": "VARUS, вул.Робоча 67", "city": "Dnipro", "orders": 430.0, "dur": 34.71, "late": 9.39, "lateprep": 6.74, "failed": 6.11, "bad": 20.31, "replacement": 51.61, "cs": 7.21, "compl": 93.89, "rating": 4.42, "brand": "Dnipro"}, {"addr": "VARUS, пр.Науки 8а", "city": "Dnipro", "orders": 375.0, "dur": 37.98, "late": 12.09, "lateprep": 17.87, "failed": 5.54, "bad": 23.93, "replacement": 61.28, "cs": 8.06, "compl": 94.46, "rating": 4.24, "brand": "Dnipro"}, {"addr": "VARUS, вул. Волинська 37", "city": "Kyiv", "orders": 357.0, "dur": 31.18, "late": 5.25, "lateprep": 5.88, "failed": 6.3, "bad": 18.11, "replacement": 55.56, "cs": 8.14, "compl": 93.7, "rating": 4.42, "brand": "Kyiv"}, {"addr": "VARUS, Площа Шахтарської Слави 1", "city": "Kryvyi Rih", "orders": 356.0, "dur": 28.48, "late": 4.29, "lateprep": 5.06, "failed": 4.56, "bad": 12.87, "replacement": 52.31, "cs": 6.17, "compl": 95.44, "rating": 4.45, "brand": "Kryvyi Rih"}, {"addr": "VARUS, вул.Калиновая 9А", "city": "Dnipro", "orders": 352.0, "dur": 39.16, "late": 10.93, "lateprep": 13.64, "failed": 6.13, "bad": 21.87, "replacement": 57.59, "cs": 6.93, "compl": 93.87, "rating": 4.31, "brand": "Dnipro"}, {"addr": "VARUS, вул. Ольги Кобилянської 1В/23", "city": "Irpin", "orders": 340.0, "dur": 36.64, "late": 8.22, "lateprep": 12.65, "failed": 3.68, "bad": 17.85, "replacement": 50.26, "cs": 7.37, "compl": 96.32, "rating": 4.35, "brand": "Інші міста"}, {"addr": "VARUS, вул. Срібнокільска 11", "city": "Kyiv", "orders": 325.0, "dur": 34.02, "late": 8.43, "lateprep": 12.31, "failed": 5.52, "bad": 17.44, "replacement": 51.05, "cs": 4.94, "compl": 94.48, "rating": 3.81, "brand": "Kyiv"}, {"addr": "VARUS, вул.Київська 239", "city": "Brovary", "orders": 322.0, "dur": 26.57, "late": 6.97, "lateprep": 0.0, "failed": 2.42, "bad": 10.3, "replacement": 41.42, "cs": 3.03, "compl": 97.58, "rating": 4.53, "brand": "Інші міста"}, {"addr": "VARUS, вул. Паникахи 15", "city": "Dnipro", "orders": 316.0, "dur": 43.19, "late": 16.71, "lateprep": 25.32, "failed": 8.93, "bad": 31.7, "replacement": 59.59, "cs": 9.8, "compl": 91.07, "rating": 4.07, "brand": "Dnipro"}, {"addr": "VARUS, вул.Незалежної України 57В", "city": "Zaporizhia", "orders": 310.0, "dur": 34.02, "late": 9.09, "lateprep": 0.97, "failed": 2.82, "bad": 17.87, "replacement": 54.04, "cs": 7.52, "compl": 97.18, "rating": 4.43, "brand": "Zaporizhia"}, {"addr": "VARUS, вул. Яценка 2", "city": "Zaporizhia", "orders": 306.0, "dur": 37.14, "late": 10.19, "lateprep": 11.76, "failed": 5.56, "bad": 20.68, "replacement": 59.66, "cs": 6.17, "compl": 94.44, "rating": 4.42, "brand": "Zaporizhia"}, {"addr": "VARUS, вул. Лесі Українки 30", "city": "Kyiv", "orders": 287.0, "dur": 41.33, "late": 10.1, "lateprep": 21.6, "failed": 25.65, "bad": 41.45, "replacement": 53.65, "cs": 10.36, "compl": 74.35, "rating": 3.67, "brand": "Kyiv"}, {"addr": "VARUS, Проспект Червоної Калини 44A", "city": "Kyiv", "orders": 282.0, "dur": 31.32, "late": 5.96, "lateprep": 1.42, "failed": 6.62, "bad": 19.54, "replacement": 63.04, "cs": 9.27, "compl": 93.38, "rating": 3.9, "brand": "Kyiv"}, {"addr": "VARUS, Вулиця Героїв полку Азов, 12", "city": "Kyiv", "orders": 274.0, "dur": 38.28, "late": 13.29, "lateprep": 15.69, "failed": 4.2, "bad": 21.33, "replacement": 54.04, "cs": 6.64, "compl": 95.8, "rating": 4.0, "brand": "Kyiv"}, {"addr": "VARUS, пр. Олександра Поля, 104", "city": "Dnipro", "orders": 250.0, "dur": 38.18, "late": 10.31, "lateprep": 9.2, "failed": 18.03, "bad": 24.81, "replacement": 43.73, "cs": 6.89, "compl": 81.97, "rating": 4.01, "brand": "Dnipro"}, {"addr": "VARUS, вул Березинская 23а", "city": "Dnipro", "orders": 249.0, "dur": 41.61, "late": 13.77, "lateprep": 14.06, "failed": 9.78, "bad": 28.99, "replacement": 54.11, "cs": 10.14, "compl": 90.22, "rating": 4.55, "brand": "Dnipro"}, {"addr": "VARUS, вул.Марії Кюрі 5", "city": "Dnipro", "orders": 248.0, "dur": 32.62, "late": 9.3, "lateprep": 5.65, "failed": 3.88, "bad": 16.28, "replacement": 37.98, "cs": 5.43, "compl": 96.12, "rating": 4.67, "brand": "Dnipro"}, {"addr": "VARUS, вул. Костянтинівська 2А", "city": "Kyiv", "orders": 243.0, "dur": 32.59, "late": 5.79, "lateprep": 3.7, "failed": 6.18, "bad": 16.22, "replacement": 55.63, "cs": 6.95, "compl": 93.82, "rating": 4.21, "brand": "Kyiv"}, {"addr": "VARUS, пр. Металургів 42А", "city": "Kryvyi Rih", "orders": 238.0, "dur": 27.87, "late": 6.22, "lateprep": 3.36, "failed": 1.24, "bad": 14.94, "replacement": 64.89, "cs": 8.3, "compl": 98.76, "rating": 4.5, "brand": "Kryvyi Rih"}, {"addr": "VARUS, Харківське Шосе 160", "city": "Kyiv", "orders": 237.0, "dur": 33.55, "late": 6.2, "lateprep": 3.8, "failed": 2.07, "bad": 14.46, "replacement": 47.73, "cs": 7.02, "compl": 97.93, "rating": 4.65, "brand": "Kyiv"}, {"addr": "VARUS, проспект Слобожанський 86", "city": "Dnipro", "orders": 229.0, "dur": 36.83, "late": 12.75, "lateprep": 17.47, "failed": 8.76, "bad": 26.29, "replacement": 62.63, "cs": 7.97, "compl": 91.24, "rating": 4.14, "brand": "Dnipro"}, {"addr": "VARUS, вул.Коммунарівська буд. 8", "city": "Dnipro", "orders": 214.0, "dur": 46.62, "late": 13.58, "lateprep": 13.08, "failed": 11.93, "bad": 29.63, "replacement": 46.18, "cs": 11.93, "compl": 88.07, "rating": 4.44, "brand": "Dnipro"}, {"addr": "VARUS, вул. Деміївська 27", "city": "Kyiv", "orders": 197.0, "dur": 27.44, "late": 2.0, "lateprep": 4.06, "failed": 1.5, "bad": 7.0, "replacement": 53.1, "cs": 4.0, "compl": 98.5, "rating": 4.46, "brand": "Kyiv"}, {"addr": "VARUS, вул. Драгаманова 40г", "city": "Kyiv", "orders": 192.0, "dur": 39.03, "late": 8.14, "lateprep": 14.06, "failed": 13.12, "bad": 27.6, "replacement": 42.5, "cs": 9.95, "compl": 86.88, "rating": 3.51, "brand": "Kyiv"}, {"addr": "VARUS, Люстдорфська дорога 114", "city": "Odesa", "orders": 176.0, "dur": 46.42, "late": 15.85, "lateprep": 16.48, "failed": 3.83, "bad": 24.59, "replacement": 53.27, "cs": 8.2, "compl": 96.17, "rating": 3.94, "brand": "Інші міста"}, {"addr": "VARUS, вул. 200 річчя Кривого Рогу", "city": "Kryvyi Rih", "orders": 169.0, "dur": 28.39, "late": 5.17, "lateprep": 1.18, "failed": 2.87, "bad": 17.82, "replacement": 64.8, "cs": 10.92, "compl": 97.13, "rating": 3.31, "brand": "Kryvyi Rih"}, {"addr": "VARUS, вул. Івана Авраменко 21В", "city": "Kryvyi Rih", "orders": 164.0, "dur": 27.7, "late": 5.26, "lateprep": 5.49, "failed": 4.09, "bad": 15.2, "replacement": 68.65, "cs": 7.02, "compl": 95.91, "rating": 4.23, "brand": "Kryvyi Rih"}, {"addr": "VARUS, пр. Івана Мазепи, 58", "city": "Dnipro", "orders": 144.0, "dur": 34.09, "late": 6.96, "lateprep": 4.86, "failed": 8.86, "bad": 17.72, "replacement": 37.06, "cs": 5.06, "compl": 91.14, "rating": 4.74, "brand": "Dnipro"}, {"addr": "VARUS, Північно-Кільцева вулиця, 10а,", "city": "Zaporizhia", "orders": 136.0, "dur": 37.74, "late": 10.6, "lateprep": 10.29, "failed": 9.93, "bad": 24.5, "replacement": 56.65, "cs": 6.62, "compl": 90.07, "rating": 4.02, "brand": "Zaporizhia"}, {"addr": "VARUS, пр. Миколи Бажана 38", "city": "Kyiv", "orders": 130.0, "dur": 31.18, "late": 8.76, "lateprep": 9.23, "failed": 5.11, "bad": 20.44, "replacement": 56.08, "cs": 10.22, "compl": 94.89, "rating": 3.84, "brand": "Kyiv"}, {"addr": "VARUS, Донецьке шосcе 110", "city": "Dnipro", "orders": 124.0, "dur": 36.08, "late": 11.94, "lateprep": 8.87, "failed": 7.46, "bad": 25.37, "replacement": 51.68, "cs": 11.94, "compl": 92.54, "rating": 4.59, "brand": "Dnipro"}, {"addr": "VARUS вул.Петра Сагайдачного, 7", "city": "Zaporizhia", "orders": 115.0, "dur": 33.34, "late": 11.48, "lateprep": 8.7, "failed": 5.74, "bad": 20.49, "replacement": 58.33, "cs": 8.2, "compl": 94.26, "rating": 4.41, "brand": "Zaporizhia"}, {"addr": "VARUS, пр.Оболонський 47/42", "city": "Kyiv", "orders": 107.0, "dur": 36.08, "late": 8.93, "lateprep": 13.08, "failed": 4.46, "bad": 21.43, "replacement": 62.31, "cs": 9.82, "compl": 95.54, "rating": 3.92, "brand": "Kyiv"}, {"addr": "VARUS, пр. Добровольського 122/1", "city": "Odesa", "orders": 100.0, "dur": 40.66, "late": 16.35, "lateprep": 11.0, "failed": 3.85, "bad": 25.96, "replacement": 53.1, "cs": 9.62, "compl": 96.15, "rating": 3.65, "brand": "Інші міста"}, {"addr": "VARUS, вул.Французький бульвар 22", "city": "Odesa", "orders": 98.0, "dur": 55.43, "late": 16.67, "lateprep": 30.61, "failed": 22.22, "bad": 44.44, "replacement": 56.34, "cs": 9.52, "compl": 77.78, "rating": 3.91, "brand": "Інші міста"}, {"addr": "VARUS, вул.Бажана 10-А", "city": "Kyiv", "orders": 82.0, "dur": 29.34, "late": 1.83, "lateprep": 12.2, "failed": 24.77, "bad": 34.86, "replacement": 45.38, "cs": 11.93, "compl": 75.23, "rating": 3.78, "brand": "Kyiv"}, {"addr": "VARUS, вул. Соборна 97А", "city": "Pavlohrad", "orders": 81.0, "dur": 36.02, "late": 3.57, "lateprep": 1.23, "failed": 3.57, "bad": 9.52, "replacement": 61.05, "cs": 4.76, "compl": 96.43, "rating": 4.48, "brand": "Інші міста"}, {"addr": "VARUS, пр. Гуляєва полковника ж.м. \"Дружний\" буд. 107/1", "city": "Odesa", "orders": 69.0, "dur": 44.71, "late": 12.66, "lateprep": 7.25, "failed": 12.66, "bad": 37.97, "replacement": 66.67, "cs": 17.72, "compl": 87.34, "rating": 3.33, "brand": "Інші міста"}, {"addr": "VARUS, 5-й Зарічний, д.19", "city": "Kryvyi Rih", "orders": 64.0, "dur": 58.34, "late": 19.4, "lateprep": 15.62, "failed": 4.48, "bad": 28.36, "replacement": 66.2, "cs": 11.94, "compl": 95.52, "rating": 4.0, "brand": "Kryvyi Rih"}, {"addr": "VARUS, вул.Нова 2В", "city": "Pavlohrad", "orders": 59.0, "dur": 33.0, "late": 12.12, "lateprep": 0.0, "failed": 10.61, "bad": 27.27, "replacement": 56.16, "cs": 7.58, "compl": 89.39, "rating": 4.72, "brand": "Інші міста"}, {"addr": "VARUS, Донецьке шосcе 9а", "city": "Dnipro", "orders": 56.0, "dur": 39.84, "late": 16.39, "lateprep": 5.36, "failed": 8.2, "bad": 24.59, "replacement": 47.06, "cs": 4.92, "compl": 91.8, "rating": 4.91, "brand": "Dnipro"}, {"addr": "VARUS, вул.Тараса Шевченка 7", "city": "Kamianske", "orders": 28.0, "dur": 35.51, "late": 23.33, "lateprep": 0.0, "failed": 6.67, "bad": 33.33, "replacement": 56.76, "cs": 6.67, "compl": 93.33, "rating": 4.75, "brand": "Інші міста"}, {"addr": "VARUS, вул.Дніпровская 1", "city": "Vyshhorod", "orders": 28.0, "dur": 28.42, "late": 3.23, "lateprep": 3.57, "failed": 9.68, "bad": 16.13, "replacement": 45.45, "cs": 6.45, "compl": 90.32, "rating": 4.43, "brand": "Інші міста"}, {"addr": "VARUS, мкр Сонячний 41а", "city": "Kryvyi Rih", "orders": 21.0, "dur": 25.91, "late": 0.0, "lateprep": 14.29, "failed": 0.0, "bad": 14.29, "replacement": 40.0, "cs": 14.29, "compl": 100.0, "rating": 3.67, "brand": "Kryvyi Rih"}, {"addr": "VARUS, бул.Будівельників 27а", "city": "Kamianske", "orders": 3.0, "dur": 39.89, "late": 16.67, "lateprep": 66.67, "failed": 50.0, "bad": 66.67, "replacement": 55.56, "cs": 16.67, "compl": 50.0, "rating": 5.0, "brand": "Інші міста"}], "store_period": "квітень–червень 2026 (Q2)", "store_cols": [{"key": "orders", "label": "Замовлень", "fmt": "int", "dir": 0}, {"key": "dur", "label": "Час доставки, хв", "fmt": "min", "dir": -1}, {"key": "late", "label": "Запізнення 10+, %", "fmt": "pct", "dir": -1}, {"key": "lateprep", "label": "Пізня підготовка 10+, %", "fmt": "pct", "dir": -1}, {"key": "failed", "label": "Зірвані замовл., %", "fmt": "pct", "dir": -1}, {"key": "bad", "label": "Bad Order Rate, %", "fmt": "pct", "dir": -1}, {"key": "replacement", "label": "Заміни товарів, %", "fmt": "pct", "dir": -1}, {"key": "cs", "label": "CS-тікети, %", "fmt": "pct", "dir": -1}, {"key": "compl", "label": "Завершеність, %", "fmt": "pct", "dir": 1}, {"key": "rating", "label": "Рейтинг", "fmt": "dec", "dir": 1}], "bench_note": "середнє по продуктових партнерах (Bolt Market) в Україні за Q2 — 1374 магазинів"};
+const G=R.group, L=R.group_lbl, ML=R.month_lbl;
+const PALETTE=["#34d399","#60a5fa","#c084fc","#fbbf24","#f472b6","#22d3ee","#a3e635"];
+const CLR={}; G.forEach((g,i)=>CLR[g]=PALETTE[i%PALETTE.length]);
+document.getElementById("ovSub").innerHTML=`VARUS — помісячно (${ML[0]}–${ML[ML.length-1]} 2026, партнер стартував у травні). Орієнтир — <b>${R.bench_note}</b>. Групування — по містах присутності.`;
+document.getElementById("footBench").textContent=R.bench_note;
+document.getElementById("genAt").textContent="Згенеровано: "+(R.generated_at||"");
+function fmt(v,f){
+  if(v===null||v===undefined||Number.isNaN(v))return "—";
+  if(f==="eur")return "€"+Math.round(v).toLocaleString("uk-UA");
+  if(f==="int")return Math.round(v).toLocaleString("uk-UA");
+  if(f==="dec")return v.toFixed(2);
+  if(f==="pct")return Math.round(v)+"%";
+  if(f==="min")return Math.round(v)+" хв";
+  return v;}
+function meanAll(a){a=a.filter(x=>x!==null&&x!==undefined);return a.length?a.reduce((x,y)=>x+y,0)/a.length:null;}
+function median(a){a=a.filter(x=>x!==null&&x!==undefined).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2;}
+document.querySelectorAll("#tabsnav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#tabsnav button").forEach(x=>x.classList.toggle("active",x===b));
+  document.getElementById("tab-overview").style.display=b.dataset.tab==="overview"?"":"none";
+  document.getElementById("tab-stores").style.display=b.dataset.tab==="stores"?"":"none";});
+const hl=document.getElementById("hl");
+G.forEach(b=>{const col=document.createElement("div");col.className="hcol";
+  let html=`<h3><span class="tag" style="background:${CLR[b]}"></span>${L[b]}</h3>`;
+  (R.highlights[b]||[]).forEach(h=>{html+=`<div class="hitem ${h.level}"><div class="k">${h.kind}</div><div class="t">${h.text}</div></div>`;});
+  col.innerHTML=html;hl.appendChild(col);});
+(function(){const host=document.getElementById("tables");
+  G.forEach(b=>{const hd=document.createElement("div");hd.className="brandhead";
+    hd.innerHTML=`<span class="tag" style="background:${CLR[b]}"></span>${L[b]}`;host.appendChild(hd);
+    const tw=document.createElement("div");tw.className="tablewrap";
+    let head=`<thead><tr><th>Показник</th>`+ML.map(m=>`<th>${m}</th>`).join("")+`<th>vs</th></tr></thead>`;
+    let body="<tbody>";let cur=null;
+    R.metrics.forEach(m=>{
+      if(m.group!==cur){cur=m.group;body+=`<tr class="grp"><td colspan="${ML.length+2}">${cur}</td></tr>`;}
+      const arr=m.brands[b]||[];body+=`<tr><td>${m.label}</td>`;
+      arr.forEach(v=>{let cls="";
+        if(v!==null&&m.bench!==null&&m.dir!==0)cls=((m.dir===1&&v>=m.bench)||(m.dir===-1&&v<=m.bench))?"cell-good":"cell-bad";
+        body+=`<td class="${cls}">${fmt(v,m.fmt)}</td>`;});
+      let vd="—",vc="eq";
+      if(m.bench!==null){const a=meanAll(arr);
+        if(a!==null){const rel=(a-m.bench)/Math.abs(m.bench);
+          if(Math.abs(rel)<=0.05){vd="згідно";vc="eq";}
+          else if(a>m.bench){vd="вище";vc=m.dir===-1?"down":"up";}
+          else{vd="нижче";vc=m.dir===-1?"up":"down";}}}
+      body+=`<td class="vd ${vc}">${vd}</td></tr>`;});
+    tw.innerHTML=`<table>${head}${body}</tbody></table>`;host.appendChild(tw);});})();
+/* ===== STORE-LEVEL DETAIL (Q2) ===== */
+(function(){
+  document.getElementById("periodTag").textContent=R.store_period;
+  const cols=R.store_cols, stores=R.stores;
+  const med={};cols.forEach(c=>{med[c.key]=median(stores.map(s=>s[c.key]));});
+  function flagCount(s){let n=0;cols.forEach(c=>{if(c.dir===0)return;const v=s[c.key],mv=med[c.key];
+    if(v!==null&&mv!==null){if((c.dir===1&&v<mv)||(c.dir===-1&&v>mv))n++;}});return n;}
+  stores.forEach(s=>s._flags=flagCount(s));
+  const nFlagCols=cols.filter(c=>c.dir!==0).length;
+  const worst=[...stores].sort((a,b)=>b._flags-a._flags||(b.late||0)-(a.late||0)).slice(0,6);
+  document.getElementById("worst").innerHTML=worst.map(s=>{
+    const lb=L[s.brand]||s.brand;
+    return `<div class="worst"><b>${s.addr}</b> · ${lb} — ⚠ ${s._flags}/${nFlagCols} метрик гірші за медіану. `+
+      `Час ${fmt(s.dur,'min')}, запізнення 10+ ${fmt(s.late,'pct')}, зірвані ${fmt(s.failed,'pct')}, bad-order ${fmt(s.bad,'pct')}, заміни ${fmt(s.replacement,'pct')}, завершеність ${fmt(s.compl,'pct')}, рейтинг ${fmt(s.rating,'dec')}.</div>`;
+  }).join("");
+  const host=document.getElementById("storeTables");const state={};
+  function render(b){
+    const list=stores.filter(s=>s.brand===b);
+    const sortKey=state[b]?.key||"_flags", dir=state[b]?.dir??-1;
+    list.sort((a,x)=>{const va=(sortKey==="_flags")?a._flags:(sortKey==="addr")?a.addr:a[sortKey];
+      const vx=(sortKey==="_flags")?x._flags:(sortKey==="addr")?x.addr:x[sortKey];
+      if(va===null||va===undefined)return 1;if(vx===null||vx===undefined)return -1;
+      if(va<vx)return -1*dir;if(va>vx)return 1*dir;return 0;});
+    let head=`<thead><tr><th data-k="addr">Адреса</th>`+cols.map(c=>`<th data-k="${c.key}">${c.label}</th>`).join("")+`<th data-k="_flags">⚠</th></tr></thead>`;
+    let body="<tbody>";
+    list.forEach(s=>{body+=`<tr><td title="${s.addr}">${s.addr}</td>`;
+      cols.forEach(c=>{let cls="";const v=s[c.key],mv=med[c.key];
+        if(c.dir!==0&&v!==null&&mv!==null)cls=((c.dir===1&&v>=mv)||(c.dir===-1&&v<=mv))?"cell-good":"cell-bad";
+        body+=`<td class="${cls}">${fmt(v,c.fmt)}</td>`;});
+      const fc=s._flags>=Math.ceil(nFlagCols*0.6)?"f2":(s._flags>=Math.ceil(nFlagCols*0.35)?"f1":"f0");
+      body+=`<td><span class="flag ${fc}">${s._flags}</span></td></tr>`;});
+    return head+body+"</tbody>";}
+  G.forEach(b=>{
+    const cnt=stores.filter(s=>s.brand===b).length;
+    if(!cnt)return;
+    const hd=document.createElement("div");hd.className="brandhead";
+    hd.innerHTML=`<span class="tag" style="background:${CLR[b]}"></span>${L[b]} <span class="cnt">· ${cnt} магазинів</span>`;host.appendChild(hd);
+    const tw=document.createElement("div");tw.className="tablewrap";
+    const tbl=document.createElement("table");tbl.className="stbl";tw.appendChild(tbl);host.appendChild(tw);
+    function draw(){tbl.innerHTML=render(b);
+      tbl.querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k;
+        if(state[b]&&state[b].key===k)state[b].dir*=-1;else state[b]={key:k,dir:(k==="addr"?1:-1)};draw();});}
+    draw();});
+})();
+</script></body></html>

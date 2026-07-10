@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VARUS · CVP звіт 2026</title>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--line:#2a2f3a;--txt:#e7eaf0;--muted:#9aa4b2;
+--accent:#34d399;--accent2:#60a5fa;--bad:#f87171;--good:#34d399;--warn:#fbbf24;--neu:#94a3b8;--promo:#f59e0b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 18px 80px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:14px}
+.badge{display:inline-block;background:rgba(52,211,153,.14);color:var(--accent);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.4px}
+h1{font-size:27px;margin:12px 0 6px}
+h2{font-size:19px;margin:30px 0 12px}
+.sub{color:var(--muted);font-size:14px}
+.tabsnav{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:3px;margin:6px 0 8px}
+.tabsnav button{background:transparent;border:none;color:var(--muted);padding:9px 18px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:700}
+.tabsnav button.active{background:var(--accent);color:#0a0d12}
+.hl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:980px){.hl{grid-template-columns:1fr}}
+.hcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.hcol h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}
+.hcol h3 .tag{width:10px;height:10px;border-radius:50%}
+.hitem{border-left:3px solid var(--line);padding:8px 12px;margin-bottom:9px;background:var(--panel2);border-radius:0 8px 8px 0}
+.hitem.crit{border-left-color:var(--bad)} .hitem.watch{border-left-color:var(--warn)} .hitem.win{border-left-color:var(--good)}
+.hitem .k{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+.hitem.crit .k{color:var(--bad)} .hitem.watch .k{color:var(--warn)} .hitem.win .k{color:var(--good)}
+.hitem .t{font-size:13px;margin-top:3px}
+.brandhead{font-size:16px;font-weight:700;margin:22px 0 8px;display:flex;align-items:center;gap:8px}
+.brandhead .tag{width:11px;height:11px;border-radius:50%}
+.brandhead .cnt{font-size:12px;color:var(--muted);font-weight:500}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:6px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--panel);color:var(--muted);font-weight:600;font-size:12px}
+tbody tr:hover td{background:var(--panel2)}
+.grp td{color:var(--accent2);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;background:var(--panel2)}
+.cell-bad{color:var(--bad)} .cell-good{color:var(--good)}
+.vd{font-weight:700;font-size:12px}.vd.up{color:var(--good)}.vd.down{color:var(--bad)}.vd.eq{color:var(--neu)}
+.legend{font-size:12px;color:var(--muted);margin:8px 0}.legend span{margin-right:15px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stbl th{cursor:pointer;user-select:none}
+.stbl td:first-child,.stbl th:first-child{text-align:left;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flag{display:inline-block;min-width:20px;text-align:center;font-weight:700;border-radius:6px;padding:1px 6px}
+.flag.f0{color:var(--good)} .flag.f1{color:var(--warn)} .flag.f2{background:rgba(248,113,113,.18);color:var(--bad)}
+.worst{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:10px;font-size:13px}
+.worst b{color:#fff}
+.periodtag{display:inline-block;background:rgba(96,165,250,.14);color:var(--accent2);font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:8px}
+footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:34px;padding-top:16px}
+</style></head><body><div class="wrap">
+<header class="top">
+  <span class="badge">BOLT FOOD · UKRAINE · ЗВІТ ДЛЯ ПАРТНЕРА</span>
+  <h1>VARUS — CVP звіт 2026</h1>
+  <div class="tabsnav" id="tabsnav">
+    <button data-tab="overview" class="active">Огляд</button>
+    <button data-tab="stores">Детальний аналіз (магазини)</button>
+  </div>
+</header>
+
+<div id="tab-overview">
+<div class="sub" style="margin-bottom:8px" id="ovSub"></div>
+<section><h2>Ключові акценти</h2><div class="hl" id="hl"></div></section>
+<section><h2>Показники по містах</h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--good)"></i>краще за середнє по продуктових мережах</span>
+    <span><i class="dot" style="background:var(--bad)"></i>гірше за середнє</span>
+    <span>«vs»: <b class="vd up">вище</b> / <b class="vd down">нижче</b> / <b class="vd eq">згідно</b></span>
+  </div>
+  <div id="tables"></div></section>
+</div>
+
+<div id="tab-stores" style="display:none">
+<div class="sub" style="margin-bottom:8px">Деталізація метрик <b>Швидкість і якість</b> по кожному магазину VARUS <span class="periodtag" id="periodTag"></span>. Клік на заголовок колонки — сортування. Колонка <b>⚠</b> — скільки метрик у магазину гірші за медіану мережі.</div>
+<details class="panel" open style="margin-bottom:14px">
+<summary style="cursor:pointer;font-weight:700;font-size:15px">Що означає кожна метрика</summary>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:9px 22px;margin-top:12px;font-size:13px">
+ <div><b>Замовлень</b> — кількість доставлених замовлень магазину за період (обсяг активності).</div>
+ <div><b>Час доставки, хв</b> — середній повний час від оформлення замовлення до вручення клієнту. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Запізнення 10+, %</b> — частка замовлень, доставлених пізніше за обіцяний час більш ніж на 10 хв. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Пізня підготовка 10+, %</b> — частка замовлень, де магазин збирав/готував замовлення довше за план понад 10 хв (зона відповідальності магазину). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Зірвані замовл., %</b> — частка замовлень, які не вдалося успішно доставити (скасовані/зірвані). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Bad Order Rate, %</b> — частка «проблемних» замовлень із будь-яким негативним інцидентом (запізнення, недоставка, скарга, низька оцінка). <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Заміни товарів, %</b> — частка замовлень, де довелося замінити товар через його відсутність на полиці. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>CS-тікети, %</b> — частка замовлень, за якими клієнт звертався у підтримку Bolt. <i style="color:var(--muted)">менше = краще</i></div>
+ <div><b>Завершеність, %</b> — частка успішно завершених (доставлених) замовлень з усіх прийнятих. <i style="color:var(--muted)">більше = краще</i></div>
+ <div><b>Рейтинг</b> — середня оцінка магазину від клієнтів (шкала 1–5). <i style="color:var(--muted)">більше = краще</i></div>
+ <div><b>⚠</b> — скільки метрик цього магазину гірші за медіану мережі (що більше — то проблемніший магазин).</div>
+</div>
+</details>
+<section><h2>Найпроблемніші магазини</h2><div id="worst"></div></section>
+<section><h2>По магазинах (за містами)</h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--good)"></i>краще за медіану мережі</span>
+    <span><i class="dot" style="background:var(--bad)"></i>гірше за медіану мережі</span>
+  </div>
+  <div id="storeTables"></div></section>
+</div>
+
+<footer><b>Методологія.</b> Джерело: Databricks — <code>fact_order_delivery</code> (бізнес-метрики), <code>fact_provider_monthly</code> (store-level швидкість і якість), <code>fact_provider_weekly</code> (заміни товарів). Лише <code>order_state='delivered'</code>, <code>group_name='VARUS'</code>.
+  VARUS стартував на Bolt Food у травні 2026, тому показано травень–червень. Орієнтир (бенчмарк) = <span id="footBench"></span>. Групування — по містах присутності.
+  Вкладка «Детальний аналіз»: <b>Q2 2026 (кві–чер)</b>, зважене середнє по місяцях на рівні магазину; кольори та ⚠ порівнюють магазин з медіаною по магазинах мережі. <span id="genAt"></span></footer>
+</div>
+<script>
+const R=/*__CVP_DATA__*/;
+const G=R.group, L=R.group_lbl, ML=R.month_lbl;
+const PALETTE=["#34d399","#60a5fa","#c084fc","#fbbf24","#f472b6","#22d3ee","#a3e635"];
+const CLR={}; G.forEach((g,i)=>CLR[g]=PALETTE[i%PALETTE.length]);
+document.getElementById("ovSub").innerHTML=`VARUS — помісячно (${ML[0]}–${ML[ML.length-1]} 2026, партнер стартував у травні). Орієнтир — <b>${R.bench_note}</b>. Групування — по містах присутності.`;
+document.getElementById("footBench").textContent=R.bench_note;
+document.getElementById("genAt").textContent="Згенеровано: "+(R.generated_at||"");
+function fmt(v,f){
+  if(v===null||v===undefined||Number.isNaN(v))return "—";
+  if(f==="eur")return "€"+Math.round(v).toLocaleString("uk-UA");
+  if(f==="int")return Math.round(v).toLocaleString("uk-UA");
+  if(f==="dec")return v.toFixed(2);
+  if(f==="pct")return Math.round(v)+"%";
+  if(f==="min")return Math.round(v)+" хв";
+  return v;}
+function meanAll(a){a=a.filter(x=>x!==null&&x!==undefined);return a.length?a.reduce((x,y)=>x+y,0)/a.length:null;}
+function median(a){a=a.filter(x=>x!==null&&x!==undefined).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2;}
+document.querySelectorAll("#tabsnav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#tabsnav button").forEach(x=>x.classList.toggle("active",x===b));
+  document.getElementById("tab-overview").style.display=b.dataset.tab==="overview"?"":"none";
+  document.getElementById("tab-stores").style.display=b.dataset.tab==="stores"?"":"none";});
+const hl=document.getElementById("hl");
+G.forEach(b=>{const col=document.createElement("div");col.className="hcol";
+  let html=`<h3><span class="tag" style="background:${CLR[b]}"></span>${L[b]}</h3>`;
+  (R.highlights[b]||[]).forEach(h=>{html+=`<div class="hitem ${h.level}"><div class="k">${h.kind}</div><div class="t">${h.text}</div></div>`;});
+  col.innerHTML=html;hl.appendChild(col);});
+(function(){const host=document.getElementById("tables");
+  G.forEach(b=>{const hd=document.createElement("div");hd.className="brandhead";
+    hd.innerHTML=`<span class="tag" style="background:${CLR[b]}"></span>${L[b]}`;host.appendChild(hd);
+    const tw=document.createElement("div");tw.className="tablewrap";
+    let head=`<thead><tr><th>Показник</th>`+ML.map(m=>`<th>${m}</th>`).join("")+`<th>vs</th></tr></thead>`;
+    let body="<tbody>";let cur=null;
+    R.metrics.forEach(m=>{
+      if(m.group!==cur){cur=m.group;body+=`<tr class="grp"><td colspan="${ML.length+2}">${cur}</td></tr>`;}
+      const arr=m.brands[b]||[];body+=`<tr><td>${m.label}</td>`;
+      arr.forEach(v=>{let cls="";
+        if(v!==null&&m.bench!==null&&m.dir!==0)cls=((m.dir===1&&v>=m.bench)||(m.dir===-1&&v<=m.bench))?"cell-good":"cell-bad";
+        body+=`<td class="${cls}">${fmt(v,m.fmt)}</td>`;});
+      let vd="—",vc="eq";
+      if(m.bench!==null){const a=meanAll(arr);
+        if(a!==null){const rel=(a-m.bench)/Math.abs(m.bench);
+          if(Math.abs(rel)<=0.05){vd="згідно";vc="eq";}
+          else if(a>m.bench){vd="вище";vc=m.dir===-1?"down":"up";}
+          else{vd="нижче";vc=m.dir===-1?"up":"down";}}}
+      body+=`<td class="vd ${vc}">${vd}</td></tr>`;});
+    tw.innerHTML=`<table>${head}${body}</tbody></table>`;host.appendChild(tw);});})();
+/* ===== STORE-LEVEL DETAIL (Q2) ===== */
+(function(){
+  document.getElementById("periodTag").textContent=R.store_period;
+  const cols=R.store_cols, stores=R.stores;
+  const med={};cols.forEach(c=>{med[c.key]=median(stores.map(s=>s[c.key]));});
+  function flagCount(s){let n=0;cols.forEach(c=>{if(c.dir===0)return;const v=s[c.key],mv=med[c.key];
+    if(v!==null&&mv!==null){if((c.dir===1&&v<mv)||(c.dir===-1&&v>mv))n++;}});return n;}
+  stores.forEach(s=>s._flags=flagCount(s));
+  const nFlagCols=cols.filter(c=>c.dir!==0).length;
+  const worst=[...stores].sort((a,b)=>b._flags-a._flags||(b.late||0)-(a.late||0)).slice(0,6);
+  document.getElementById("worst").innerHTML=worst.map(s=>{
+    const lb=L[s.brand]||s.brand;
+    return `<div class="worst"><b>${s.addr}</b> · ${lb} — ⚠ ${s._flags}/${nFlagCols} метрик гірші за медіану. `+
+      `Час ${fmt(s.dur,'min')}, запізнення 10+ ${fmt(s.late,'pct')}, зірвані ${fmt(s.failed,'pct')}, bad-order ${fmt(s.bad,'pct')}, заміни ${fmt(s.replacement,'pct')}, завершеність ${fmt(s.compl,'pct')}, рейтинг ${fmt(s.rating,'dec')}.</div>`;
+  }).join("");
+  const host=document.getElementById("storeTables");const state={};
+  function render(b){
+    const list=stores.filter(s=>s.brand===b);
+    const sortKey=state[b]?.key||"_flags", dir=state[b]?.dir??-1;
+    list.sort((a,x)=>{const va=(sortKey==="_flags")?a._flags:(sortKey==="addr")?a.addr:a[sortKey];
+      const vx=(sortKey==="_flags")?x._flags:(sortKey==="addr")?x.addr:x[sortKey];
+      if(va===null||va===undefined)return 1;if(vx===null||vx===undefined)return -1;
+      if(va<vx)return -1*dir;if(va>vx)return 1*dir;return 0;});
+    let head=`<thead><tr><th data-k="addr">Адреса</th>`+cols.map(c=>`<th data-k="${c.key}">${c.label}</th>`).join("")+`<th data-k="_flags">⚠</th></tr></thead>`;
+    let body="<tbody>";
+    list.forEach(s=>{body+=`<tr><td title="${s.addr}">${s.addr}</td>`;
+      cols.forEach(c=>{let cls="";const v=s[c.key],mv=med[c.key];
+        if(c.dir!==0&&v!==null&&mv!==null)cls=((c.dir===1&&v>=mv)||(c.dir===-1&&v<=mv))?"cell-good":"cell-bad";
+        body+=`<td class="${cls}">${fmt(v,c.fmt)}</td>`;});
+      const fc=s._flags>=Math.ceil(nFlagCols*0.6)?"f2":(s._flags>=Math.ceil(nFlagCols*0.35)?"f1":"f0");
+      body+=`<td><span class="flag ${fc}">${s._flags}</span></td></tr>`;});
+    return head+body+"</tbody>";}
+  G.forEach(b=>{
+    const cnt=stores.filter(s=>s.brand===b).length;
+    if(!cnt)return;
+    const hd=document.createElement("div");hd.className="brandhead";
+    hd.innerHTML=`<span class="tag" style="background:${CLR[b]}"></span>${L[b]} <span class="cnt">· ${cnt} магазинів</span>`;host.appendChild(hd);
+    const tw=document.createElement("div");tw.className="tablewrap";
+    const tbl=document.createElement("table");tbl.className="stbl";tw.appendChild(tbl);host.appendChild(tw);
+    function draw(){tbl.innerHTML=render(b);
+      tbl.querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k;
+        if(state[b]&&state[b].key===k)state[b].dir*=-1;else state[b]={key:k,dir:(k==="addr"?1:-1)};draw();});}
+    draw();});
+})();
+</script></body></html>
