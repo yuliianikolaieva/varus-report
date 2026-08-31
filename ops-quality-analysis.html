@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VARUS — Операційний аналіз: Failed & Bad Orders, Користувачі</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#F8F9FA;--card:#fff;--border:#e5e7eb;--text:#1A1A2E;--muted:#6b7280;--green:#34D186;--red:#dc2626;--yellow:#ca8a04;--blue:#2563eb;--purple:#7c3aed;--cyan:#0891b2;--orange:#ea580c;--accent:#34D186;--accent-dark:#1A1A2E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,system-ui,sans-serif;line-height:1.65}
+.container{max-width:1240px;margin:0 auto;padding:28px}
+.header{display:flex;align-items:center;gap:20px;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border)}
+.logo-dot{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#34D186,#1A1A2E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+h1{font-size:24px;font-weight:700;color:var(--accent-dark)}
+.subtitle{color:var(--muted);font-size:13px;margin-top:2px}
+.report-meta{margin-left:auto;text-align:right;color:var(--muted);font-size:12px}
+.btn-pdf{display:inline-flex;align-items:center;gap:7px;background:var(--accent-dark);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:8px}
+.btn-pdf:hover{opacity:.85}
+h2{font-size:18px;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--accent-dark)}
+h3{font-size:14px;font-weight:600;margin-bottom:10px}
+.section{margin-bottom:36px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.kpi{text-align:center;padding:16px 12px}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;line-height:1.3}
+.kpi-value{font-size:26px;font-weight:700}
+.kpi-sub{font-size:11px;margin-top:4px;font-weight:600}
+.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--yellow)}.stable{color:var(--muted)}
+.chart-box{position:relative;height:300px}
+.chart-box-sm{position:relative;height:240px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f3f4f6}
+tr:hover{background:#f9fafb}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:700}
+.badge-g{background:#dcfce7;color:#166534}.badge-r{background:#fee2e2;color:#991b1b}.badge-y{background:#fef9c3;color:#854d0e}.badge-b{background:#dbeafe;color:#1e40af}
+.cell-crit{background:#fee2e2!important;color:#991b1b;font-weight:700}
+.cell-warn{background:#fef9c3!important;color:#854d0e;font-weight:600}
+.cell-good{background:#dcfce7!important;color:#166534}
+.insight{border-left:3px solid var(--blue);background:#eff6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:13px}
+.insight.warn{border-color:var(--orange);background:#fff7ed}
+.insight.good{border-color:var(--green);background:#f0fdf4}
+.insight.action{border-color:var(--purple);background:#f5f3ff}
+.insight.crit{border-color:var(--red);background:#fef2f2}
+.insight-title{font-weight:700;margin-bottom:3px}
+.insight-text{color:#374151;font-size:12.5px}
+.divider{height:1px;background:var(--border);margin:28px 0}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:28px}
+.toc a{color:var(--blue);text-decoration:none;font-size:13px}
+.toc a:hover{text-decoration:underline}
+.toc li{margin:4px 0}
+ul.compact{padding-left:18px;font-size:13px;color:#374151}
+ul.compact li{margin:4px 0}
+.actor-p{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr}}
+@media print{body{background:#fff}.card{box-shadow:none}.btn-pdf{display:none}}
+</style>
+</head>
+<body>
+<div class="container" id="report">
+
+<div class="header">
+  <div class="logo-dot">V</div>
+  <div>
+    <h1>VARUS — Операційний аналіз якості</h1>
+    <div class="subtitle">Failed & Bad Orders · Скарги CS · Користувачі · Втрати GMV · Травень–Серпень 2026</div>
+  </div>
+  <div class="report-meta">
+    Період: 01.05 – 31.08.2026<br>
+    Сформовано: 31.08.2026<br>
+    Джерело: Databricks · group_name = VARUS
+    <br>
+    <button class="btn-pdf" onclick="downloadPDF()">⬇ Завантажити PDF</button>
+  </div>
+</div>
+
+<nav class="toc">
+  <strong>Зміст:</strong>
+  <ol>
+    <li><a href="#summary">Executive Summary</a></li>
+    <li><a href="#failed">Failed Orders — невиконані замовлення</a></li>
+    <li><a href="#bad">Bad Orders & CS — скарги та дефекти</a></li>
+    <li><a href="#stores">Проблемні магазини</a></li>
+    <li><a href="#users">Користувачі — частота, retention, conversion</a></li>
+    <li><a href="#impact">Втрати GMV та наслідки</a></li>
+    <li><a href="#actions">Рекомендації для партнера</a></li>
+  </ol>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="section" id="summary">
+<h2>1. Executive Summary</h2>
+<div class="grid-5">
+  <div class="card kpi"><div class="kpi-label">Доставлено замовлень</div><div class="kpi-value">37 653</div><div class="kpi-sub stable">GMV €557 730</div></div>
+  <div class="card kpi"><div class="kpi-label">Failed orders</div><div class="kpi-value down">3 173</div><div class="kpi-sub down">7.8% від усіх</div></div>
+  <div class="card kpi"><div class="kpi-label">Втрачений GMV</div><div class="kpi-value down">€51 536</div><div class="kpi-sub down">9.2% від delivered GMV</div></div>
+  <div class="card kpi"><div class="kpi-label">Bad order rate</div><div class="kpi-value down">14.6%</div><div class="kpi-sub down">5 503 bad / 37 653</div></div>
+  <div class="card kpi"><div class="kpi-label">Унікальні юзери</div><div class="kpi-value up">15 012</div><div class="kpi-sub up">+86% з травня</div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="insight crit">
+  <div class="insight-title">🔴 Головний сигнал: серпень — різке погіршення операційної якості</div>
+  <div class="insight-text">При зростанні обсягу (+60% замовлень MoM) fail rate зріс з 4.8% (липень) до <strong>10.1%</strong> (серпень), а втрачений GMV — з €8K до <strong>€30K</strong>. Bad order rate повернувся до 15.2% після покращення в червні–липні. Це прямий ризик для retention та репутації бренду VARUS на Bolt Food.</div>
+</div>
+<div class="insight good">
+  <div class="insight-title">🟢 Позитив: сильне залучення та повернення користувачів</div>
+  <div class="insight-text">15 012 унікальних покупців за 4 місяці. M1 retention когорт ~60–63%. Частота покупок зросла з 1.68 до 2.07 замовлень/юзер. 95% замовлень — від <em>існуючих</em> користувачів Bolt (не перші замовлення на платформі), тобто VARUS успішно конвертує лояльну базу Bolt.</div>
+</div>
+<div class="insight warn">
+  <div class="insight-title">🟡 Ключова причина bad orders — партнер (збірка, затримки, CS-fail)</div>
+  <div class="insight-text">У серпні 52% bad-order attribution припадає на <strong>provider</strong> (2 316 випадків). Топ причини: ручне скасування CS через проблеми партнера (1 365), затримка підготовки (665), відсутні позиції (285). Це операційна зона відповідальності мережі VARUS.</div>
+</div>
+</section>
+
+<!-- FAILED ORDERS -->
+<section class="section" id="failed">
+<h2>2. Failed Orders — невиконані замовлення</h2>
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">Замовлення зі статусом <code>failed</code> або <code>rejected</code> — клієнт не отримав товар. Класифікація причин — взаємовиключна за пріоритетом.</p>
+
+<div class="grid-2">
+  <div class="card"><h3>Динаміка fail rate (%)</h3><div class="chart-box"><canvas id="failRateChart"></canvas></div></div>
+  <div class="card"><h3>Втрачений GMV (€) по місяцях</h3><div class="chart-box"><canvas id="lostGmvChart"></canvas></div></div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Місячна розбивка</h3>
+<table>
+<thead><tr><th>Місяць</th><th class="num">Всього</th><th class="num">Delivered</th><th class="num">Failed</th><th class="num">Fail %</th><th class="num">Delivered GMV</th><th class="num">Втрачений GMV</th></tr></thead>
+<tbody>
+<tr><td>Травень 2026</td><td class="num">6 763</td><td class="num">6 168</td><td class="num">595</td><td class="num cell-warn">8.80%</td><td class="num">€72 612</td><td class="num">€6 602</td></tr>
+<tr><td>Червень 2026</td><td class="num">7 966</td><td class="num">7 479</td><td class="num">487</td><td class="num cell-good">6.11%</td><td class="num">€101 330</td><td class="num">€6 710</td></tr>
+<tr><td>Липень 2026</td><td class="num">10 341</td><td class="num">9 844</td><td class="num">497</td><td class="num cell-good">4.81%</td><td class="num">€156 189</td><td class="num">€7 990</td></tr>
+<tr><td>Серпень 2026</td><td class="num">15 757</td><td class="num">14 162</td><td class="num cell-crit">1 594</td><td class="num cell-crit">10.12%</td><td class="num">€227 600</td><td class="num cell-crit">€30 234</td></tr>
+<tr style="font-weight:700;background:#f9fafb"><td>Разом</td><td class="num">40 827</td><td class="num">37 653</td><td class="num">3 173</td><td class="num">7.77%</td><td class="num">€557 730</td><td class="num">€51 536</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card"><h3>Причини failed orders — stacked по місяцях</h3><div class="chart-box"><canvas id="failReasonChart"></canvas></div></div>
+  <div class="card">
+    <h3>Розшифровка причин</h3>
+    <table>
+    <thead><tr><th>Причина</th><th class="num">Трав–Серп</th><th class="num">% від failed</th><th class="num">Втрата GMV</th></tr></thead>
+    <tbody>
+    <tr><td>Система / оплата / інше</td><td class="num">1 225</td><td class="num">38.6%</td><td class="num">€19 886</td></tr>
+    <tr><td>Проблема з курʼєром</td><td class="num">1 037</td><td class="num">32.7%</td><td class="num">€18 534</td></tr>
+    <tr><td>Клієнт скасував</td><td class="num">805</td><td class="num">25.4%</td><td class="num">€11 549</td></tr>
+    <tr><td>Партнер не відповів (тайм-аут)</td><td class="num">83</td><td class="num">2.6%</td><td class="num">€1 293</td></tr>
+    <tr><td>Партнер не прийняв (інше)</td><td class="num">23</td><td class="num">0.7%</td><td class="num">€274</td></tr>
+    </tbody>
+    </table>
+    <div class="insight warn" style="margin-top:12px">
+      <div class="insight-title">Серпень: подвійний удар</div>
+      <div class="insight-text">Курʼєрські проблеми (595 failed, €12.3K) та системні/оплатні (623, €11.3K) — обидві категорії <strong>×3–4</strong> від липня. Це корелює зі зростанням обсягу та навантаженням на логістику в пік сезону.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- BAD ORDERS -->
+<section class="section" id="bad">
+<h2>3. Bad Orders & CS — скарги та дефекти якості</h2>
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">Bad order = замовлення доставлено, але з дефектом (затримка, відсутня позиція, неправильний товар, пошкодження). Ticket = звернення до CS. Attribution = хто винен за bad order.</p>
+
+<div class="grid-2">
+  <div class="card"><h3>Bad order rate (%)</h3><div class="chart-box"><canvas id="badRateChart"></canvas></div></div>
+  <div class="card"><h3>CS tickets rate (%)</h3><div class="chart-box"><canvas id="ticketChart"></canvas></div></div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<table>
+<thead><tr><th>Місяць</th><th class="num">Delivered</th><th class="num">Bad orders</th><th class="num">Bad %</th><th class="num">CS tickets</th><th class="num">Ticket %</th><th class="num">Refund rate</th><th class="num">Refunds €</th></tr></thead>
+<tbody>
+<tr><td>Травень</td><td class="num">6 168</td><td class="num">1 087</td><td class="num cell-crit">17.62%</td><td class="num">573</td><td class="num cell-warn">9.29%</td><td class="num">0.46%</td><td class="num">€154</td></tr>
+<tr><td>Червень</td><td class="num">7 479</td><td class="num">1 025</td><td class="num cell-warn">13.71%</td><td class="num">385</td><td class="num">5.15%</td><td class="num">0.53%</td><td class="num">€334</td></tr>
+<tr><td>Липень</td><td class="num">9 844</td><td class="num">1 243</td><td class="num">12.63%</td><td class="num">497</td><td class="num">5.05%</td><td class="num">0.53%</td><td class="num">€449</td></tr>
+<tr><td>Серпень</td><td class="num">14 162</td><td class="num">2 148</td><td class="num cell-warn">15.17%</td><td class="num">851</td><td class="num">6.01%</td><td class="num">0.48%</td><td class="num">€554</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card"><h3>Хто винен за bad order (attribution)</h3><div class="chart-box"><canvas id="actorChart"></canvas></div>
+    <div class="legend" style="margin-top:8px;font-size:11px;color:var(--muted)">
+      <span><span class="actor-p" style="background:#dc2626"></span>Provider (партнер)</span>
+      <span><span class="actor-p" style="background:#2563eb"></span>Courier</span>
+      <span><span class="actor-p" style="background:#7c3aed"></span>Supply (курʼєрська мережа)</span>
+      <span><span class="actor-p" style="background:#ca8a04"></span>Eater (клієнт)</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Топ причини скарг (bad order attribution)</h3>
+    <table>
+    <thead><tr><th>Причина</th><th>Опис</th><th class="num">Серпень</th><th class="num">Всього</th></tr></thead>
+    <tbody>
+    <tr><td>manually_failed_by_cs</td><td>CS скасував через проблему партнера (OOS, не може зібрати)</td><td class="num cell-crit">1 365</td><td class="num">2 566</td></tr>
+    <tr><td>provider_preparation_delay</td><td>Затримка збірки на магазині</td><td class="num cell-warn">665</td><td class="num">1 258</td></tr>
+    <tr><td>missing_item</td><td>Відсутня позиція в замовленні</td><td class="num">285</td><td class="num">789</td></tr>
+    <tr><td>supply_starvation</td><td>Немає вільного курʼєра</td><td class="num">160</td><td class="num">501</td></tr>
+    <tr><td>courier_eta_error</td><td>Помилка ETA курʼєра</td><td class="num">137</td><td class="num">369</td></tr>
+    <tr><td>wrong_item</td><td>Неправильний товар</td><td class="num">64</td><td class="num">140</td></tr>
+    <tr><td>spoiled_item</td><td>Псування / прострочення</td><td class="num">42</td><td class="num">90</td></tr>
+  </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="insight action" style="margin-top:16px">
+  <div class="insight-title">Що це означає для CS</div>
+  <div class="insight-text">
+    <ul class="compact">
+      <li><strong>manually_failed_by_cs (provider)</strong> — найчастіша причина. CS дзвонить/пише клієнту, що замовлення не може бути виконане через відсутність товару або проблеми на складі. Це прямий індикатор <em>availability gap</em> між меню Bolt і реальним залишком.</li>
+      <li><strong>missing_item + wrong_item</strong> — помилки збірки. Клієнт отримує замовлення, але з дефектом → ticket → refund/promo → погіршення NPS.</li>
+      <li><strong>provider_preparation_delay</strong> — магазин не встигає зібрати → курʼєр чекає → клієнт чекає → скарги «замовлення довго».</li>
+      <li>У серпні ticket rate знову зріс до 6% (було 5% в червні–липні) — сигнал, що якість не встигає за зростанням.</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- STORES -->
+<section class="section" id="stores">
+<h2>4. Проблемні магазини (топ-15 за failed orders)</h2>
+<div class="card">
+<table>
+<thead><tr><th>Магазин</th><th>Місто</th><th class="num">Всього</th><th class="num">Failed</th><th class="num">Fail %</th><th class="num">Bad</th><th class="num">Bad %</th><th class="num">Втрата GMV</th></tr></thead>
+<tbody>
+<tr><td>VARUS, вул.Андрія Малишко,3</td><td>Kyiv</td><td class="num">1 793</td><td class="num">221</td><td class="num cell-warn">12.33%</td><td class="num">307</td><td class="num cell-warn">19.53%</td><td class="num">€4 457</td></tr>
+<tr><td>VARUS, вул.Васильківска 34</td><td>Kyiv</td><td class="num">1 656</td><td class="num">199</td><td class="num cell-warn">12.02%</td><td class="num">200</td><td class="num">13.73%</td><td class="num">€3 443</td></tr>
+<tr><td>VARUS, вул. Тютюника 39-А</td><td>Kyiv</td><td class="num">1 572</td><td class="num">176</td><td class="num">11.20%</td><td class="num">180</td><td class="num">12.89%</td><td class="num">€2 546</td></tr>
+<tr><td>VARUS, пр. Коцюбинського, 70</td><td>Vinnytsia</td><td class="num">1 963</td><td class="num">159</td><td class="num">8.10%</td><td class="num">282</td><td class="num cell-warn">15.63%</td><td class="num">€2 443</td></tr>
+<tr><td>VARUS, пр.Науки 8а</td><td>Dnipro</td><td class="num">1 085</td><td class="num">135</td><td class="num cell-warn">12.44%</td><td class="num cell-crit">261</td><td class="num cell-crit">27.47%</td><td class="num">€2 411</td></tr>
+<tr><td>VARUS, вул. Лесі Українки 30</td><td>Kyiv</td><td class="num">474</td><td class="num cell-crit">134</td><td class="num cell-crit">28.27%</td><td class="num">75</td><td class="num cell-warn">22.06%</td><td class="num">€2 142</td></tr>
+<tr><td>VARUS, вул. Жилянська 59</td><td>Kyiv</td><td class="num">1 508</td><td class="num">127</td><td class="num">8.42%</td><td class="num">177</td><td class="num">12.82%</td><td class="num">€2 028</td></tr>
+<tr><td>VARUS, бул. Європейський 1Д</td><td>Dnipro</td><td class="num">1 077</td><td class="num">115</td><td class="num">10.68%</td><td class="num">164</td><td class="num">17.05%</td><td class="num">€1 664</td></tr>
+<tr><td>VARUS, Вулиця Героїв полку Азов, 12</td><td>Kyiv</td><td class="num">872</td><td class="num">107</td><td class="num">12.27%</td><td class="num">107</td><td class="num">13.99%</td><td class="num">€2 488</td></tr>
+<tr><td>VARUS, вул.Бажана 10-А</td><td>Kyiv</td><td class="num">289</td><td class="num cell-crit">82</td><td class="num cell-crit">28.37%</td><td class="num">25</td><td class="num">12.08%</td><td class="num">€1 203</td></tr>
+<tr><td>VARUS, вул. Паникахи 15</td><td>Dnipro</td><td class="num">725</td><td class="num">85</td><td class="num">11.72%</td><td class="num cell-warn">149</td><td class="num cell-crit">23.28%</td><td class="num">€1 452</td></tr>
+</tbody>
+</table>
+<div class="insight warn" style="margin-top:12px">
+  <div class="insight-title">Фокус для операційної роботи</div>
+  <div class="insight-text">Київ (Малишко, Васильківська, Лесі Українки 30, Бажана) та Дніпро (Науки 8а, Паникахи) — магазини з найвищим fail/bad rate. <strong>пр.Науки 8а (Дніпро)</strong> — bad rate 27.5%, найгірший показник мережі. Рекомендуємо точковий аудит збірки та синхронізації залишків.</div>
+</div>
+</div>
+</section>
+
+<!-- USERS -->
+<section class="section" id="users">
+<h2>5. Користувачі — частота, new vs existing, retention</h2>
+
+<div class="grid-4">
+  <div class="card kpi"><div class="kpi-label">Активні юзери (серпень)</div><div class="kpi-value up">6 845</div><div class="kpi-sub up">+45% vs липень</div></div>
+  <div class="card kpi"><div class="kpi-label">Замовлень / юзер</div><div class="kpi-value">2.07</div><div class="kpi-sub up">було 1.68 у травні</div></div>
+  <div class="card kpi"><div class="kpi-label">New to VARUS (серпень)</div><div class="kpi-value">4 583</div><div class="kpi-sub">67% від активних</div></div>
+  <div class="card kpi"><div class="kpi-label">Returning (серпень)</div><div class="kpi-value up">2 262</div><div class="kpi-sub up">33% від активних</div></div>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card"><h3>Активні користувачі по місяцях</h3><div class="chart-box"><canvas id="usersChart"></canvas></div></div>
+  <div class="card"><h3>New vs Returning to VARUS</h3><div class="chart-box"><canvas id="newRetChart"></canvas></div></div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Деталізація по місяцях</h3>
+<table>
+<thead><tr><th>Місяць</th><th class="num">Active users</th><th class="num">New to VARUS</th><th class="num">Returning</th><th class="num">Orders</th><th class="num">Ord/user</th><th class="num">% new platform users*</th></tr></thead>
+<tbody>
+<tr><td>Травень</td><td class="num">3 671</td><td class="num">3 669</td><td class="num">2</td><td class="num">6 168</td><td class="num">1.68</td><td class="num">5.80%</td></tr>
+<tr><td>Червень</td><td class="num">3 571</td><td class="num">2 649</td><td class="num">922</td><td class="num">7 479</td><td class="num">2.09</td><td class="num">4.92%</td></tr>
+<tr><td>Липень</td><td class="num">4 704</td><td class="num">3 216</td><td class="num">1 488</td><td class="num">9 844</td><td class="num">2.09</td><td class="num">4.20%</td></tr>
+<tr><td>Серпень</td><td class="num">6 845</td><td class="num">4 583</td><td class="num">2 262</td><td class="num">14 162</td><td class="num">2.07</td><td class="num">4.75%</td></tr>
+</tbody>
+</table>
+<p style="font-size:11px;color:var(--muted);margin-top:8px">* % new platform users = частка замовлень від користувачів, для яких це перше замовлення на Bolt Food взагалі (is_first_delivery_order). ~95% покупців VARUS — <em>існуючі</em> користувачі Bolt.</p>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Monthly Retention (когортний аналіз)</h3>
+<table>
+<thead><tr><th>Когорта (перше замовлення VARUS)</th><th class="num">Розмір</th><th class="num">M1 retained</th><th class="num">M1 %</th><th class="num">M2 retained</th><th class="num">M2 %</th></tr></thead>
+<tbody>
+<tr><td>Травень 2026</td><td class="num">3 669</td><td class="num">2 322</td><td class="num cell-good">63.3%</td><td class="num">2 090</td><td class="num">57.0%</td></tr>
+<tr><td>Червень 2026</td><td class="num">2 649</td><td class="num">1 592</td><td class="num cell-good">60.1%</td><td class="num">1 455</td><td class="num">54.9%</td></tr>
+<tr><td>Липень 2026</td><td class="num">3 216</td><td class="num">2 050</td><td class="num cell-good">63.7%</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Серпень 2026</td><td class="num">4 583</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+</tbody>
+</table>
+<div class="insight good" style="margin-top:12px">
+  <div class="insight-title">Conversion & залучення</div>
+  <div class="insight-text">M1 retention 60–64% — сильний показник для grocery delivery. Кожен 3-й активний юзер у серпні — <strong>повертається</strong> (вже купував VARUS раніше). Частота 2+ замовлень/місяць свідчить про формування звички. Search conversion по запиту «varus» — 23% (814 сесій). Ризик: погіршення якості в серпні може «з'їсти» retention у когорті серпня–вересня.</div>
+</div>
+</div>
+</section>
+
+<!-- IMPACT -->
+<section class="section" id="impact">
+<h2>6. Втрати GMV та бізнес-наслідки</h2>
+
+<div class="grid-3">
+  <div class="card">
+    <h3>Прямі втрати</h3>
+    <ul class="compact">
+      <li><strong>€51 536</strong> — втрачений GMV через failed orders (4 міс.)</li>
+      <li><strong>€1 491</strong> — demand refunds (Bolt компенсації)</li>
+      <li><strong>~€8–12K/міс.</strong> — оцінка втрат від bad orders (refund + promo + re-delivery cost)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Непрямі втрати</h3>
+    <ul class="compact">
+      <li>Зниження retention: 1 п.п. churn × 15K users × €16 AOV × 2 orders = <strong>~€48K/рік</strong></li>
+      <li>Негативні відгуки → зниження search conversion</li>
+      <li>Навантаження на CS: 2 306 tickets за 4 міс.</li>
+      <li>Репутаційний ризик для бренду VARUS vs Glovo (45K vs 10K orders)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Сценарій без дій (Q4 2026)</h3>
+    <ul class="compact">
+      <li>При GMV €250K/міс. і fail rate 10% → <strong>€25K/міс. втрат</strong></li>
+      <li>Bad rate 15% → ~2 800 незадоволених клієнтів/міс.</li>
+      <li>M1 retention може впасти з 63% до 50% → −2 000 returning users</li>
+      <li>Ризик втрати позиції #1 grocery partner на Bolt UA</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Структура втрат GMV (серпень 2026)</h3>
+<div class="chart-box-sm"><canvas id="augLossChart"></canvas></div>
+</div>
+</section>
+
+<!-- ACTIONS -->
+<section class="section" id="actions">
+<h2>7. Рекомендації для партнера VARUS</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>🔴 Пріоритет 1 — Негайно (1–2 тижні)</h3>
+    <ul class="compact">
+      <li><strong>Аудит залишків</strong> — синхронізація меню Bolt ↔ ERP VARUS. 2 566 CS-fail за 4 міс. = товар «є в меню, немає на полиці».</li>
+      <li><strong>Точковий фокус на 5 магазинах</strong> — Лесі Українки 30, Бажана 10-А, пр.Науки 8а, Паникахи 15, Малишко 3.</li>
+      <li><strong>Збірка</strong> — тренінг пікерів, контроль missing/wrong items (789+140 випадків).</li>
+      <li><strong>SLA збірки</strong> — ціль &lt;15 хв; зараз provider_preparation_delay = 1 258 випадків.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>🟡 Пріоритет 2 — Середньостроково (1 місяць)</h3>
+    <ul class="compact">
+      <li>Dashboard якості по магазинах (fail %, bad %, CS tickets) — щотижневий review.</li>
+      <li>Спільна робоча група Bolt × VARUS ops (weekly standup).</li>
+      <li>Пілот second payment для закриття settlement gap (регіон 84637).</li>
+      <li>Курʼєрська ємність у пікові години (спільно з Bolt logistics).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="insight action" style="margin-top:16px">
+  <div class="insight-title">Повідомлення для партнера</div>
+  <div class="insight-text">
+    VARUS — найбільший grocery-партнер Bolt Food UA (36% GMV топ-10, €228K/міс.). За 4 місяці залучено <strong>15 012 унікальних покупців</strong> з сильним retention (60%+). Однак операційна якість у серпні <strong>погіршилась критично</strong>: fail rate 10.1% (×2 від липня), втрачено €30K GMV за один місяць. Основні причини — на стороні партнера: відсутність товару, затримки збірки, помилки пікера. Без системних змін ризикуємо втратити лояльних користувачів та потенціал зростання в Q4.
+  </div>
+</div>
+</section>
+
+<footer style="text-align:center;color:var(--muted);font-size:11px;padding:24px 0;border-top:1px solid var(--border)">
+  VARUS × Bolt Food UA · Операційний аналіз · Дані: main.ng_delivery.* · 
+  <a href="https://yuliianikolaieva.github.io/varus-report/ops-quality-analysis.html" style="color:var(--blue)">GitHub Pages</a>
+</footer>
+
+</div>
+
+<script>
+const months = ['Трав','Черв','Лип','Серп'];
+const chartDefaults = {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:11},boxWidth:12}}}};
+
+// Fail rate
+new Chart(document.getElementById('failRateChart'),{type:'line',data:{
+  labels:months,datasets:[{label:'Fail rate %',data:[8.80,6.11,4.81,10.12],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.1)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:'#dc2626'}]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,max:12,ticks:{callback:v=>v+'%'}}}}});
+
+// Lost GMV
+new Chart(document.getElementById('lostGmvChart'),{type:'bar',data:{
+  labels:months,datasets:[{label:'Втрачений GMV €',data:[6602,6710,7990,30234],backgroundColor:['#fca5a5','#fca5a5','#fca5a5','#dc2626']}]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,ticks:{callback:v=>'€'+v.toLocaleString()}}}}});
+
+// Fail reasons stacked
+new Chart(document.getElementById('failReasonChart'),{type:'bar',data:{
+  labels:months,datasets:[
+    {label:'Система/оплата',data:[238,172,192,623],backgroundColor:'#94a3b8'},
+    {label:'Курʼєр',data:[175,132,135,595],backgroundColor:'#2563eb'},
+    {label:'Клієнт скасував',data:[149,149,157,350],backgroundColor:'#ca8a04'},
+    {label:'Партнер (тайм-аут)',data:[29,27,7,20],backgroundColor:'#dc2626'},
+    {label:'Партнер (інше)',data:[4,7,6,6],backgroundColor:'#991b1b'}
+  ]
+},options:{...chartDefaults,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+
+// Bad rate
+new Chart(document.getElementById('badRateChart'),{type:'line',data:{
+  labels:months,datasets:[{label:'Bad order %',data:[17.62,13.71,12.63,15.17],borderColor:'#ea580c',backgroundColor:'rgba(234,88,12,0.1)',fill:true,tension:0.3,pointRadius:5}]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,max:20,ticks:{callback:v=>v+'%'}}}}});
+
+// Tickets
+new Chart(document.getElementById('ticketChart'),{type:'bar',data:{
+  labels:months,datasets:[{label:'Ticket rate %',data:[9.29,5.15,5.05,6.01],backgroundColor:'#7c3aed'}]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,max:12,ticks:{callback:v=>v+'%'}}}}});
+
+// Actor attribution
+new Chart(document.getElementById('actorChart'),{type:'bar',data:{
+  labels:months,datasets:[
+    {label:'Provider',data:[737,698,800,2316],backgroundColor:'#dc2626'},
+    {label:'Courier',data:[230,304,328,452],backgroundColor:'#2563eb'},
+    {label:'Supply',data:[219,219,263,376],backgroundColor:'#0891b2'},
+    {label:'Eater',data:[428,245,248,449],backgroundColor:'#ca8a04'}
+  ]
+},options:{...chartDefaults,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+
+// Users
+new Chart(document.getElementById('usersChart'),{type:'bar',data:{
+  labels:months,datasets:[{label:'Active users',data:[3671,3571,4704,6845],backgroundColor:'#34D186'}]
+},options:chartDefaults});
+
+// New vs Returning
+new Chart(document.getElementById('newRetChart'),{type:'bar',data:{
+  labels:months,datasets:[
+    {label:'New to VARUS',data:[3669,2649,3216,4583],backgroundColor:'#34D186'},
+    {label:'Returning',data:[2,922,1488,2262],backgroundColor:'#1A1A2E'}
+  ]
+},options:{...chartDefaults,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+
+// Aug loss breakdown
+new Chart(document.getElementById('augLossChart'),{type:'doughnut',data:{
+  labels:['Курʼєр (€12.3K)','Система/оплата (€11.3K)','Клієнт скасував (€6.1K)','Партнер (€0.5K)'],
+  datasets:[{data:[12340,11330,6101,463],backgroundColor:['#2563eb','#94a3b8','#ca8a04','#dc2626']}]
+},options:{...chartDefaults,plugins:{legend:{position:'right'}}}});
+
+function downloadPDF(){
+  html2pdf().set({margin:10,filename:'VARUS_Ops_Quality_Analysis_Aug2026.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}}).from(document.getElementById('report')).save();
+}
+</script>
+</body>
+</html>
