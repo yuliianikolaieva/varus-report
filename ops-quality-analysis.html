@@ -57,8 +57,15 @@ tr:hover{background:#f9fafb}
 .toc li{margin:4px 0}
 ul.compact{padding-left:18px;font-size:13px;color:#374151}
 ul.compact li{margin:4px 0}
-.actor-p{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
-@media(max-width:900px){.grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr}}
+.better{color:#166534;font-weight:600}.worse{color:#991b1b;font-weight:600}.inline{color:var(--muted);font-size:10px}
+.bench-row td{background:#f8fafc}
+.bench-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.glossary{background:#fafafa;border:1px dashed var(--border);border-radius:8px;padding:14px 16px;font-size:12.5px;margin-top:12px}
+.glossary dt{font-weight:700;margin-top:8px;color:var(--accent-dark)}
+.glossary dt:first-child{margin-top:0}
+.glossary dd{color:#374151;margin-left:0;margin-top:2px}
+.verdict{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:6px}
+.verdict-bad{background:#fee2e2;color:#991b1b}.verdict-good{background:#dcfce7;color:#166534}.verdict-mid{background:#fef9c3;color:#854d0e}
 @media print{body{background:#fff}.card{box-shadow:none}.btn-pdf{display:none}}
 </style>
 </head>
@@ -84,6 +91,7 @@ ul.compact li{margin:4px 0}
   <strong>Зміст:</strong>
   <ol>
     <li><a href="#summary">Executive Summary</a></li>
+    <li><a href="#benchmark">Порівняння з медіаною UA Stores</a></li>
     <li><a href="#failed">Failed Orders — невиконані замовлення</a></li>
     <li><a href="#bad">Bad Orders & CS — скарги та дефекти</a></li>
     <li><a href="#stores">Проблемні магазини</a></li>
@@ -118,11 +126,112 @@ ul.compact li{margin:4px 0}
   <div class="insight-title">🟡 Ключова причина bad orders — партнер (збірка, затримки, CS-fail)</div>
   <div class="insight-text">У серпні 52% bad-order attribution припадає на <strong>provider</strong> (2 316 випадків). Топ причини: ручне скасування CS через проблеми партнера (1 365), затримка підготовки (665), відсутні позиції (285). Це операційна зона відповідальності мережі VARUS.</div>
 </div>
+<div class="insight">
+  <div class="insight-title">📊 VARUS vs медіана ринку (13 grocery-партнерів UA, ≥2K delivered)</div>
+  <div class="insight-text">За якістю — <strong>гірше за медіану</strong> (bad rate 14.6% vs 7.2%, fail rate 7.8% vs 4.9%). За лояльністю — <strong>значно краще</strong> (M1 retention 60–64% vs медіана 22–38%). Детальне порівняння — у <a href="#benchmark">розділі 2</a>.</div>
+</div>
+</section>
+
+<!-- BENCHMARK -->
+<section class="section" id="benchmark">
+<h2>2. Порівняння VARUS з медіаною UA Stores</h2>
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">Бенчмарк: <strong>медіана</strong> по 13–15 grocery-партнерах Bolt Food UA (<code>delivery_vertical LIKE 'store%'</code>), які мають ≥500 delivered/міс. або ≥2 000 за весь період. Медіана = «типовий» партнер — половина краще, половина гірше.</p>
+
+<div class="card">
+<h3>Загальне порівняння (травень–серпень 2026)</h3>
+<table>
+<thead><tr><th>Метрика</th><th class="num">VARUS</th><th class="num">Медіана ринку</th><th class="num">Середнє ринку</th><th>Висновок</th></tr></thead>
+<tbody>
+<tr>
+  <td>Fail rate (%)</td>
+  <td class="num worse">7.77%</td>
+  <td class="num">4.91%</td>
+  <td class="num">6.32%</td>
+  <td><span class="verdict verdict-bad">Гірше</span> +2.9 п.п. від медіани</td>
+</tr>
+<tr>
+  <td>Bad order rate (%)</td>
+  <td class="num worse">14.62%</td>
+  <td class="num">7.18%</td>
+  <td class="num">7.01%</td>
+  <td><span class="verdict verdict-bad">Значно гірше</span> ×2 від медіани</td>
+</tr>
+<tr>
+  <td>CS ticket rate (%)</td>
+  <td class="num worse">6.13%</td>
+  <td class="num">3.14%</td>
+  <td class="num">3.67%</td>
+  <td><span class="verdict verdict-bad">Гірше</span> майже ×2 від медіани</td>
+</tr>
+<tr>
+  <td>Втрачений GMV / delivered GMV</td>
+  <td class="num worse">9.24%</td>
+  <td class="num">6.48%</td>
+  <td class="num">7.48%</td>
+  <td><span class="verdict verdict-bad">Гірше</span></td>
+</tr>
+<tr>
+  <td>Замовлень / юзер (за період)</td>
+  <td class="num">2.51</td>
+  <td class="num">3.50</td>
+  <td class="num">3.49</td>
+  <td><span class="verdict verdict-mid">Нижче</span> — партнер молодий, база ще «розігрівається»</td>
+</tr>
+<tr>
+  <td>M1 retention (когорта травень)</td>
+  <td class="num better">63.3%</td>
+  <td class="num">37.6%</td>
+  <td class="num">36.4%</td>
+  <td><span class="verdict verdict-good">Значно краще</span> +26 п.п.</td>
+</tr>
+<tr>
+  <td>M1 retention (когорта червень)</td>
+  <td class="num better">60.1%</td>
+  <td class="num">21.8%</td>
+  <td class="num">23.3%</td>
+  <td><span class="verdict verdict-good">Значно краще</span> +38 п.п.</td>
+</tr>
+<tr>
+  <td>M1 retention (когорта липень)</td>
+  <td class="num better">63.7%</td>
+  <td class="num">22.5%</td>
+  <td class="num">21.5%</td>
+  <td><span class="verdict verdict-good">Значно краще</span> +41 п.п.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Місячна динаміка: VARUS vs медіана ринку</h3>
+<table>
+<thead><tr><th>Місяць</th><th class="num">VARUS fail %</th><th class="num">Медіана fail %</th><th class="num">VARUS bad %</th><th class="num">Медіана bad %</th><th class="num">VARUS ticket %</th><th class="num">Медіана ticket %</th><th class="num">VARUS ord/user</th><th class="num">Медіана ord/user</th></tr></thead>
+<tbody>
+<tr><td>Травень</td><td class="num cell-warn">8.80%</td><td class="num">5.14%</td><td class="num cell-crit">17.62%</td><td class="num">9.54%</td><td class="num cell-warn">9.29%</td><td class="num">3.40%</td><td class="num">1.68</td><td class="num">2.24</td></tr>
+<tr><td>Червень</td><td class="num cell-warn">6.11%</td><td class="num">4.86%</td><td class="num cell-warn">13.71%</td><td class="num">6.37%</td><td class="num">5.15%</td><td class="num">2.85%</td><td class="num">2.09</td><td class="num">2.32</td></tr>
+<tr><td>Липень</td><td class="num">4.81%</td><td class="num">4.75%</td><td class="num cell-warn">12.63%</td><td class="num">6.47%</td><td class="num">5.05%</td><td class="num">3.21%</td><td class="num">2.09</td><td class="num">2.28</td></tr>
+<tr><td>Серпень</td><td class="num cell-crit">10.12%</td><td class="num">6.91%</td><td class="num cell-warn">15.17%</td><td class="num">6.56%</td><td class="num">6.01%</td><td class="num">3.16%</td><td class="num">2.07</td><td class="num">2.30</td></tr>
+</tbody>
+</table>
+<div class="insight warn" style="margin-top:12px">
+  <div class="insight-title">Як читати порівняння</div>
+  <div class="insight-text">
+    <strong>Якість (fail, bad, tickets)</strong> — VARUS стабільно вище медіани по всіх 4 місяцях. Найближче до ринку по fail rate був липень (4.81% vs 4.75%), але bad rate все одно у 2× гірший (12.6% vs 6.5%).<br>
+    <strong>Частота покупок</strong> — нижча за медіану, бо VARUS ще на етапі залучення (багато «перших спроб»). Це нормально для нового партнера.<br>
+    <strong>Retention</strong> — навпаки, VARUS у 2–3× кращий за типового grocery-партнера. Сильний бренд тягне лояльність, але якість може це зруйнувати.
+  </div>
+</div>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card"><h3>Fail rate: VARUS vs медіана</h3><div class="chart-box"><canvas id="benchFailChart"></canvas></div></div>
+  <div class="card"><h3>Bad rate: VARUS vs медіана</h3><div class="chart-box"><canvas id="benchBadChart"></canvas></div></div>
+</div>
 </section>
 
 <!-- FAILED ORDERS -->
 <section class="section" id="failed">
-<h2>2. Failed Orders — невиконані замовлення</h2>
+<h2>3. Failed Orders — невиконані замовлення</h2>
 <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Замовлення зі статусом <code>failed</code> або <code>rejected</code> — клієнт не отримав товар. Класифікація причин — взаємовиключна за пріоритетом.</p>
 
 <div class="grid-2">
@@ -168,7 +277,7 @@ ul.compact li{margin:4px 0}
 
 <!-- BAD ORDERS -->
 <section class="section" id="bad">
-<h2>3. Bad Orders & CS — скарги та дефекти якості</h2>
+<h2>4. Bad Orders & CS — скарги та дефекти якості</h2>
 <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Bad order = замовлення доставлено, але з дефектом (затримка, відсутня позиція, неправильний товар, пошкодження). Ticket = звернення до CS. Attribution = хто винен за bad order.</p>
 
 <div class="grid-2">
@@ -229,7 +338,7 @@ ul.compact li{margin:4px 0}
 
 <!-- STORES -->
 <section class="section" id="stores">
-<h2>4. Проблемні магазини (топ-15 за failed orders)</h2>
+<h2>5. Проблемні магазини (топ-15 за failed orders)</h2>
 <div class="card">
 <table>
 <thead><tr><th>Магазин</th><th>Місто</th><th class="num">Всього</th><th class="num">Failed</th><th class="num">Fail %</th><th class="num">Bad</th><th class="num">Bad %</th><th class="num">Втрата GMV</th></tr></thead>
@@ -256,7 +365,7 @@ ul.compact li{margin:4px 0}
 
 <!-- USERS -->
 <section class="section" id="users">
-<h2>5. Користувачі — частота, new vs existing, retention</h2>
+<h2>6. Користувачі — частота, new vs existing, retention</h2>
 
 <div class="grid-4">
   <div class="card kpi"><div class="kpi-label">Активні юзери (серпень)</div><div class="kpi-value up">6 845</div><div class="kpi-sub up">+45% vs липень</div></div>
@@ -287,24 +396,43 @@ ul.compact li{margin:4px 0}
 <div class="card" style="margin-top:16px">
 <h3>Monthly Retention (когортний аналіз)</h3>
 <table>
-<thead><tr><th>Когорта (перше замовлення VARUS)</th><th class="num">Розмір</th><th class="num">M1 retained</th><th class="num">M1 %</th><th class="num">M2 retained</th><th class="num">M2 %</th></tr></thead>
+<thead><tr><th>Когорта (перше замовлення VARUS)</th><th class="num">Розмір</th><th class="num">M1 retained</th><th class="num">M1 %</th><th class="num">Медіана ринку M1</th><th class="num">M2 retained</th><th class="num">M2 %</th></tr></thead>
 <tbody>
-<tr><td>Травень 2026</td><td class="num">3 669</td><td class="num">2 322</td><td class="num cell-good">63.3%</td><td class="num">2 090</td><td class="num">57.0%</td></tr>
-<tr><td>Червень 2026</td><td class="num">2 649</td><td class="num">1 592</td><td class="num cell-good">60.1%</td><td class="num">1 455</td><td class="num">54.9%</td></tr>
-<tr><td>Липень 2026</td><td class="num">3 216</td><td class="num">2 050</td><td class="num cell-good">63.7%</td><td class="num">—</td><td class="num">—</td></tr>
-<tr><td>Серпень 2026</td><td class="num">4 583</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Травень 2026</td><td class="num">3 669</td><td class="num">2 322</td><td class="num cell-good">63.3%</td><td class="num">37.6%</td><td class="num">2 090</td><td class="num">57.0%</td></tr>
+<tr><td>Червень 2026</td><td class="num">2 649</td><td class="num">1 592</td><td class="num cell-good">60.1%</td><td class="num">21.8%</td><td class="num">1 455</td><td class="num">54.9%</td></tr>
+<tr><td>Липень 2026</td><td class="num">3 216</td><td class="num">2 050</td><td class="num cell-good">63.7%</td><td class="num">22.5%</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Серпень 2026</td><td class="num">4 583</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
 </tbody>
 </table>
+
+<dl class="glossary">
+  <dt>Що таке M1 retention?</dt>
+  <dd>
+    <strong>M1 = Month 1</strong> — це частка користувачів, які <em>повернулись і зробили ще одне замовлення</em> у VARUS у наступному календарному місяці після першого.
+    <br><br>
+    <strong>Приклад:</strong> когорта травня = 3 669 людей, які вперше замовили VARUS у травні. З них <strong>2 322 (63.3%)</strong> знову замовили VARUS у червні. Це і є M1 retention.
+    <br><br>
+    <strong>M2 retention</strong> — те саме, але для другого місяця після першого (травнева когорта → липень): 2 090 / 3 669 = 57.0%.
+    <br><br>
+    <strong>Чому це важливо:</strong> високий M1 = клієнт сформував звичку. Низький M1 = «спробував і пішов». Для grocery M1 20–40% — типово по ринку UA; VARUS показує 60%+ — це сильна лояльність до бренду, яку не можна втратити через погану якість.
+  </dd>
+  <dt>Чим M1 відрізняється від «Returning users»?</dt>
+  <dd>
+    <strong>Returning users</strong> (у таблиці вище) — скільки юзерів у конкретному місяці вже купували VARUS раніше (будь-коли).<br>
+    <strong>M1 retention</strong> — скільки з <em>конкретної когорти новачків</em> повернулось рівно через 1 місяць. Це точніша метрика лояльності.
+  </dd>
+</dl>
+
 <div class="insight good" style="margin-top:12px">
   <div class="insight-title">Conversion & залучення</div>
-  <div class="insight-text">M1 retention 60–64% — сильний показник для grocery delivery. Кожен 3-й активний юзер у серпні — <strong>повертається</strong> (вже купував VARUS раніше). Частота 2+ замовлень/місяць свідчить про формування звички. Search conversion по запиту «varus» — 23% (814 сесій). Ризик: погіршення якості в серпні може «з'їсти» retention у когорті серпня–вересня.</div>
+  <div class="insight-text">M1 retention VARUS (60–64%) — у <strong>2–3× вищий</strong> за медіану grocery-ринку UA (22–38%). Кожен 3-й активний юзер у серпні — <strong>повертається</strong>. Частота 2+ замовлень/місяць свідчить про формування звички, хоча поки нижча за медіану ринку (2.5 vs 3.5 за період). Search conversion по запиту «varus» — 23% (814 сесій). Ризик: погіршення якості в серпні може «з'їсти» retention у когорті серпня–вересня.</div>
 </div>
 </div>
 </section>
 
 <!-- IMPACT -->
 <section class="section" id="impact">
-<h2>6. Втрати GMV та бізнес-наслідки</h2>
+<h2>7. Втрати GMV та бізнес-наслідки</h2>
 
 <div class="grid-3">
   <div class="card">
@@ -343,7 +471,7 @@ ul.compact li{margin:4px 0}
 
 <!-- ACTIONS -->
 <section class="section" id="actions">
-<h2>7. Рекомендації для партнера VARUS</h2>
+<h2>8. Рекомендації для партнера VARUS</h2>
 
 <div class="grid-2">
   <div class="card">
@@ -387,8 +515,27 @@ const chartDefaults = {responsive:true,maintainAspectRatio:false,plugins:{legend
 
 // Fail rate
 new Chart(document.getElementById('failRateChart'),{type:'line',data:{
-  labels:months,datasets:[{label:'Fail rate %',data:[8.80,6.11,4.81,10.12],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.1)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:'#dc2626'}]
+  labels:months,datasets:[
+    {label:'VARUS fail %',data:[8.80,6.11,4.81,10.12],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.1)',fill:true,tension:0.3,pointRadius:5},
+    {label:'Медіана ринку',data:[5.14,4.86,4.75,6.91],borderColor:'#94a3b8',borderDash:[5,5],tension:0.3,pointRadius:4,fill:false}
+  ]
 },options:{...chartDefaults,scales:{y:{beginAtZero:true,max:12,ticks:{callback:v=>v+'%'}}}}});
+
+// Benchmark fail
+new Chart(document.getElementById('benchFailChart'),{type:'line',data:{
+  labels:months,datasets:[
+    {label:'VARUS',data:[8.80,6.11,4.81,10.12],borderColor:'#dc2626',tension:0.3,pointRadius:5},
+    {label:'Медіана UA Stores',data:[5.14,4.86,4.75,6.91],borderColor:'#2563eb',borderDash:[6,4],tension:0.3,pointRadius:4}
+  ]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}}});
+
+// Benchmark bad
+new Chart(document.getElementById('benchBadChart'),{type:'line',data:{
+  labels:months,datasets:[
+    {label:'VARUS',data:[17.62,13.71,12.63,15.17],borderColor:'#ea580c',tension:0.3,pointRadius:5},
+    {label:'Медіана UA Stores',data:[9.54,6.37,6.47,6.56],borderColor:'#2563eb',borderDash:[6,4],tension:0.3,pointRadius:4}
+  ]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}}});
 
 // Lost GMV
 new Chart(document.getElementById('lostGmvChart'),{type:'bar',data:{
