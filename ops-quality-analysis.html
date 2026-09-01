@@ -93,6 +93,7 @@ ul.compact li{margin:4px 0}
     <li><a href="#summary">Executive Summary</a></li>
     <li><a href="#benchmark">Порівняння з медіаною UA Stores</a></li>
     <li><a href="#failed">Failed Orders — невиконані замовлення</a></li>
+    <li><a href="#courier-failed">Deep dive: курʼєрські failed orders (серпень)</a></li>
     <li><a href="#bad">Bad Orders & CS — скарги та дефекти</a></li>
     <li><a href="#stores">Проблемні магазини</a></li>
     <li><a href="#users">Користувачі — частота, retention, conversion</a></li>
@@ -272,6 +273,100 @@ ul.compact li{margin:4px 0}
       <div class="insight-text">Курʼєрські проблеми (595 failed, €12.3K) та системні/оплатні (623, €11.3K) — обидві категорії <strong>×3–4</strong> від липня. Це корелює зі зростанням обсягу та навантаженням на логістику в пік сезону.</div>
     </div>
   </div>
+</div>
+
+<!-- COURIER FAILED DEEP DIVE -->
+<div class="divider"></div>
+<div id="courier-failed">
+<h3 style="font-size:16px;margin-bottom:12px">🔍 Deep dive: Failed orders через курʼєра — тижневий розбір (серпень 2026)</h3>
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">
+  Категорія <strong>«Проблема з курʼєром»</strong> = <code>number_courier_rejects &gt; 0</code> (хоча б один курʼєр відхилив/не прийняв замовлення). Нижче — детальний розбір <em>що саме</em> сталось після courier reject і на що звернути увагу.
+</p>
+
+<div class="grid-4">
+  <div class="card kpi"><div class="kpi-label">Courier-failed (серпень)</div><div class="kpi-value down">768</div><div class="kpi-sub down">48% від усіх failed у серпні</div></div>
+  <div class="card kpi"><div class="kpi-label">Втрачений GMV</div><div class="kpi-value down">€15.6K</div><div class="kpi-sub down">~52% lost GMV серпня</div></div>
+  <div class="card kpi"><div class="kpi-label">Сер. courier rejects</div><div class="kpi-value">2.4</div><div class="kpi-sub">на 1 failed order</div></div>
+  <div class="card kpi"><div class="kpi-label">2+ rejects</div><div class="kpi-value down">52%</div><div class="kpi-sub">кілька курʼєрів відмовились</div></div>
+</div>
+
+<div class="insight crit" style="margin-top:16px">
+  <div class="insight-title">⚠️ Головний інсайт: courier reject ≠ проблема курʼєра</div>
+  <div class="insight-text">
+    У <strong>~85–90%</strong> failed orders з courier reject фінальна причина — <strong>CS скасував через проблему партнера</strong> (повільна збірка, OOS, замовлення «зависло»). Курʼєри відмовляються брати замовлення, яке довго чекає на збірку → ланцюг reject → fail. Справжніх «немає курʼєра» (supply) — лише <strong>7–18 на тиждень</strong>. Фокус: прискорити збірку VARUS + курʼєрська ємність у пік, а не лише «шукати курʼєрів».
+  </div>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card"><h3>Courier-failed по тижнях (серпень)</h3><div class="chart-box"><canvas id="courierWeekChart"></canvas></div></div>
+  <div class="card"><h3>Що сталось після courier reject (деталізація)</h3><div class="chart-box"><canvas id="courierReasonChart"></canvas></div></div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Тижнева таблиця: courier-failed orders</h3>
+<table>
+<thead><tr><th>Тиждень (Пн)</th><th class="num">Всього failed</th><th class="num">Courier-failed</th><th class="num">% від failed</th><th class="num">Lost GMV €</th><th class="num">Сер. rejects</th><th class="num">2+ rejects</th><th class="num">Клієнт скасував</th></tr></thead>
+<tbody>
+<tr><td>28.07 – 03.08</td><td class="num">210</td><td class="num">106</td><td class="num">50.5%</td><td class="num">€1 895</td><td class="num">2.46</td><td class="num">60</td><td class="num">24</td></tr>
+<tr><td>04.08 – 10.08</td><td class="num">390</td><td class="num">155</td><td class="num">39.7%</td><td class="num">€3 066</td><td class="num">2.23</td><td class="num">71</td><td class="num">41</td></tr>
+<tr><td>11.08 – 17.08</td><td class="num">311</td><td class="num">131</td><td class="num">42.1%</td><td class="num">€2 569</td><td class="num">2.39</td><td class="num">63</td><td class="num">32</td></tr>
+<tr class="cell-crit"><td>18.08 – 24.08</td><td class="num">645</td><td class="num">330</td><td class="num">51.2%</td><td class="num">€7 198</td><td class="num">2.48</td><td class="num">184</td><td class="num">41</td></tr>
+<tr><td>25.08 – 31.08</td><td class="num">77</td><td class="num">46</td><td class="num cell-warn">59.7%</td><td class="num">€881</td><td class="num">1.96</td><td class="num">22</td><td class="num">4</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="card">
+    <h3>Деталізація причин (після courier reject)</h3>
+    <table>
+    <thead><tr><th>Причина</th><th>Що це означає</th><th class="num">Серпень</th></tr></thead>
+    <tbody>
+    <tr><td>CS скасував: проблема партнера</td><td>Замовлення «зависло» на збірці / OOS → курʼєри відмовились → CS скасував</td><td class="num cell-crit">665</td></tr>
+    <tr><td>Автоскасування системою</td><td>Система закрила замовлення (тайм-аут, supply)</td><td class="num">46</td></tr>
+    <tr><td>CS скасував: немає курʼєра</td><td>Реальний дефіцит курʼєрів (supply starvation)</td><td class="num">46</td></tr>
+    <tr><td>Клієнт скасував</td><td>Клієнт не дочекався після courier reject</td><td class="num">~142</td></tr>
+    <tr><td>CS скасував: проблема курʼєра</td><td>Чиста курʼєрська проблема (поведінка, не знайшов тощо)</td><td class="num">13</td></tr>
+    </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>На що звернути увагу — action list</h3>
+    <ul class="compact">
+      <li><strong>Тиждень 18–24.08</strong> — пік: 330 courier-failed, €7.2K втрат. Перевірити, що сталось у пʼятницю–суботу (99+80 fails).</li>
+      <li><strong>Час доби 12:00–18:00</strong> — пік courier-failed (до 48/год у тиждень 24.08). Потрібна додаткова курʼєрська ємність у обід + вечір.</li>
+      <li><strong>Київ</strong> — 65% courier-failed у піковий тиждень (213 з 330). Топ: Васильківська 34 (51), Малишко 3 (41), Азов 12 (36).</li>
+      <li><strong>Дніпро</strong> — пр.Науки 8а: avg 3.0–4.4 courier rejects/замовлення (найвище). Повільна збірка → курʼєри не беруть.</li>
+      <li><strong>52% з 2+ rejects</strong> — замовлення «крутилось» між курʼєрами. Корінь: довге очікування на пікера VARUS.</li>
+      <li><strong>Лише 13 чистих курʼєрських CS-fail</strong> за серпень — не варто звужувати проблему до «немає курʼєрів».</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Топ магазини за courier-failed (серпень, ≥8 cases/тиждень)</h3>
+<table>
+<thead><tr><th>Тиждень</th><th>Магазин</th><th>Місто</th><th class="num">N</th><th class="num">Сер. rejects</th><th class="num">Lost GMV</th></tr></thead>
+<tbody>
+<tr><td>18–24.08</td><td>VARUS, вул.Васильківска 34</td><td>Kyiv</td><td class="num cell-crit">51</td><td class="num">3.2</td><td class="num">€1 106</td></tr>
+<tr><td>18–24.08</td><td>VARUS, вул.Андрія Малишко,3</td><td>Kyiv</td><td class="num cell-warn">41</td><td class="num">3.2</td><td class="num">€895</td></tr>
+<tr><td>18–24.08</td><td>VARUS, Вулиця Героїв полку Азов, 12</td><td>Kyiv</td><td class="num cell-warn">36</td><td class="num">2.2</td><td class="num">€1 012</td></tr>
+<tr><td>18–24.08</td><td>VARUS, вул. Тютюника 39-А</td><td>Kyiv</td><td class="num">29</td><td class="num">1.8</td><td class="num">€521</td></tr>
+<tr><td>11–17.08</td><td>VARUS, вул.Андрія Малишко,3</td><td>Kyiv</td><td class="num">30</td><td class="num cell-warn">3.4</td><td class="num">€631</td></tr>
+<tr><td>04–10.08</td><td>VARUS, пр.Науки 8а</td><td>Dnipro</td><td class="num">25</td><td class="num cell-crit">3.0</td><td class="num">€487</td></tr>
+<tr><td>04–10.08</td><td>VARUS, пр. Коцюбинського, 70</td><td>Vinnytsia</td><td class="num">20</td><td class="num">2.8</td><td class="num">€355</td></tr>
+<tr><td>18–24.08</td><td>VARUS, вул. Жилянська 59</td><td>Kyiv</td><td class="num">22</td><td class="num">2.3</td><td class="num">€307</td></tr>
+<tr><td>18–24.08</td><td>VARUS, пр.Науки 8а</td><td>Dnipro</td><td class="num">16</td><td class="num cell-warn">3.1</td><td class="num">€358</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="insight action" style="margin-top:16px">
+  <div class="insight-title">Рекомендація для розмови з логістикою + VARUS</div>
+  <div class="insight-text">
+    Courier-failed у VARUS — це переважно <strong>«ефект доміно»</strong>: партнер повільно збирає → ETA зростає → курʼєри відмовляються (2–3 рази) → CS скасовує або клієнт йде. Рішення — двостороннє: (1) VARUS: SLA збірки &lt;15 хв на пікових магазинах Києва; (2) Bolt logistics: +capacity Київ пт–сб 12–18h; (3) спільний моніторинг «courier reject rate» по магазинах як ранній сигнал проблеми збірки.
+  </div>
+</div>
 </div>
 </section>
 
@@ -591,6 +686,25 @@ new Chart(document.getElementById('augLossChart'),{type:'doughnut',data:{
   labels:['Курʼєр (€12.3K)','Система/оплата (€11.3K)','Клієнт скасував (€6.1K)','Партнер (€0.5K)'],
   datasets:[{data:[12340,11330,6101,463],backgroundColor:['#2563eb','#94a3b8','#ca8a04','#dc2626']}]
 },options:{...chartDefaults,plugins:{legend:{position:'right'}}}});
+
+// Courier weekly Aug
+const augWeeks=['28.07','04.08','11.08','18.08','25.08'];
+new Chart(document.getElementById('courierWeekChart'),{type:'bar',data:{
+  labels:augWeeks,datasets:[
+    {label:'Courier-failed',data:[106,155,131,330,46],backgroundColor:'#7c3aed'},
+    {label:'Всього failed',data:[210,390,311,645,77],backgroundColor:'#e5e7eb'}
+  ]
+},options:{...chartDefaults,scales:{y:{beginAtZero:true}}}});
+
+// Courier sub-reasons stacked
+new Chart(document.getElementById('courierReasonChart'),{type:'bar',data:{
+  labels:augWeeks,datasets:[
+    {label:'CS: проблема партнера',data:[83,126,116,295,45],backgroundColor:'#dc2626'},
+    {label:'Автоскасування (supply)',data:[10,18,3,12,0],backgroundColor:'#94a3b8'},
+    {label:'CS: немає курʼєра',data:[11,10,7,18,0],backgroundColor:'#ea580c'},
+    {label:'CS: проблема курʼєра',data:[2,1,4,5,1],backgroundColor:'#2563eb'}
+  ]
+},options:{...chartDefaults,scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
 
 function downloadPDF(){
   html2pdf().set({margin:10,filename:'VARUS_Ops_Quality_Analysis_Aug2026.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}}).from(document.getElementById('report')).save();
