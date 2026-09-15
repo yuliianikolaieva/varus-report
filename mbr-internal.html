@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>VARUS × Bolt — MBR internal · Aug 2026</title>
+<style>
+  :root {
+    --ink: #13211b;
+    --muted: #6c7772;
+    --faint: #97a49d;
+    --line: #e6ebe7;
+    --soft: #f3faf5;
+    --green: #0f9d5a;
+    --green-bright: #21c56d;
+    --lime: #b7e04a;
+    --mint: #e9f7ef;
+    --dark: #13211b;
+    --red: #e94b3b;
+    --red-soft: #fff3f0;
+    --amber: #a8761c;
+    --amber-soft: #fdf7ea;
+    --blue: #2a8bee;
+    --blue-deep: #1250c8;
+    --blue-soft: #f2f8fc;
+    --white: #fff;
+    --page-bg: #eceeec;
+    --shadow: 0 16px 50px rgba(19, 33, 27, .12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: "Avenir Next", "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", "Mulish", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .toolbar {
+    position: fixed; z-index: 50; top: 16px; left: 50%;
+    width: min(980px, calc(100vw - 28px)); transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+    border: 1px solid var(--line); border-radius: 14px;
+    background: rgba(255,255,255,.95); backdrop-filter: blur(14px);
+    box-shadow: 0 8px 30px rgba(19,33,27,.08);
+  }
+  .toolbar b { margin: 0 8px; font-size: 13px; white-space: nowrap; }
+  .toolbar a, .toolbar button {
+    min-height: 38px; display: inline-flex; align-items: center; justify-content: center;
+    padding: 0 13px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--white); color: var(--ink); font: inherit; font-size: 12px;
+    font-weight: 700; text-decoration: none; cursor: pointer; white-space: nowrap;
+  }
+  .toolbar a:hover { border-color: var(--green); }
+  .toolbar button { margin-left: auto; border: 0; background: var(--dark); color: #fff; }
+  .tag-internal {
+    padding: 5px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red);
+    font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
+  }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 94px 20px 80px; }
+  .slide {
+    position: relative;
+    background: var(--white);
+    width: 100%;
+    min-height: 720px;
+    overflow: hidden;
+    padding: 52px 68px 64px 76px;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide::before {
+    content: ""; position: absolute; top: 50%; left: 0; width: 9px; height: 214px;
+    transform: translateY(-50%); border-radius: 0 6px 6px 0;
+    background: linear-gradient(180deg, var(--green), var(--lime));
+  }
+  .slide::after {
+    content: attr(data-page) "  ·  VARUS × BOLT FOOD";
+    position: absolute; right: 68px; bottom: 24px; left: 76px;
+    padding-top: 12px; border-top: 1px solid var(--line);
+    color: var(--faint); font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  }
+  .eyebrow {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+  .pill { padding: 5px 11px; border-radius: 999px; background: var(--soft); color: var(--muted); }
+  .pill.on { background: linear-gradient(90deg, var(--green), var(--green-bright)); color: var(--white); }
+  .pill.mint { background: var(--mint); color: var(--dark); }
+  h1 { font-size: 38px; line-height: 1.15; margin: 0 0 10px; letter-spacing: -.025em; }
+  h2 { font-size: 27px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.02em; }
+  h3 { font-size: 14px; margin: 22px 0 8px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  p { margin: 0 0 10px; }
+  .lead { color: var(--muted); font-size: 15px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .note { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .callout {
+    border-radius: 14px; padding: 18px 20px; margin: 18px 0;
+    border: 1px solid var(--line); background: var(--soft);
+  }
+  .callout .ttl { font-weight: 700; margin-bottom: 6px; }
+  .callout.good { background: var(--mint); border-color: #bfe3cf; }
+  .callout.good .ttl { color: var(--dark); }
+  .callout.bad { background: var(--red-soft); border-color: #f2d5c9; }
+  .callout.bad .ttl { color: var(--red); }
+  .callout.warn { background: var(--amber-soft); border-color: #f0e2c4; }
+  .callout.warn .ttl { color: var(--amber); }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 6px; }
+  .kpi { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; background: var(--white); }
+  .kpi .v { font-size: 27px; font-weight: 800; letter-spacing: -.025em; }
+  .kpi .l { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .kpi.good .v { color: var(--green); }
+  .kpi.bad .v { color: var(--red); }
+  .kpi.warn .v { color: var(--amber); }
+  .cols2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .cols3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .box { border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; background: var(--white); }
+  .box .hd { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+  .box ul { margin: 0; padding-left: 18px; }
+  .box li { margin-bottom: 7px; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 8px; }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); background: var(--soft); font-weight: 800; }
+  td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.hl td { background: #f6fbf8; }
+  tr.warnrow td { background: var(--red-soft); }
+  .chart { margin-top: 6px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 6px 0 2px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .metric-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 26px 0; }
+  .flow-step { position: relative; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--soft); }
+  .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -12px; top: 34%; z-index: 2; color: var(--green); font-size: 22px; font-weight: 800; }
+  .metric-flow.composition .flow-step::after { display: none; }
+  .flow-step .big { font-size: 29px; font-weight: 800; line-height: 1.05; }
+  .flow-step .small { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .section-kicker { display: inline-flex; gap: 10px; align-items: center; margin-bottom: 12px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .section-kicker::before { content: ""; width: 28px; height: 4px; border-radius: 3px; background: linear-gradient(90deg, var(--green), var(--lime)); }
+  .status { display: inline-flex; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; }
+  .status.red { color: var(--red); background: var(--red-soft); }
+  .status.amber { color: var(--amber); background: var(--amber-soft); }
+  .status.green { color: var(--green); background: var(--mint); }
+  .bar-list { display: grid; gap: 12px; margin-top: 16px; }
+  .bar-row { display: grid; grid-template-columns: 220px 1fr 48px; gap: 12px; align-items: center; font-size: 13px; }
+  .bar-track { height: 10px; overflow: hidden; border-radius: 999px; background: var(--line); }
+  .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--green), var(--lime)); }
+  .hr { height: 1px; background: var(--line); margin: 24px 0; border: 0; }
+  footer { color: var(--muted); font-size: 12.5px; padding: 0 12px; }
+  /* ---- перегляд лише онлайн ---- */
+  body { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+  @media print {
+    .wrap, .toolbar, footer { display: none !important; }
+    body::after {
+      content: "Друк і експорт цієї презентації вимкнено. Актуальна версія — за посиланням від Bolt.";
+      display: block; padding: 80px 60px; font-size: 20px; font-weight: 700;
+    }
+  }
+  @media (max-width: 860px) {
+    .toolbar { overflow-x: auto; justify-content: flex-start; }
+    .toolbar button { margin-left: 0; }
+    .kpis, .cols2, .cols3, .metric-flow { grid-template-columns: 1fr; }
+    .flow-step:not(:last-child)::after { display: none; }
+    .bar-row { grid-template-columns: 1fr; gap: 4px; }
+    .slide { min-height: 0; padding: 34px 24px 58px 32px; }
+    .slide::after { left: 32px; right: 24px; }
+    h1 { font-size: 26px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .wrap { padding: 0; }
+    .slide { width: 1280px; height: 720px; min-height: 720px; margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+  }
+</style>
+</head><body>
+<nav class="toolbar" aria-label="Навігація презентації">
+  <b>VARUS × Bolt · Aug 2026</b>
+  <span class="tag-internal">Internal · не для партнера</span>
+  <a href="#results">Результат</a>
+  <a href="#growth">Ріст</a>
+  <a href="#operations">Операційка</a>
+  <a href="#stores">Магазини</a>
+  <a href="#cvp">CVP</a>
+  <a href="#banners">Банери</a>
+  <a href="#investments">Інвестиції</a>
+  <a href="#next">Наступні кроки</a>
+  <a href="#store-fix">Фікс магазинів</a>
+</nav>
+<div class="wrap">
+
+  <!-- ============ 1. Загальні цифри ============ -->
+  <section class="slide" id="results">
+    <div class="eyebrow">
+      <span class="pill on">Monthly Business Review</span>
+      <span class="pill mint">VARUS × Bolt Food UA</span>
+      <span class="pill">Дані до 31 Aug 2026</span>
+    </div>
+    <h1>Від нуля до 29 млн грн за чотири місяці</h1>
+    <p class="lead">Весь період співпраці · 23 Apr – 31 Aug 2026</p>
+
+    <div class="kpis">
+      <div class="kpi good"><div class="v">29.0 млн грн</div><div class="l">GMV за весь час · €563k</div></div>
+      <div class="kpi good"><div class="v">111%</div><div class="l">Сукупного рампу</div></div>
+      <div class="kpi"><div class="v">41 282</div><div class="l">Замовлень · 38 012 доставлено</div></div>
+      <div class="kpi"><div class="v">₴763</div><div class="l">Середній чек за весь час</div></div>
+    </div>
+    <div class="kpis" style="margin-top:12px">
+      <div class="kpi"><div class="v">15 124</div><div class="l">Унікальних клієнтів</div></div>
+      <div class="kpi good"><div class="v">39%</div><div class="l">Повернулись ≥2 рази</div></div>
+      <div class="kpi"><div class="v">11 / 55</div><div class="l">Міст / магазинів з замовленнями</div></div>
+      <div class="kpi"><div class="v">€58.5k</div><div class="l">Промо-інвестиції · 73% від VARUS</div></div>
+    </div>
+
+    <h3>GMV vs ramp plan, млн грн</h3>
+    <table>
+      <thead><tr>
+        <th>Місяць</th><th class="r">План, млн</th><th class="r">Факт, млн</th>
+        <th class="r">% плану</th><th class="r">Замовлення</th><th class="r">AOV, грн</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Квітень · тестові дні</td><td class="r">—</td><td class="r">0.00</td><td class="r">—</td><td class="r">22</td><td class="r">—</td></tr>
+        <tr><td>Травень</td><td class="r">3.0</td><td class="r">3.74</td><td class="r">125%</td><td class="r">6 763</td><td class="r">606</td></tr>
+        <tr><td>Червень</td><td class="r">5.0</td><td class="r">5.22</td><td class="r">104%</td><td class="r">7 966</td><td class="r">698</td></tr>
+        <tr><td>Липень</td><td class="r">8.0</td><td class="r">7.96</td><td class="r">99%</td><td class="r">10 341</td><td class="r">809</td></tr>
+        <tr><td>Серпень</td><td class="r">10.0</td><td class="r">12.07</td><td class="r">121%</td><td class="r">16 190</td><td class="r">831</td></tr>
+        <tr class="hl"><td><b>Разом</b></td><td class="r">26.0</td><td class="r"><b>28.98</b></td><td class="r"><b>111%</b></td><td class="r"><b>41 282</b></td><td class="r"><b>763</b></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Перше замовлення — 23 Apr 2026, повноцінний rollout стартував 1 травня.
+      Ramp 3 → 5 → 8 → 10 млн грн — робочий план, потребує контрактного підтвердження.
+      GMV і AOV — по delivered; замовлення — всі створені. Мережа VARUS, без пілота NYAM BY VARUS.UA.</p>
+  </section>
+
+  <!-- ============ 2. Як ми росли ============ -->
+  <section class="slide" id="growth">
+    <div class="section-kicker">Динаміка</div>
+    <h2>Від 3.7 до 12.1 млн грн GMV за чотири місяці</h2>
+    <p class="lead">Покриття + нові клієнти + більший кошик.</p>
+
+    <h3>Delivered GMV по тижнях, млн грн</h3>
+    <div class="chart" id="ch-gmv"></div>
+
+    <div class="kpis" style="margin-top:16px">
+      <div class="kpi good"><div class="v">×3.2</div><div class="l">GMV · травень → серпень</div></div>
+      <div class="kpi good"><div class="v">+90%</div><div class="l">Активні клієнти · 3 943 → 7 482</div></div>
+      <div class="kpi good"><div class="v">+37%</div><div class="l">AOV · ₴606 → ₴831</div></div>
+      <div class="kpi"><div class="v">39%</div><div class="l">Клієнтів повернулись ≥2 рази</div></div>
+    </div>
+
+    <h3>Клієнти по місяцях</h3>
+    <table>
+      <thead><tr>
+        <th>Місяць</th><th class="r">Активні</th><th class="r">Нові на VARUS</th>
+        <th class="r">Повторні ≥2</th><th class="r">AOV, грн</th><th class="r">GMV, млн</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Травень</td><td class="r">3 943</td><td class="r">3 941</td><td class="r">1 144</td><td class="r">606</td><td class="r">3.74</td></tr>
+        <tr><td>Червень</td><td class="r">3 757</td><td class="r">2 778</td><td class="r">1 273</td><td class="r">698</td><td class="r">5.22</td></tr>
+        <tr><td>Липень</td><td class="r">4 882</td><td class="r">3 342</td><td class="r">1 807</td><td class="r">809</td><td class="r">7.96</td></tr>
+        <tr class="hl"><td>Серпень</td><td class="r">7 482</td><td class="r">5 060</td><td class="r">2 754</td><td class="r">831</td><td class="r">12.07</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 3. Операційні проблеми ============ -->
+  <section class="slide" id="operations">
+    <div class="section-kicker">Операційна якість</div>
+    <h2>Скасовано 3 187 замовлень на ₴2.67 млн</h2>
+    <p class="lead">Скасування з будь-якої причини, квітень–серпень 2026.</p>
+
+    <div class="kpis">
+      <div class="kpi bad"><div class="v">3 187</div><div class="l">Скасованих замовлень</div></div>
+      <div class="kpi bad"><div class="v">₴2.67 млн</div><div class="l">Втрачений GMV</div></div>
+      <div class="kpi"><div class="v">7.7%</div><div class="l">Частка скасувань від усіх замовлень</div></div>
+      <div class="kpi"><div class="v">₴839</div><div class="l">Середній чек скасування</div></div>
+    </div>
+
+    <table>
+      <thead><tr>
+        <th>Період</th><th class="r">Замовлень</th><th class="r">Скасовано</th>
+        <th class="r">NDR</th><th class="r">Втрачений GMV</th><th class="r">Чек скасування</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Квітень–травень · стабілізація</td><td class="r">6 785</td><td class="r">586</td><td class="r">8.6%</td><td class="r">₴0.32 млн</td><td class="r">₴550</td></tr>
+        <tr class="warnrow"><td><b>Червень–серпень · робочий режим</b></td><td class="r">34 497</td><td class="r">2 601</td><td class="r">7.5%</td><td class="r"><b>₴2.35 млн</b></td><td class="r">₴904</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Основні причини · червень–серпень</h3>
+    <div class="kpis">
+      <div class="kpi bad"><div class="v">₴420k</div><div class="l">Товару немає · 571 замовлення</div></div>
+      <div class="kpi warn"><div class="v">₴410k</div><div class="l">Повітряна тривога · 390</div></div>
+      <div class="kpi bad"><div class="v">₴366k</div><div class="l">Магазин закритий у робочі години · 367</div></div>
+      <div class="kpi bad"><div class="v">₴207k</div><div class="l">Магазин скасував без причини · 230</div></div>
+    </div>
+    <div class="kpis" style="margin-top:12px">
+      <div class="kpi bad"><div class="v">₴70k</div><div class="l">Нема кому збирати · 72</div></div>
+      <div class="kpi"><div class="v">₴107k</div><div class="l">Форс-мажор магазину · 127</div></div>
+      <div class="kpi"><div class="v">₴91k</div><div class="l">Скасував клієнт · 108</div></div>
+      <div class="kpi"><div class="v">₴41k</div><div class="l">Збій інтеграції · 55</div></div>
+    </div>
+    <p class="note">«Нема кому збирати» — лише випадки, де CS прямо записав «no packers»,
+      «no pickers», «refuses to collect order». Коментар є у 599 із 2 601 скасування,
+      тож реальна цифра вища.</p>
+  </section>
+
+  <!-- ============ 4. Де болить ============ -->
+  <section class="slide" id="stores">
+    <div class="section-kicker">Рівень магазину</div>
+    <h2>На 6 магазинів припадає ₴826k скасувань — третина всього обсягу</h2>
+    <p class="lead">Червень–серпень. Це магазини, з яких варто починати turnaround.</p>
+    <div class="kpis">
+      <div class="kpi bad"><div class="v">₴826k</div><div class="l">GMV скасувань · топ-6 магазинів</div></div>
+      <div class="kpi bad"><div class="v">35%</div><div class="l">Від усього обсягу скасувань</div></div>
+      <div class="kpi warn"><div class="v">864</div><div class="l">Скасованих замовлень у цих магазинах</div></div>
+      <div class="kpi"><div class="v">4 із 6</div><div class="l">У Києві</div></div>
+    </div>
+
+    <table>
+      <thead><tr>
+        <th>Магазин</th><th>Місто</th><th class="r">Замовлень</th><th class="r">Скасовано</th>
+        <th class="r">NDR</th><th class="r">GMV скасувань</th><th class="r">DT p50</th><th>Статус</th>
+      </tr></thead>
+      <tbody>
+        <tr class="warnrow"><td>Андрія Малишка, 3</td><td>Київ</td><td class="r">1 472</td><td class="r">190</td><td class="r">12.9%</td><td class="r">207k грн</td><td class="r">44.3 хв</td><td><span class="status red">Critical</span></td></tr>
+        <tr class="warnrow"><td>Васильківська, 34</td><td>Київ</td><td class="r">1 304</td><td class="r">156</td><td class="r">12.0%</td><td class="r">146k грн</td><td class="r">36.3 хв</td><td><span class="status red">Critical</span></td></tr>
+        <tr class="warnrow"><td>Героїв полку Азов, 12</td><td>Київ</td><td class="r">756</td><td class="r">105</td><td class="r">13.9%</td><td class="r">127k грн</td><td class="r">34.4 хв</td><td><span class="status red">Critical</span></td></tr>
+        <tr><td>пр. Коцюбинського, 70</td><td>Вінниця</td><td class="r">1 963</td><td class="r">157</td><td class="r">8.0%</td><td class="r">125k грн</td><td class="r">44.6 хв</td><td><span class="status amber">Fix</span></td></tr>
+        <tr><td>пр. Науки, 8а</td><td>Дніпро</td><td class="r">929</td><td class="r">119</td><td class="r">12.8%</td><td class="r">114k грн</td><td class="r">54.6 хв</td><td><span class="status amber">Fix</span></td></tr>
+        <tr><td>Тютюнника, 39-А</td><td>Київ</td><td class="r">1 287</td><td class="r">137</td><td class="r">10.6%</td><td class="r">107k грн</td><td class="r">28.3 хв</td><td><span class="status amber">Fix</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout bad">
+      <div class="ttl">Що просимо</div>
+      По трьох critical-магазинах — відповідальний, план по персоналу на зборці,
+      реальні години прийому замовлень і дата повторної перевірки.
+      Ціль: NDR ≤ 8% і DT p50 ≤ 30 хв.
+    </div>
+    <p class="note">GMV скасувань — сума кошиків скасованих замовлень магазину за 1 Jun – 31 Aug 2026.</p>
+  </section>
+
+  <!-- ============ 5. CVP: конверсія та ретеншн ============ -->
+  <section class="slide" id="cvp">
+    <div class="section-kicker">CVP · конверсія та ретеншн</div>
+    <h2>Конверсія 28% — краще за ринок, але кошик губить 41% клієнтів</h2>
+    <p class="lead">Серпень 2026. Порівняння з найбільшими брендами Stores в Україні.</p>
+
+    <div class="kpis">
+      <div class="kpi good"><div class="v">28%</div><div class="l">Конверсія · медіана UA Stores 20%</div></div>
+      <div class="kpi good"><div class="v">9%</div><div class="l">Discovery rate · найвищий серед топ-брендів</div></div>
+      <div class="kpi"><div class="v">51 228</div><div class="l">Menu views · 22% усіх Stores в Україні</div></div>
+      <div class="kpi bad"><div class="v">41%</div><div class="l">Кошиків покинуто · у HOP HEY 26%</div></div>
+    </div>
+
+    <h3>Фанел проти топ-брендів Stores, серпень</h3>
+    <table>
+      <thead><tr>
+        <th>Бренд</th><th class="r">Показів</th><th class="r">Discovery</th><th class="r">Menu views</th>
+        <th class="r">Menu engagement</th><th class="r">Кошик покинуто</th><th class="r">Конверсія</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>HOP HEY</td><td class="r">289 124</td><td class="r">4%</td><td class="r">10 693</td><td class="r">50%</td><td class="r">26%</td><td class="r">37%</td></tr>
+        <tr><td>KOPIYKA</td><td class="r">139 427</td><td class="r">5%</td><td class="r">6 309</td><td class="r">48%</td><td class="r">35%</td><td class="r">31%</td></tr>
+        <tr class="hl"><td><b>VARUS</b></td><td class="r"><b>594 954</b></td><td class="r"><b>9%</b></td><td class="r"><b>51 228</b></td><td class="r"><b>47%</b></td><td class="r"><b>41%</b></td><td class="r"><b>28%</b></td></tr>
+        <tr><td>OKKO MARKET</td><td class="r">203 125</td><td class="r">4%</td><td class="r">7 928</td><td class="r">26%</td><td class="r">45%</td><td class="r">14%</td></tr>
+        <tr><td>LOKO</td><td class="r">599 076</td><td class="r">7%</td><td class="r">43 631</td><td class="r">31%</td><td class="r">62%</td><td class="r">12%</td></tr>
+        <tr><td>Усі Stores України</td><td class="r">4 606 884</td><td class="r">5%</td><td class="r">237 331</td><td class="r">34%</td><td class="r">42%</td><td class="r">20%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Ретеншн: скільки клієнтів повертається наступного місяця</h3>
+    <table>
+      <thead><tr>
+        <th>Когорта · перше замовлення</th><th class="r">Розмір</th><th class="r">M1 VARUS</th>
+        <th class="r">M1 медіана ринку</th><th class="r">Різниця</th><th class="r">M2 VARUS</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Травень</td><td class="r">3 671</td><td class="r">63.3%</td><td class="r">37.6%</td><td class="r">×1.7</td><td class="r">56.9%</td></tr>
+        <tr><td>Червень</td><td class="r">2 649</td><td class="r">60.1%</td><td class="r">21.8%</td><td class="r">×2.8</td><td class="r">55.1%</td></tr>
+        <tr class="hl"><td>Липень</td><td class="r"><b>3 216</b></td><td class="r"><b>64.0%</b></td><td class="r">22.5%</td><td class="r"><b>×2.8</b></td><td class="r">30.5%*</td></tr>
+        <tr><td>Серпень</td><td class="r">4 677</td><td class="r">31.0%*</td><td class="r">8.7%</td><td class="r">×3.6</td><td class="r">—</td></tr>
+      </tbody>
+    </table>
+    <p class="note">* M1 серпневої когорти й M2 липневої вимірюються у вересні — місяць ще не закритий,
+      тож фактичні значення будуть вищими. Когорта — місяць першого замовлення саме на VARUS.</p>
+
+    <div class="cols2" style="margin-top:18px">
+      <div class="callout good" style="margin:0">
+        <div class="ttl">Що працює</div>
+        Клієнт, який один раз купив на VARUS, повертається у 2.8 раза частіше, ніж у середньому по
+        Stores. VARUS збирає 22% усіх menu views категорії при 13% показів — люди свідомо шукають
+        саме цей бренд. Discovery rate 9% проти 5% по ринку.
+      </div>
+      <div class="callout bad" style="margin:0">
+        <div class="ttl">Де втрачаємо</div>
+        Кошик: 41% покинутих — на рівні ринку (42%), але вдвічі гірше за HOP HEY з його 26%.
+        Паралельно псується якість: order defect rate 60.3% і not-delivered 10.3% у серпні проти
+        44.3% і 6.1% у червні. Кожен +1 п.п. конверсії на серпневому трафіку ≈ +€8k GMV на місяць.
+      </div>
+    </div>
+    <p class="note">Джерело: Looker CVP-дашборд (фанел по брендах) і Databricks
+      <span class="num">etl_delivery_provider_eater_session_funnel_aggregates</span>.
+      За визначенням Databricks конверсія VARUS у серпні — 27.6% проти 20.05% по всіх Stores.</p>
+  </section>
+
+  <!-- ============ 6. Як працюють банери ============ -->
+  <section class="slide" id="banners">
+    <div class="section-kicker">Банери та плейсменти</div>
+    <h2>Банери дають 6% переходів і 2% замовлень — конверсія втричі нижча за категорії</h2>
+    <p class="lead">Серпень 2026. Кожен перехід у магазин VARUS у розрізі того, звідки клієнт прийшов.</p>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v">3 029</div><div class="l">Кліків з банерів у магазин · 6% усіх переходів</div></div>
+      <div class="kpi warn"><div class="v">285</div><div class="l">Замовлень з банерів · 2.3% від усіх</div></div>
+      <div class="kpi bad"><div class="v">9.4%</div><div class="l">Конверсія банерів · категорії дають 28%</div></div>
+      <div class="kpi bad"><div class="v">5</div><div class="l">Нових клієнтів з банерів за місяць</div></div>
+    </div>
+
+    <h3>Конверсія переходу в замовлення, серпень</h3>
+    <div class="bar-list">
+      <div class="bar-row"><span>Історія замовлень</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><b class="num">41.3%</b></div>
+      <div class="bar-row"><span>Категорія магазинів</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><b class="num">28.1%</b></div>
+      <div class="bar-row"><span>Активний кошик</span><div class="bar-track"><div class="bar-fill" style="width:67%"></div></div><b class="num">27.5%</b></div>
+      <div class="bar-row"><span>Пошук</span><div class="bar-track"><div class="bar-fill" style="width:63%"></div></div><b class="num">26.0%</b></div>
+      <div class="bar-row"><span>Головна лента</span><div class="bar-track"><div class="bar-fill" style="width:61%"></div></div><b class="num">25.2%</b></div>
+      <div class="bar-row"><span>Банер</span><div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--red)"></div></div><b class="num">11.0%</b></div>
+      <div class="bar-row"><span>Deeplink · зовнішні кампанії</span><div class="bar-track"><div class="bar-fill" style="width:19%;background:var(--red)"></div></div><b class="num">7.8%</b></div>
+      <div class="bar-row"><span>Hero banner</span><div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--red)"></div></div><b class="num">7.6%</b></div>
+    </div>
+
+    <h3>Деталі по джерелах, серпень</h3>
+    <table>
+      <thead><tr>
+        <th>Джерело переходу</th><th class="r">Кліків у магазин</th><th class="r">Додали в кошик</th>
+        <th class="r">Кошик / клік</th><th class="r">Замовлень</th><th class="r">Конверсія</th>
+        <th class="r">GMV, €</th><th class="r">Нових клієнтів</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Категорія магазинів</td><td class="r">24 130</td><td class="r">11 798</td><td class="r">48.9%</td><td class="r">6 790</td><td class="r">28.1%</td><td class="r">107 302</td><td class="r">198</td></tr>
+        <tr><td>Головна лента</td><td class="r">11 885</td><td class="r">5 969</td><td class="r">50.2%</td><td class="r">2 991</td><td class="r">25.2%</td><td class="r">46 716</td><td class="r">240</td></tr>
+        <tr><td>Пошук</td><td class="r">6 038</td><td class="r">3 308</td><td class="r">54.8%</td><td class="r">1 569</td><td class="r">26.0%</td><td class="r">23 261</td><td class="r">125</td></tr>
+        <tr><td>Deeplink</td><td class="r">2 977</td><td class="r">678</td><td class="r">22.8%</td><td class="r">231</td><td class="r">7.8%</td><td class="r">3 857</td><td class="r">8</td></tr>
+        <tr class="warnrow"><td><b>Банер</b></td><td class="r">1 578</td><td class="r">552</td><td class="r">35.0%</td><td class="r">174</td><td class="r">11.0%</td><td class="r">2 908</td><td class="r">5</td></tr>
+        <tr class="warnrow"><td><b>Hero banner</b></td><td class="r">1 451</td><td class="r">266</td><td class="r">18.3%</td><td class="r">111</td><td class="r">7.6%</td><td class="r">2 099</td><td class="r">0</td></tr>
+        <tr><td>Активний кошик</td><td class="r">1 182</td><td class="r">461</td><td class="r">39.0%</td><td class="r">325</td><td class="r">27.5%</td><td class="r">6 052</td><td class="r">22</td></tr>
+        <tr><td>Історія замовлень</td><td class="r">521</td><td class="r">372</td><td class="r">71.4%</td><td class="r">215</td><td class="r">41.3%</td><td class="r">3 055</td><td class="r">2</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cols3" style="margin-top:18px">
+      <div class="box">
+        <div class="hd">Банери ростуть швидко</div>
+        <ul>
+          <li>Червень — 13 кліків, липень — 333, серпень — <b>3 029</b>.</li>
+          <li>За серпень банери принесли €5.0k GMV — це ще малий, але вже помітний канал.</li>
+          <li>Розміщення працює: клік є. Проблема — що клієнт бачить після кліку.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="hd">Hero banner ламається на кошику</div>
+        <ul>
+          <li>Лише <b>18%</b> тих, хто клікнув, додають товар — проти 35% зі звичайного банера і 49% з категорії.</li>
+          <li>Клієнт потрапляє на весь асортимент магазину без підбірки і йде.</li>
+          <li>Висновок: під івент потрібна виділена категорія або добірка товарів, а не тільки картинка.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="hd">Банери не приводять новачків</div>
+        <ul>
+          <li>5 перших замовлень з банерів із 614 нових клієнтів за серпень.</li>
+          <li>Нових приводять головна лента (240) і категорія (198).</li>
+          <li>Тобто банер сьогодні — інструмент реактивації наявних, а не acquisition.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Джерело: Databricks
+      <span class="num">etl_delivery_eater_session_provider_viewed_sources</span> —
+      сесії з переглядом магазину VARUS, 1–31 Aug 2026. Конверсія = замовлення / кліків у магазин.
+      GMV — сума кошиків до знижки в межах сесії, тому не дорівнює delivered GMV з першого блоку.</p>
+  </section>
+
+  <!-- ============ 7. Інвестиції Bolt і VARUS ============ -->
+  <section class="slide" id="investments">
+    <div class="section-kicker">Інвестиції в промо</div>
+    <h2>€74.7k промо за період: 66% фінансує VARUS, 34% Bolt</h2>
+    <p class="lead">Квітень–серпень 2026. Знижки на товари + компенсація доставки.</p>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v">€59.8k</div><div class="l">Знижки на товари · 10.6% GMV</div></div>
+      <div class="kpi"><div class="v">€14.8k</div><div class="l">Компенсація доставки · 2.6% GMV</div></div>
+      <div class="kpi good"><div class="v">66% / 34%</div><div class="l">VARUS / Bolt · розподіл знижок</div></div>
+      <div class="kpi warn"><div class="v">5.6%</div><div class="l">Ефективна комісія від GMV · номінал 7%</div></div>
+    </div>
+
+    <h3>Промо-інвестиції по місяцях, € </h3>
+    <div class="chart" id="ch-promo"></div>
+
+    <table>
+      <thead><tr>
+        <th>Місяць</th><th class="r">GMV, €</th><th class="r">Знижки на товари, €</th><th class="r">% GMV</th>
+        <th class="r">Промо на доставку, €</th><th class="r">% GMV</th>
+        <th class="r">Комісія, €</th><th class="r">% GMV</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Травень</td><td class="r">72 612</td><td class="r">4 616</td><td class="r">6.4%</td><td class="r">2 315</td><td class="r">3.2%</td><td class="r">4 152</td><td class="r">5.7%</td></tr>
+        <tr><td>Червень</td><td class="r">101 330</td><td class="r">6 679</td><td class="r">6.6%</td><td class="r">2</td><td class="r">0.0%</td><td class="r">5 798</td><td class="r">5.7%</td></tr>
+        <tr><td>Липень</td><td class="r">156 189</td><td class="r">18 386</td><td class="r">11.8%</td><td class="r">4 102</td><td class="r">2.6%</td><td class="r">8 673</td><td class="r">5.6%</td></tr>
+        <tr class="hl"><td>Серпень</td><td class="r"><b>233 133</b></td><td class="r"><b>30 150</b></td><td class="r"><b>12.9%</b></td><td class="r"><b>8 409</b></td><td class="r">3.6%</td><td class="r"><b>13 050</b></td><td class="r">5.6%</td></tr>
+        <tr><td><b>Разом</b></td><td class="r"><b>563 272</b></td><td class="r"><b>59 834</b></td><td class="r">10.6%</td><td class="r"><b>14 831</b></td><td class="r">2.6%</td><td class="r"><b>31 673</b></td><td class="r">5.6%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Хто платить за знижки · за типом кампанії, квітень–серпень</h3>
+    <table>
+      <thead><tr>
+        <th>Тип кампанії</th><th class="r">Cost share мерчанта</th><th class="r">Знижка, ₴</th><th class="r">Частка</th><th>Платить</th>
+      </tr></thead>
+      <tbody>
+        <tr class="hl"><td>Bolt Market supplier · промо мерчанта на товари</td><td class="r">100%</td><td class="r">2 644 874</td><td class="r">66.2%</td><td><span class="status green">VARUS</span></td></tr>
+        <tr><td>Provider campaign · retail growth</td><td class="r">0%</td><td class="r">889 245</td><td class="r">22.2%</td><td><span class="status amber">Bolt</span></td></tr>
+        <tr><td>Marketing · 3rd party partnership</td><td class="r">0%</td><td class="r">227 928</td><td class="r">5.7%</td><td><span class="status amber">Bolt</span></td></tr>
+        <tr><td>Provider campaign · 3rd party partnership</td><td class="r">0%</td><td class="r">165 475</td><td class="r">4.1%</td><td><span class="status amber">Bolt</span></td></tr>
+        <tr><td>Activation · перше замовлення</td><td class="r">0%</td><td class="r">51 732</td><td class="r">1.3%</td><td><span class="status amber">Bolt</span></td></tr>
+        <tr><td>Інше · ELC, Bolt Plus, решта</td><td class="r">0–100%</td><td class="r">18 743</td><td class="r">0.5%</td><td><span class="status amber">Bolt</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="cols2" style="margin-top:18px">
+      <div class="callout warn" style="margin:0">
+        <div class="ttl">Промо на доставку Bolt фінансує сам</div>
+        У серпні Bolt зняв €8.4k з чеків за доставку — cost share на цих кампаніях не налаштований,
+        тобто VARUS у них не платить нічого. Це і є предмет домовленості 50/50: на серпневому
+        обсязі це ≈ €4.2k на місяць від VARUS.
+      </div>
+      <div class="callout bad" style="margin:0">
+        <div class="ttl">Комісія 7% дає 5.6% від GMV</div>
+        Комісія нараховується на товарну частину чека, а GMV включає доставку й сервісні збори,
+        тому ефективна ставка нижча за номінал. За серпень — €13.0k комісії на €233k GMV.
+        Перехід на 9% дає +€3.7k на місяць (+28.6%) без зміни обсягів.
+      </div>
+    </div>
+    <p class="note">Знижки на товари — <span class="num">total_order_item_discount_eur</span>,
+      промо на доставку — різниця <span class="num">delivery_price_before/after_discount_eur</span>,
+      cost share — <span class="num">etl_delivery_order_campaign</span> × <span class="num">dim_campaign_delivery_v2</span>.
+      У клієнтській версії вказано €58.5k і 73% від VARUS — це метрика Looker з іншою базою;
+      тут — розрахунок по order-level даних з cost share.</p>
+  </section>
+
+  <!-- ============ 8. Наступні кроки: комерція ============ -->
+  <section class="slide" id="next">
+    <div class="section-kicker">Наступні кроки · комерція</div>
+    <h2>Івенти до кінця року, 50/50 на доставку, комісія 9%</h2>
+    <p class="lead">Три домовленості, які треба закрити до старту сезону покупок.</p>
+
+    <h3>1. Участь у всіх глобальних івентах</h3>
+    <table>
+      <thead><tr>
+        <th>Івент</th><th>Дати</th><th>Плейсменти Bolt</th><th>Що потрібно від VARUS</th>
+      </tr></thead>
+      <tbody>
+        <tr class="hl"><td>Глобальна кампанія · обрана</td><td>21–25 Oct</td><td>Hero Banner + Modals</td><td>Знижки на топ-категорії, окрема добірка товарів</td></tr>
+        <tr><td>🎃 Halloween</td><td>26.10 – 01.11</td><td>Home Screen + Stores Screen Banner</td><td>Тематична спецкатегорія, спецпропозиції</td></tr>
+        <tr><td>🛍️ Black Friday</td><td>23.11 – 29.11</td><td>Hero Banner, Home + Stores Screen, Modals</td><td>Максимальні знижки, weekend promo</td></tr>
+        <tr><td>🎄 Christmas</td><td>07.12 – 27.12</td><td>Home Screen + Stores Screen Banner</td><td>Подарункові набори, святкова категорія</td></tr>
+        <tr><td>🍾 New Year's</td><td>28.12 – 03.01</td><td>Home Screen + Stores Screen Banner</td><td>Святковий кошик, спецпропозиції</td></tr>
+        <tr><td>🛍️ Store Deal Days</td><td>за домовленістю</td><td>Stores Screen Banner + Modals</td><td>Знижки та спецпропозиції на період</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Hero Banner доступний тільки для однієї обраної кампанії. Умова участі в кожному
+      івенті — знижки або спецпропозиції, weekend promo та <b>виділена спецкатегорія на період
+      глобального івента</b>: за даними банерного блоку сам банер без добірки конвертує втричі гірше.</p>
+
+    <h3>2. Компенсація доставки 50/50</h3>
+    <div class="chart" id="ch-df-share"></div>
+    <div class="kpis" style="margin-top:14px">
+      <div class="kpi good"><div class="v">62%</div><div class="l">Замовлень у серпні з промо на доставку</div></div>
+      <div class="kpi good"><div class="v">71%</div><div class="l">GMV серпня через промо на доставку</div></div>
+      <div class="kpi good"><div class="v">+50%</div><div class="l">AOV з промо · €18.4 проти €12.3</div></div>
+      <div class="kpi warn"><div class="v">€8.4k</div><div class="l">Заплатив Bolt у серпні · VARUS 0</div></div>
+    </div>
+    <div class="callout good">
+      <div class="ttl">Доказ, що це працює</div>
+      У червні промо на доставку не було зовсім — 4 замовлення з 7 479, і це найслабший місяць
+      по темпу росту. У липні промо повернули: 49% замовлень і 67% GMV, у серпні — 62% і 71%.
+      Паблік лонч теж ішов із компенсованою доставкою. Просимо 50/50 — на серпневому обсязі
+      це ≈ €4.2k на місяць від VARUS проти €8.4k, які зараз повністю несе Bolt.
+    </div>
+
+    <h3>3. Комісія 7% → 9%</h3>
+    <div class="cols3">
+      <div class="flow-step"><div class="big">€13.0k</div><div class="small">Комісія за серпень при 7% · 5.6% від GMV</div></div>
+      <div class="flow-step"><div class="big">€16.8k</div><div class="small">Та сама база при 9% · 7.2% від GMV</div></div>
+      <div class="flow-step"><div class="big">+€45k</div><div class="small">На рік у серпневому run-rate · +28.6%</div></div>
+    </div>
+    <p class="note">Розрахунок: комісія серпня × 9/7, обсяги без змін. Підвищення узгоджене —
+      потрібна дата вступу в силу та підписаний додаток.</p>
+  </section>
+
+  <!-- ============ 9. Наступні кроки: операційка ============ -->
+  <section class="slide" id="store-fix">
+    <div class="section-kicker">Наступні кроки · операційка</div>
+    <h2>Що саме покращуємо і в яких магазинах</h2>
+    <p class="lead">Червень–серпень 2026. Магазини з ≥100 замовлень, відсортовані за втраченим GMV.</p>
+
+    <div class="kpis">
+      <div class="kpi bad"><div class="v">94.8%</div><div class="l">Доступність мережі в серпні · 99.3% у липні</div></div>
+      <div class="kpi bad"><div class="v">10.3%</div><div class="l">Not-delivered у серпні · 4.8% у липні</div></div>
+      <div class="kpi warn"><div class="v">43 хв</div><div class="l">Час доставки в серпні · 37 хв у липні</div></div>
+      <div class="kpi bad"><div class="v">60.3%</div><div class="l">Order defect rate · 54.1% у липні</div></div>
+    </div>
+
+    <h3>Чотири напрямки роботи</h3>
+    <div class="cols2">
+      <div class="box">
+        <div class="hd">Наявність товару · ₴420k втрат</div>
+        <ul>
+          <li>571 скасування через «товару немає» за червень–серпень.</li>
+          <li>Що робимо: щоденне звіряння стоків перед відкриттям слотів, зняття з полиці в порталі замість скасування замовлення.</li>
+          <li>Де: Андрія Малишка 3, Васильківська 34, Героїв полку Азов 12.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="hd">Реальні години роботи · ₴366k втрат</div>
+        <ul>
+          <li>367 замовлень скасовано, бо магазин був закритий у заявлені робочі години.</li>
+          <li>Що робимо: привести графік у порталі до фактичного, авто-пауза замість прийому замовлень.</li>
+          <li>Де: Лесі Українки 30, Яценка 2, Васильківська 34, Коцюбинського 70.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="hd">Персонал на зборці · ₴70k підтверджених втрат</div>
+        <ul>
+          <li>72 випадки, де CS прямо записав «нема кому збирати». Коментар є лише у 599 з 2 601 скасування — реальна цифра вища.</li>
+          <li>Що робимо: закріплений збирач на пікові години 17:00–21:00 і вихідні.</li>
+          <li>Де: три critical-магазини Києва.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="hd">Час доставки · 5 магазинів понад 42 хв</div>
+        <ul>
+          <li>Науки 8а — 54.7 хв, Коцюбинського 70 — 44.6, Малишка 3 — 44.3, Калинова 9А — 43.3, Глинки 2 — 42.3.</li>
+          <li>Що робимо: скоротити час зборки, окрема зона видачі для курʼєра.</li>
+          <li>Ціль: DT p50 ≤ 30 хв.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Магазини, які треба покращити · доступність і персонал</h3>
+    <table>
+      <thead><tr>
+        <th>Магазин</th><th>Місто</th><th class="r">Замовлень</th><th class="r">NDR</th>
+        <th class="r">Доступність</th><th class="r">DT p50</th><th class="r">Втрачений GMV, €</th><th>Пріоритет</th>
+      </tr></thead>
+      <tbody>
+        <tr class="warnrow"><td>вул. Лесі Українки 30</td><td>Київ</td><td class="r">216</td><td class="r">51.9%</td><td class="r">91.7%</td><td class="r">40.6 хв</td><td class="r">1 864</td><td><span class="status red">Перезапуск</span></td></tr>
+        <tr class="warnrow"><td>вул. Андрія Малишка 3</td><td>Київ</td><td class="r">1 472</td><td class="r">13.0%</td><td class="r">95.1%</td><td class="r">44.3 хв</td><td class="r">4 020</td><td><span class="status red">Critical</span></td></tr>
+        <tr class="warnrow"><td>вул. Васильківська 34</td><td>Київ</td><td class="r">1 304</td><td class="r">12.1%</td><td class="r">93.3%</td><td class="r">36.3 хв</td><td class="r">2 843</td><td><span class="status red">Critical</span></td></tr>
+        <tr class="warnrow"><td>вул. Героїв полку Азов 12</td><td>Київ</td><td class="r">756</td><td class="r">14.0%</td><td class="r">96.6%</td><td class="r">34.4 хв</td><td class="r">2 460</td><td><span class="status red">Critical</span></td></tr>
+        <tr><td>пр. Коцюбинського 70</td><td>Вінниця</td><td class="r">1 963</td><td class="r">8.1%</td><td class="r">93.7%</td><td class="r">44.6 хв</td><td class="r">2 443</td><td><span class="status amber">Fix</span></td></tr>
+        <tr><td>пр. Науки 8а</td><td>Дніпро</td><td class="r">929</td><td class="r">13.0%</td><td class="r">97.3%</td><td class="r">54.7 хв</td><td class="r">2 242</td><td><span class="status amber">Fix · час</span></td></tr>
+        <tr><td>вул. Паникахи 15</td><td>Дніпро</td><td class="r">566</td><td class="r">12.0%</td><td class="r">93.5%</td><td class="r">50.5 хв</td><td class="r">1 294</td><td><span class="status amber">Fix</span></td></tr>
+        <tr><td>вул. Бажана 10-А</td><td>Київ</td><td class="r">253</td><td class="r">28.5%</td><td class="r">99.4%</td><td class="r">29.3 хв</td><td class="r">1 103</td><td><span class="status amber">Fix · NDR</span></td></tr>
+        <tr><td>Французький бульвар 22</td><td>Одеса</td><td class="r">280</td><td class="r">17.9%</td><td class="r">100%</td><td class="r">54.2 хв</td><td class="r">899</td><td><span class="status amber">Fix · NDR</span></td></tr>
+        <tr><td>вул. Яценка 2</td><td>Запоріжжя</td><td class="r">&lt; 100</td><td class="r">—</td><td class="r">91.8%</td><td class="r">—</td><td class="r">—</td><td><span class="status amber">Доступність</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout bad">
+      <div class="ttl">Що просимо по кожному магазину зі списку</div>
+      Відповідального з боку VARUS, план по персоналу на зборці, реальні години прийому замовлень
+      у порталі та дату повторної перевірки. Ціль по мережі: NDR ≤ 8%, доступність ≥ 98%,
+      DT p50 ≤ 30 хв.
+    </div>
+    <p class="note">Доступність — <span class="num">etl_delivery_provider_daily_availability</span>,
+      середнє по днях 1 Jun – 31 Aug 2026. NDR і втрачений GMV — замовлення у статусах failed/rejected.
+      Поза періодом звіту: у вересні доступність мережі впала до 90.8%, not-delivered виріс до 16.9% —
+      тренд погіршується, тому фікс потрібен до старту сезону івентів.</p>
+  </section>
+
+  <footer>
+    VARUS × Bolt Food UA · <b>внутрішня версія MBR, не для партнера</b> ·
+    дані Databricks до 31 Aug 2026 · мережа VARUS без пілота NYAM BY VARUS.UA
+  </footer>
+</div>
+
+<script>
+const C = {
+  green: '#0f9d5a', mint: '#8fd3b3', grey: '#a9b7b0', greyDark: '#6c7772',
+  red: '#e94b3b', amber: '#c99a3c', blue: '#2a8bee', line: '#e6ebe7', muted: '#6c7772'
+};
+
+const slides = [...document.querySelectorAll('.slide:not([hidden])')];
+slides.forEach((slide, index) => {
+  slide.dataset.page = `${index + 1} / ${slides.length}`;
+});
+
+function fmt(v) {
+  if (Math.abs(v) >= 1000) return v.toLocaleString('uk-UA');
+  return String(Math.round(v * 100) / 100);
+}
+
+function axisTicks(max, count) {
+  const step = max / count;
+  const out = [];
+  for (let i = 0; i <= count; i++) out.push(step * i);
+  return out;
+}
+
+function niceMax(max) {
+  const mag = Math.pow(10, Math.floor(Math.log10(max)));
+  const n = Math.ceil(max / (mag / 2)) * (mag / 2);
+  return n === max ? max + mag / 2 : n;
+}
+
+// ---- generic frame -------------------------------------------------
+function frame(opts) {
+  const W = 960, H = opts.height || 260;
+  const padL = opts.padL || 52, padR = 18, padT = 14, padB = 34;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const max = opts.max;
+  const ticks = axisTicks(max, 4);
+  let g = '';
+  ticks.forEach(t => {
+    const y = padT + plotH - (t / max) * plotH;
+    g += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="${C.line}" stroke-width="1"/>`;
+    g += `<text x="${padL - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="${C.muted}">${fmt(t)}</text>`;
+  });
+  return { W, H, padL, padR, padT, padB, plotW, plotH, grid: g, max };
+}
+
+function xLabels(f, cats) {
+  const bw = f.plotW / cats.length;
+  return cats.map((c, i) => {
+    const x = f.padL + bw * i + bw / 2;
+    return `<text x="${x.toFixed(1)}" y="${f.padT + f.plotH + 20}" text-anchor="middle" font-size="11" fill="${C.muted}">${c}</text>`;
+  }).join('');
+}
+
+function legend(series) {
+  return '<div class="legend">' + series.map(s =>
+    `<span><i class="dot" style="background:${s.color}"></i>${s.name}</span>`).join('') + '</div>';
+}
+
+// ---- line chart ----------------------------------------------------
+function lineChart(el, cfg) {
+  const all = cfg.series.flatMap(s => s.data);
+  const max = niceMax(Math.max.apply(null, all));
+  const f = frame({ height: cfg.height, max: max });
+  const bw = f.plotW / cfg.categories.length;
+  const px = i => f.padL + bw * i + bw / 2;
+  const py = v => f.padT + f.plotH - (v / max) * f.plotH;
+
+  let body = '';
+  cfg.series.forEach(s => {
+    const pts = s.data.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' ');
+    if (cfg.fill) {
+      body += `<polygon points="${px(0).toFixed(1)},${(f.padT + f.plotH).toFixed(1)} ${pts} ${px(s.data.length - 1).toFixed(1)},${(f.padT + f.plotH).toFixed(1)}" fill="${s.color}" opacity="0.12"/>`;
+    }
+    body += `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    body += s.data.map((v, i) =>
+      `<circle cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="3.4" fill="#fff" stroke="${s.color}" stroke-width="2"><title>${s.name}: ${fmt(v)}</title></circle>`).join('');
+  });
+
+  el.innerHTML = (cfg.series.length > 1 ? legend(cfg.series) : '') +
+    `<svg viewBox="0 0 ${f.W} ${f.H}" width="100%" role="img">${f.grid}${body}${xLabels(f, cfg.categories)}</svg>`;
+}
+
+// ---- bar chart -----------------------------------------------------
+function barChart(el, cfg) {
+  const stacked = !!cfg.stacked;
+  let max;
+  if (stacked) {
+    max = niceMax(Math.max.apply(null, cfg.categories.map((c, i) =>
+      cfg.series.reduce((a, s) => a + s.data[i], 0))));
+  } else {
+    max = niceMax(Math.max.apply(null, cfg.series.flatMap(s => s.data).concat(cfg.refLine ? [cfg.refLine.value] : [])));
+  }
+  const f = frame({ height: cfg.height, max: max });
+  const slot = f.plotW / cfg.categories.length;
+  const groupW = slot * 0.6;
+  const n = stacked ? 1 : cfg.series.length;
+  const barW = groupW / n;
+  const py = v => f.padT + f.plotH - (v / max) * f.plotH;
+
+  let body = '';
+  cfg.categories.forEach((cat, i) => {
+    const x0 = f.padL + slot * i + (slot - groupW) / 2;
+    if (stacked) {
+      let acc = 0;
+      cfg.series.forEach(s => {
+        const v = s.data[i];
+        const hh = py(acc) - py(acc + v);
+        body += `<rect x="${x0.toFixed(1)}" y="${py(acc + v).toFixed(1)}" width="${groupW.toFixed(1)}" height="${Math.max(hh, 0).toFixed(1)}" fill="${s.color}" rx="2"><title>${cat} · ${s.name}: ${fmt(v)}</title></rect>`;
+        acc += v;
+      });
+    } else {
+      cfg.series.forEach((s, si) => {
+        const v = s.data[i];
+        const x = x0 + barW * si;
+        const y = py(v);
+        body += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(barW - 3).toFixed(1)}" height="${(f.padT + f.plotH - y).toFixed(1)}" fill="${s.color}" rx="2"><title>${cat} · ${s.name}: ${fmt(v)}</title></rect>`;
+        if (cfg.showValues) {
+          body += `<text x="${(x + (barW - 3) / 2).toFixed(1)}" y="${(y - 5).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="600" fill="${C.muted}">${fmt(v)}</text>`;
+        }
+      });
+    }
+  });
+
+  if (cfg.refLine) {
+    const y = py(cfg.refLine.value);
+    body += `<line x1="${f.padL}" y1="${y.toFixed(1)}" x2="${f.W - f.padR}" y2="${y.toFixed(1)}" stroke="${C.red}" stroke-width="1.6" stroke-dasharray="6 4"/>`;
+    body += `<text x="${f.W - f.padR - 4}" y="${(y - 6).toFixed(1)}" text-anchor="end" font-size="11" font-weight="700" fill="${C.red}">${cfg.refLine.label}</text>`;
+  }
+
+  el.innerHTML = (cfg.series.length > 1 ? legend(cfg.series) : '') +
+    `<svg viewBox="0 0 ${f.W} ${f.H}" width="100%" role="img">${f.grid}${body}${xLabels(f, cfg.categories)}</svg>`;
+}
+
+// ---- render --------------------------------------------------------
+lineChart(document.getElementById('ch-gmv'), {
+  categories: ['27 Apr', '4 May', '11', '18', '25', '1 Jun', '8', '15', '22', '29',
+               '6 Jul', '13', '20', '27', '3 Aug', '10', '17', '24'],
+  series: [{ name: 'GMV delivered, млн грн', color: C.green,
+    data: [0.22, 0.87, 0.90, 0.89, 0.85, 1.03, 1.17, 1.45, 1.22, 1.47,
+           1.75, 1.67, 2.01, 2.13, 2.34, 3.25, 2.74, 2.72] }],
+  fill: true, height: 250
+});
+
+barChart(document.getElementById('ch-promo'), {
+  categories: ['Травень', 'Червень', 'Липень', 'Серпень'],
+  series: [
+    { name: 'Знижки на товари, €', color: C.green, data: [4616, 6679, 18386, 30150] },
+    { name: 'Промо на доставку, €', color: C.blue, data: [2315, 2, 4102, 8409] }
+  ],
+  stacked: true, height: 240
+});
+
+barChart(document.getElementById('ch-df-share'), {
+  categories: ['Травень', 'Червень', 'Липень', 'Серпень'],
+  series: [
+    { name: '% замовлень з промо на доставку', color: C.blue, data: [36.4, 0.1, 49.3, 61.9] },
+    { name: '% GMV з промо на доставку', color: C.mint, data: [33.7, 0.0, 67.3, 70.9] }
+  ],
+  showValues: true, height: 230
+});
+
+// ---- перегляд лише онлайн -------------------------------------------
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  const k = (e.key || '').toLowerCase();
+  const mod = e.ctrlKey || e.metaKey;
+  if (mod && ['p', 's', 'u', 'c'].includes(k)) { e.preventDefault(); return false; }
+  if (mod && e.shiftKey && ['i', 'j', 'c'].includes(k)) { e.preventDefault(); return false; }
+  if (k === 'f12') { e.preventDefault(); return false; }
+});
+</script>
+</body>
+</html>
