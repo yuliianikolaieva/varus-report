@@ -178,9 +178,11 @@
 <nav class="toolbar" aria-label="Навігація презентації">
   <b>VARUS × Bolt · Aug 2026</b>
   <a href="#results">Результат</a>
+  <a href="#market">Ринок</a>
   <a href="#growth">Ріст</a>
   <a href="#operations">Операційка</a>
   <a href="#stores">Магазини</a>
+  <a href="#sku">SKU</a>
   <a href="#cvp">CVP</a>
   <a href="#banners">Банери</a>
   <a href="#investments">Інвестиції</a>
@@ -230,6 +232,40 @@
     <p class="note">Перше замовлення — 23 Apr 2026, повноцінний rollout стартував 1 травня.
       Ramp 3 → 5 → 8 → 10 млн грн — робочий план, потребує контрактного підтвердження.
       GMV і AOV — по delivered; замовлення — всі створені. Мережа VARUS, без пілота NYAM BY VARUS.UA.</p>
+  </section>
+
+  <!-- ============ Ринковий контекст ============ -->
+  <section class="slide" id="market">
+    <div class="section-kicker">Ринок · серпень 2026</div>
+    <h2>VARUS — один із ключових драйверів росту grocery на Bolt</h2>
+    <p class="lead">Закритий факт. Ринок — усі 3P Stores в Україні; grocery — продуктові мережі та магазини.</p>
+
+    <div class="kpis">
+      <div class="kpi good"><div class="v">+26%</div><div class="l">GMV усіх Stores · липень → серпень</div></div>
+      <div class="kpi good"><div class="v">+28%</div><div class="l">GMV grocery · липень → серпень</div></div>
+      <div class="kpi good"><div class="v">+49%</div><div class="l">GMV VARUS · липень → серпень</div></div>
+      <div class="kpi good"><div class="v">41%</div><div class="l">Частка VARUS у grocery GMV · серпень</div></div>
+    </div>
+
+    <h3>Delivered GMV, € тис. на місяць</h3>
+    <div class="chart" id="ch-market"></div>
+
+    <div class="cols2" style="margin-top:10px">
+      <div class="callout good" style="margin:0">
+        <div class="ttl">Що працює</div>
+        VARUS росте майже вдвічі швидше за grocery: +49% GMV проти +28% у серпні.
+        Мережа дала 61% усього приросту grocery GMV за місяць. Середній кошик €16.06 —
+        на 20% вищий за grocery (€13.40).
+      </div>
+      <div class="callout warn" style="margin:0">
+        <div class="ttl">Де є потенціал</div>
+        NDR VARUS у серпні — 10.3% проти 8.3% у grocery. Конверсія залишається сильною,
+        але знизилась із 31% у червні до 28% у серпні. Наступний приріст — через доступність,
+        стабільну операційну роботу та конвертацію зростаючого трафіку.
+      </div>
+    </div>
+    <p class="note">Джерело: Databricks, delivered orders. Частка VARUS у серпні:
+      41% grocery GMV та 34% grocery orders. Усі ринкові дані показані агреговано.</p>
   </section>
 
   <!-- ============ 2. Як ми росли ============ -->
@@ -341,11 +377,62 @@
     <p class="note">GMV скасувань — сума кошиків скасованих замовлень магазину за 1 Jun – 31 Aug 2026.</p>
   </section>
 
+  <!-- ============ SKU та доступність ============ -->
+  <section class="slide" id="sku">
+    <div class="section-kicker">Асортимент і доступність</div>
+    <h2>Близько 10 тис. доступних SKU на магазин — фокус на стабільності 22 точок</h2>
+    <p class="lead">SKU — весь період співпраці до 13 Sep; доступність магазинів — останні 4 завершені тижні.</p>
+
+    <div class="kpis">
+      <div class="kpi good"><div class="v">9 795</div><div class="l">Медіана доступних SKU · тиждень 7 Sep</div></div>
+      <div class="kpi"><div class="v">55</div><div class="l">Магазинів зі SKU snapshot</div></div>
+      <div class="kpi warn"><div class="v">90.7%</div><div class="l">Середня доступність 56 магазинів</div></div>
+      <div class="kpi warn"><div class="v">22</div><div class="l">Магазини з доступністю нижче 90%</div></div>
+    </div>
+
+    <h3>Медіана доступних SKU на магазин · по тижнях</h3>
+    <div class="chart" id="ch-sku"></div>
+
+    <div class="cols2" style="margin-top:8px">
+      <div>
+        <h3 style="margin-top:0">Найнижча доступність магазинів</h3>
+        <table>
+          <thead><tr><th>Магазин</th><th>Місто</th><th class="r">Доступність</th></tr></thead>
+          <tbody>
+            <tr class="warnrow"><td>Костянтинівська 2А</td><td>Київ</td><td class="r"><b>54.7%</b></td></tr>
+            <tr class="warnrow"><td>Паникахи 15</td><td>Дніпро</td><td class="r"><b>57.0%</b></td></tr>
+            <tr class="warnrow"><td>Олександра Поля 104</td><td>Дніпро</td><td class="r"><b>68.4%</b></td></tr>
+            <tr class="warnrow"><td>Андрія Малишка 3</td><td>Київ</td><td class="r"><b>70.5%</b></td></tr>
+            <tr class="warnrow"><td>Калинова 9А</td><td>Дніпро</td><td class="r"><b>76.2%</b></td></tr>
+            <tr class="warnrow"><td>Лесі Українки 30</td><td>Київ</td><td class="r"><b>77.2%</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="margin-top:0">Висновок</h3>
+        <div class="callout good" style="margin:0 0 10px">
+          <div class="ttl">Асортимент великий і загалом стабільний</div>
+          Після rollout медіана тримається біля 10–10.7 тис. SKU. SKU availability
+          у магазинів переважно 94–98%, отже ключовий каталог доступний користувачам.
+        </div>
+        <div class="callout warn" style="margin:0">
+          <div class="ttl">Основний резерв — години онлайн</div>
+          26 із 56 магазинів мають доступність ≥95%, але 22 — нижче 90%.
+          Потрібен store-by-store план для шести найслабших точок: персонал,
+          фактичні години роботи та щотижневий контроль.
+        </div>
+      </div>
+    </div>
+    <p class="note">SKU: останній snapshot кожного магазину за тиждень,
+      медіана <span class="num">provider_catalog_size</span>. Тестовий тиждень 20 Apr — один магазин;
+      повний rollout — із 27 Apr. Доступність — weighted active rate за 17 Aug – 13 Sep.</p>
+  </section>
+
   <!-- ============ 5. CVP: конверсія та ретеншн ============ -->
   <section class="slide" id="cvp">
     <div class="section-kicker">CVP · конверсія та ретеншн</div>
     <h2>Конверсія 28% і повернення 60–64% клієнтів</h2>
-    <p class="lead">Закритий факт за серпень 2026 та завершені когорти клієнтів VARUS.</p>
+    <p class="lead">Закритий факт за серпень 2026. Ретеншн — з урахуванням замовлень до 14 вересня.</p>
 
     <div class="kpis">
       <div class="kpi good"><div class="v">28%</div><div class="l">Конверсія у замовлення · серпень</div></div>
@@ -854,6 +941,25 @@ lineChart(document.getElementById('ch-gmv'), {
     data: [0.22, 0.87, 0.90, 0.89, 0.85, 1.03, 1.17, 1.45, 1.22, 1.47,
            1.75, 1.67, 2.01, 2.13, 2.34, 3.25, 2.74, 2.72] }],
   fill: true, height: 250
+});
+
+barChart(document.getElementById('ch-market'), {
+  categories: ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер'],
+  series: [
+    { name: 'Усі 3P Stores', color: C.grey, data: [178, 205, 257, 305, 401, 442, 513, 649] },
+    { name: 'Grocery', color: C.mint, data: [145, 166, 203, 255, 347, 383, 448, 573] },
+    { name: 'VARUS', color: C.green, data: [0, 0, 0, 0, 73, 101, 156, 233] }
+  ],
+  stacked: false, showValues: false, height: 225
+});
+
+lineChart(document.getElementById('ch-sku'), {
+  categories: ['20 Apr', '27', '4 May', '11', '18', '25', '1 Jun', '8', '15', '22', '29',
+               '6 Jul', '13', '20', '27', '3 Aug', '10', '17', '24', '31', '7 Sep'],
+  series: [{ name: 'Медіана доступних SKU', color: C.green,
+    data: [15923, 10908, 10488, 10481, 10121, 10367, 10393, 10332, 10257, 10411, 10481,
+           10502, 10731, 10732, 10674, 10394, 9986, 9578, 10030, 10170, 9795] }],
+  fill: true, height: 190
 });
 
 barChart(document.getElementById('ch-investment-impact'), {
