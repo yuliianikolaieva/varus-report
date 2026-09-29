@@ -46,6 +46,9 @@ tr.hl td{background:#f3faf6}tr.warnrow td{background:#fff5f5}
 .filters .period-toggle{margin:0}
 .ops-focus{margin-top:16px;padding:14px 14px 6px;border:1px solid #f0d48a;border-radius:14px;background:#fff8eb}
 .ops-focus h3{margin-top:0;color:#8a5a10}
+.table-wrap tr.time-total td,.table-wrap tr.time-total td:first-child{background:#d8f6e6;font-weight:800}
+.table-wrap tr.time-part td,.table-wrap tr.time-part td:first-child{background:#eefbf4}
+.table-wrap tr.time-aside td:first-child::after{content:" · не входить у суму";font-weight:700;color:#a8761c}
 .chart-box{position:relative;height:280px}
 .table-wrap.collapsible[data-keep="10"]:not(.expanded) tbody tr:nth-child(n+11){display:none}
 .table-wrap.collapsible[data-keep="15"]:not(.expanded) tbody tr:nth-child(n+16){display:none}
@@ -891,18 +894,19 @@ details.glossary summary{cursor:pointer;font-weight:700}
     const focus = [
       ['Late Pickup Rate, %', 'late_pickup_rate', 'ops', 'pp-bad', pct],
       ['Late Delivery Rate, %', 'late_delivery_rate', 'ops', 'pp-bad', pct],
-      ['Загальний час замовлення, хв', 'order_total_min', 'ops', 'pct-bad', v => n(v, 1)],
-      ['Прийняття магазином, хв', 'accept_min', 'ops', 'pct-bad', v => n(v, 2)],
-      ['Пошук курʼєра, хв', 'courier_search_min', 'ops', 'pct-bad', v => n(v, 1)],
-      ['Дорога курʼєра до магазину, хв', 'courier_travel_min', 'ops', 'pct-bad', v => n(v, 1)],
-      ['Очікування курʼєра на локації, хв', 'courier_wait_min', 'ops', 'pct-bad', v => n(v, 1)],
-      ['Час доставки, хв', 'ride_min', 'ops', 'pct-bad', v => n(v, 1)],
-      ['Час збору магазином, хв', 'prep_min', 'ops', 'pct-bad', v => n(v, 1)]
+      ['Загальний час замовлення, хв', 'order_total_min', 'ops', 'pct-bad', v => n(v, 1), 'total'],
+      ['Прийняття магазином, хв', 'accept_min', 'ops', 'pct-bad', v => n(v, 2), 'part'],
+      ['Пошук курʼєра, хв', 'courier_search_min', 'ops', 'pct-bad', v => n(v, 1), 'part'],
+      ['Дорога курʼєра до магазину, хв', 'courier_travel_min', 'ops', 'pct-bad', v => n(v, 1), 'part'],
+      ['Очікування курʼєра на локації, хв', 'courier_wait_min', 'ops', 'pct-bad', v => n(v, 1), 'part'],
+      ['Час доставки, хв', 'ride_min', 'ops', 'pct-bad', v => n(v, 1), 'part'],
+      ['Час збору магазином, хв', 'prep_min', 'ops', 'pct-bad', v => n(v, 1), 'aside']
     ];
     function metricTable(list) {
       let head = `<tr><th>Метрика</th><th class="r">3P Україна · ${lastP ? labelPeriod(lastP, g) : ''}</th>${periods.map(p => `<th class="r">${labelPeriod(p, g)}</th>`).join('')}</tr>`;
       let body = list.map(row => {
-        let tr = `<tr><td>${row[0]}</td>`;
+        const kind = row[5] ? ` class="time-${row[5]}"` : '';
+        let tr = `<tr${kind}><td>${row[0]}</td>`;
         if (withBench.has(row[1])) {
           const src = row[2] === 'quality' ? (quality[lastP] || {}) : (omap[lastP] || {});
           tr += cell(row[4](bench[row[1]]), src[row[1]], bench[row[1]], row[3]);
@@ -920,7 +924,7 @@ details.glossary summary{cursor:pointer;font-weight:700}
     document.getElementById('ops-body').innerHTML = `${toggleHtml('ops')}${metricTable(rows)}
       <div class="ops-focus">
         <h3>Час замовлення</h3>
-        <p class="note">Загальний час = прийняття магазином + пошук курʼєра + дорога курʼєра до магазину + очікування на локації + час доставки. Час збору йде паралельно з пошуком і дорогою курʼєра, тому в суму окремо не входить.</p>
+        <p class="note">Зеленим виділені рядки, які в сумі дають загальний час: прийняття магазином + пошук курʼєра + дорога курʼєра до магазину + очікування на локації + час доставки. Час збору магазином у цю суму не входить: збірка йде паралельно з пошуком і дорогою курʼєра.</p>
         ${metricTable(focus)}
       </div>
       <p class="note">Стовпець «3P Україна» — рівень усіх 3P-магазинів України за останній повний період. Дельта біля нього показує, наскільки VARUS вищий або нижчий за цей орієнтир. У решті стовпців дельта — зміна проти попереднього періоду. Зелений — покращення, червоний — погіршення.</p>`;
@@ -1458,6 +1462,7 @@ details.glossary summary{cursor:pointer;font-weight:700}
 })();
 
 </script>
+
 
 
 
