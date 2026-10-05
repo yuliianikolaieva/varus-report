@@ -93,6 +93,7 @@ ul.compact li{margin:4px 0}
 <nav class="toc">
   <strong>Зміст:</strong>
   <ol>
+    <li><a href="#share-summary">Коротко для команди та директора</a></li>
     <li><a href="#summary">Executive Summary</a></li>
     <li><a href="#setup">Налаштування кампанії</a></li>
     <li><a href="#flow">Що сталося з виданим кешбеком</a></li>
@@ -107,6 +108,70 @@ ul.compact li{margin:4px 0}
     <li><a href="#method">Методологія та застереження</a></li>
   </ol>
 </nav>
+
+<!-- SHARE SUMMARY -->
+<section class="section" id="share-summary">
+<h2>Коротко для команди та директора</h2>
+<div class="insight good">
+  <div class="insight-title">Висновок: механіку кешбеку підтверджено, але прогноз залучення нових юзерів — ще ні</div>
+  <div class="insight-text">
+    Вересневий тест підтвердив фінансову механіку, закладену в sign-off: Bolt платить лише за викуплений кешбек,
+    а не за всю видану суму. Фактична витрата склала <strong>62 091 ₴</strong> при <strong>83 541 ₴</strong>
+    виданого кешбеку, бо 25.7% згоріли без витрати для Bolt. Водночас це <strong>не був запуск моделі для нових
+    юзерів</strong>: кампанія таргетувала активних Food-юзерів без попередньої grocery-покупки і тривала 15 днів.
+    Тому вона калібрує бюджетні припущення, але не доводить ані прогноз 844 нових юзерів, ані 60-денний ROI.
+  </div>
+</div>
+
+<div class="grid-4" style="margin-bottom:16px">
+  <div class="card kpi"><div class="kpi-label">План: Base, 7 днів</div><div class="kpi-value">844</div><div class="kpi-sub stable">нових юзери · 76 400 ₴</div></div>
+  <div class="card kpi"><div class="kpi-label">Факт: 15 днів</div><div class="kpi-value">648</div><div class="kpi-sub stable">активних Food-юзерів · 62 091 ₴</div></div>
+  <div class="card kpi"><div class="kpi-label">Плановий redemption</div><div class="kpi-value">50.0%</div><div class="kpi-sub stable">Base-сценарій</div></div>
+  <div class="card kpi"><div class="kpi-label">Фактичний redemption</div><div class="kpi-value neutral">66.9%</div><div class="kpi-sub neutral">вище Optimistic 65%</div></div>
+</div>
+
+<div class="card">
+  <h3>Що планували у sign-off vs що сталося фактично</h3>
+  <table>
+    <thead><tr><th>Показник</th><th class="num">Sign-off: план</th><th class="num">Вересневий факт</th><th>Як читати</th></tr></thead>
+    <tbody>
+      <tr><td>Цільова аудиторія</td><td class="num">Нові для delivery</td><td class="num">Активні Food, без grocery</td><td><span class="badge badge-r">не зіставно</span> різні бар’єри й поведінка</td></tr>
+      <tr><td>Тривалість</td><td class="num">7 днів</td><td class="num">15 днів</td><td><span class="badge badge-r">не зіставно</span> обсяг не можна порівнювати напряму</td></tr>
+      <tr><td>Кешбек / кеп / фінансування</td><td class="num">20% / 200 ₴ / Bolt 100%</td><td class="num">20% / 200 ₴ / Bolt 100%</td><td><span class="badge badge-g">зіставно</span> механіка збігається</td></tr>
+      <tr><td>Мінімальний чек</td><td class="num">700 ₴</td><td class="num">Не заданий</td><td><span class="badge badge-y">відкрито</span> 68.1% фактичних чеків ≥700 ₴</td></tr>
+      <tr><td>Учасники / активації</td><td class="num">844 (Base)</td><td class="num">648</td><td><span class="badge badge-y">напрямок</span> −23%, але факт ішов удвічі довше й на іншій когорті</td></tr>
+      <tr><td>Фактична витрата Bolt</td><td class="num">76 400 ₴ (€1 489)</td><td class="num">62 091 ₴ (€1 210)</td><td><span class="badge badge-y">напрямок</span> −19%; Base — прогноз для іншої кампанії</td></tr>
+      <tr><td>Redemption rate</td><td class="num">50.0% (Base)</td><td class="num cell-warn">66.9%</td><td><span class="badge badge-y">калібрувати</span> планувати 65–70%</td></tr>
+      <tr><td>Середній кешбек, який заробив юзер</td><td class="num">181 ₴</td><td class="num cell-warn">129 ₴</td><td><span class="badge badge-y">калібрувати</span> нижче на 29%</td></tr>
+      <tr><td>Витрата на юзера</td><td class="num">91 ₴</td><td class="num cell-good">96 ₴</td><td><span class="badge badge-g">зіставно</span> лише +6% — два відхилення гасяться</td></tr>
+      <tr><td>Віддача на витрату</td><td class="num">2.8x за 60 днів</td><td class="num cell-good">2.8x за 7 днів</td><td><span class="badge badge-y">напрямок</span> факт gross і не скоригований на інкрементальність</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="grid-2" style="margin-top:16px">
+  <div class="insight action" style="margin-bottom:0">
+    <div class="insight-title">Рішення, яке підтримують дані</div>
+    <div class="insight-text">
+      Запускати <strong>окремий 7-денний тест на нових юзерів</strong> можна: параметри кешбеку, бюджетна логіка
+      й обмеження 200 ₴ пройшли реальну перевірку. Залишити 10% холдаут, розвести запуск із free delivery на MOV 600 ₴
+      і затвердити стелю 294 319 ₴ — це саме ліміт ризику, а не очікувана витрата.
+    </div>
+  </div>
+  <div class="insight warn" style="margin-bottom:0">
+    <div class="insight-title">Що не можна заявляти після цього тесту</div>
+    <div class="insight-text">
+      Не можна називати 648 фактичним результатом sign-off плану або стверджувати, що нові юзери дадуть 2.8x ROI:
+      інша аудиторія, інша тривалість, відсутній рандомізований контроль, а 2.8x — gross commission, не contribution margin.
+      Після нового запуску потрібне порівняння саме з його холдаутом.
+    </div>
+  </div>
+</div>
+<div class="inline" style="margin-top:10px">
+  Джерело плану: <em>VARUS_new_user_cashback_spend_signoff (1).xlsx</em>, вкладки Sign-off / Logic & assumptions
+  (версія з мінімальним чеком 700 ₴). Пізніша ревізія моделі на 600 ₴ у це порівняння не підставлялася.
+</div>
+</section>
 
 <!-- 1. EXECUTIVE SUMMARY -->
 <section class="section" id="summary">
