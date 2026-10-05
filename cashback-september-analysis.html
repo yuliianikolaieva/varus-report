@@ -100,7 +100,7 @@ ul.compact li{margin:4px 0}
     <li><a href="#pacing">Денна динаміка</a></li>
     <li><a href="#audience">Кого кампанія дійсно зачепила</a></li>
     <li><a href="#incremental">Інкрементальність: порівняння з контрольною базою</a></li>
-    <li><a href="#roi">Віддача на витрату</a></li>
+    <li><a href="#roi">Віддача на витрату та напрямок наступних замовлень</a></li>
     <li><a href="#model">Модель сайн-офу проти факту</a></li>
     <li><a href="#budget">Місце кешбеку у вересневому бюджеті</a></li>
     <li><a href="#context">Контекст: вересень у VARUS</a></li>
@@ -138,7 +138,7 @@ ul.compact li{margin:4px 0}
       <tr><td>Цільова аудиторія</td><td class="num">Нові для delivery</td><td class="num">Активні Food, без grocery</td><td><span class="badge badge-r">не зіставно</span> різні бар’єри й поведінка</td></tr>
       <tr><td>Тривалість</td><td class="num">7 днів</td><td class="num">15 днів</td><td><span class="badge badge-r">не зіставно</span> обсяг не можна порівнювати напряму</td></tr>
       <tr><td>Кешбек / кеп / фінансування</td><td class="num">20% / 200 ₴ / Bolt 100%</td><td class="num">20% / 200 ₴ / Bolt 100%</td><td><span class="badge badge-g">зіставно</span> механіка збігається</td></tr>
-      <tr><td>Мінімальний чек</td><td class="num">700 ₴</td><td class="num">Не заданий</td><td><span class="badge badge-y">відкрито</span> 68.1% фактичних чеків ≥700 ₴</td></tr>
+      <tr><td>Мінімальний чек</td><td class="num">700 ₴</td><td class="num">700 ₴</td><td><span class="badge badge-g">збіг</span> підтверджено в налаштуваннях кампанії</td></tr>
       <tr><td>Учасники / активації</td><td class="num">844 (Base)</td><td class="num">648</td><td><span class="badge badge-y">напрямок</span> −23%, але факт ішов удвічі довше й на іншій когорті</td></tr>
       <tr><td>Фактична витрата Bolt</td><td class="num">76 400 ₴ (€1 489)</td><td class="num">62 091 ₴ (€1 210)</td><td><span class="badge badge-y">напрямок</span> −19%; Base — прогноз для іншої кампанії</td></tr>
       <tr><td>Redemption rate</td><td class="num">50.0% (Base)</td><td class="num cell-warn">66.9%</td><td><span class="badge badge-y">калібрувати</span> планувати 65–70%</td></tr>
@@ -199,8 +199,8 @@ ul.compact li{margin:4px 0}
   <div class="insight-title">⚠️ Redemption rate 66.9% — на третину вище за Base-сценарій</div>
   <div class="insight-text">
     Модель закладала 50% у Base і 65% в Optimistic. Факт — 66.9%, тобто навіть вище оптимістичного.
-    Але середній зароблений кешбек вийшов 129 ₴ проти 170 ₴ у моделі, тому дві помилки взаємно погасилися:
-    витрата на юзера склала 96 ₴ проти 85 ₴ закладених — розбіжність лише 13%.
+    Але середній зароблений кешбек вийшов 129 ₴ проти 181 ₴ у sign-off, тому дві помилки взаємно погасилися:
+    витрата на юзера склала 96 ₴ проти 91 ₴ закладених — розбіжність лише 6%.
     <strong>Бюджет у сайн-офі чіпати не треба, саме припущення redemption — треба.</strong>
   </div>
 </div>
@@ -238,6 +238,7 @@ ul.compact li{margin:4px 0}
         <tr><td>Target</td><td class="num">item_cashback</td></tr>
         <tr><td>Spend objective</td><td class="num">provider_campaign_retail_growth</td></tr>
         <tr><td>Рівень кешбеку</td><td class="num"><strong>20%</strong></td></tr>
+        <tr><td>Мінімальний чек</td><td class="num"><strong>700 ₴</strong> <span class="inline">(підтверджено вручну)</span></td></tr>
         <tr><td>Максимум на юзера</td><td class="num"><strong>200 ₴</strong> <span class="inline">(кеп досягався)</span></td></tr>
         <tr><td>Частка партнера у витраті</td><td class="num"><strong>0%</strong> <span class="inline">(100% Bolt)</span></td></tr>
         <tr><td>Старт</td><td class="num">15.09.2026, 21:00 UTC</td></tr>
@@ -258,7 +259,7 @@ ul.compact li{margin:4px 0}
         <tr><td>Термін згорання</td><td class="num">7 днів</td><td class="num">7 днів</td><td><span class="badge badge-g">збіг</span></td></tr>
         <tr><td>Тривалість</td><td class="num">7 днів</td><td class="num">15 днів</td><td><span class="badge badge-y">довше</span></td></tr>
         <tr><td>Аудиторія</td><td class="num">Нові юзери</td><td class="num">Активні Food,<br>без продуктів</td><td><span class="badge badge-r">інша</span></td></tr>
-        <tr><td>Мін. чек</td><td class="num">600 ₴</td><td class="num">не заданий</td><td><span class="badge badge-y">відкрито</span></td></tr>
+        <tr><td>Мін. чек</td><td class="num">700 ₴</td><td class="num">700 ₴</td><td><span class="badge badge-g">збіг</span></td></tr>
       </tbody>
     </table>
     <div class="insight" style="margin-top:12px;margin-bottom:0">
@@ -344,7 +345,6 @@ ul.compact li{margin:4px 0}
         <tr><td>Вже купували продукти раніше</td><td class="num">380 (58.6%)</td></tr>
         <tr><td>Середній чек</td><td class="num"><strong>996 ₴</strong></td></tr>
         <tr><td>Медіанний чек</td><td class="num">821 ₴</td></tr>
-        <tr><td>Чеків вище 600 ₴</td><td class="num cell-good">84.1%</td></tr>
         <tr><td>Замовлень на юзера</td><td class="num">1.0</td></tr>
       </tbody>
     </table>
@@ -465,6 +465,49 @@ ul.compact li{margin:4px 0}
     (див. розділ 6 — чистий лифт лише +12 п.п.).
   </div>
 </div>
+
+<div class="divider"></div>
+<h3>Куди пішли наступні замовлення юзерів, що викупили кешбек</h3>
+<div class="insight warn">
+  <div class="insight-title">Це напрямок наступних замовлень, а не точний розподіл 55 856 ₴ кешбеку</div>
+  <div class="insight-text">
+    У доступній кампейн-таблиці є сума викупу по купону, але немає <code>redemption_order_id</code> — тобто неможливо
+    надійно зв'язати кожну гривню кешбеку з конкретним замовленням і партнером. Нижче — усі delivered-замовлення
+    протягом 7 днів після активації серед юзерів, чий кешбек був викуплений. Це чесний індикатор того, куди вони
+    повернулися, але не доказ того, де був застосований сам кешбек.
+  </div>
+</div>
+<div class="grid-2">
+  <div class="card">
+    <h3>Напрямок витрат після активації</h3>
+    <table>
+      <thead><tr><th>Напрямок</th><th class="num">Замовлень</th><th class="num">Юзерів</th><th class="num">GMV</th><th class="num">Частка GMV</th></tr></thead>
+      <tbody>
+        <tr><td>Ресторани / non-grocery</td><td class="num">716</td><td class="num">329</td><td class="num">€11 602</td><td class="num cell-warn">70.3%</td></tr>
+        <tr><td>VARUS</td><td class="num">223</td><td class="num">154</td><td class="num">€3 856</td><td class="num">23.4%</td></tr>
+        <tr><td>Інші grocery</td><td class="num">50</td><td class="num">35</td><td class="num">€933</td><td class="num">5.7%</td></tr>
+        <tr><td>Specialty stores</td><td class="num">8</td><td class="num">5</td><td class="num">€111</td><td class="num">0.7%</td></tr>
+        <tr style="background:#f8fafc"><td><strong>Разом</strong></td><td class="num"><strong>997</strong></td><td class="num">—</td><td class="num"><strong>€16 502</strong></td><td class="num"><strong>100%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Топ партнерів за follow-on GMV</h3>
+    <table>
+      <thead><tr><th>Партнер</th><th class="num">Замовлень</th><th class="num">Юзерів</th><th class="num">GMV</th></tr></thead>
+      <tbody>
+        <tr><td>VARUS</td><td class="num">223</td><td class="num">154</td><td class="num">€3 856</td></tr>
+        <tr><td>McDonald's</td><td class="num">147</td><td class="num">118</td><td class="num">€2 094</td></tr>
+        <tr><td>LOKO</td><td class="num">35</td><td class="num">29</td><td class="num">€742</td></tr>
+        <tr><td>KFC</td><td class="num">60</td><td class="num">46</td><td class="num">€964</td></tr>
+        <tr><td>Foodz Collection</td><td class="num">23</td><td class="num">16</td><td class="num">€431</td></tr>
+        <tr><td>Evraziya Group</td><td class="num">25</td><td class="num">19</td><td class="num">€426</td></tr>
+        <tr><td>Lviv Croissants</td><td class="num">27</td><td class="num">21</td><td class="num">€394</td></tr>
+        <tr><td>Sushi Master</td><td class="num">19</td><td class="num">16</td><td class="num">€361</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </section>
 
 <!-- 8. MODEL VS ACTUAL -->
@@ -476,8 +519,8 @@ ul.compact li{margin:4px 0}
     <tbody>
       <tr><td>Згорілий кешбек не коштує нічого</td><td class="num">припущення</td><td class="num">підтверджено</td><td><span class="badge badge-g">тримається</span> 21 449 ₴ безкоштовно</td></tr>
       <tr><td>Redemption rate</td><td class="num">50%</td><td class="num cell-warn">66.9%</td><td><span class="badge badge-y">підняти</span> до 65–70%</td></tr>
-      <tr><td>Середній зароблений кешбек</td><td class="num">170 ₴</td><td class="num cell-warn">129 ₴</td><td><span class="badge badge-y">знизити</span></td></tr>
-      <tr><td>Витрата на юзера</td><td class="num">85 ₴</td><td class="num cell-good">96 ₴</td><td><span class="badge badge-g">лишити</span> помилки погасилися</td></tr>
+      <tr><td>Середній зароблений кешбек</td><td class="num">181 ₴</td><td class="num cell-warn">129 ₴</td><td><span class="badge badge-y">знизити</span></td></tr>
+      <tr><td>Витрата на юзера</td><td class="num">91 ₴</td><td class="num cell-good">96 ₴</td><td><span class="badge badge-g">лишити</span> помилки погасилися</td></tr>
       <tr><td>Повтор за 7 днів</td><td class="num">27.7% органіка</td><td class="num">66.1% факт<br><span class="inline">база 54.1%</span></td><td><span class="badge badge-y">+12 п.п.</span> чистий лифт</td></tr>
       <tr><td>Повернення GMV у партнера</td><td class="num">70.6%</td><td class="num cell-crit">23.3%</td><td><span class="badge badge-r">когортна</span> різниця</td></tr>
       <tr><td>Віддача на витрату</td><td class="num">3.0x / 60 днів</td><td class="num cell-good">2.8x / 7 днів</td><td><span class="badge badge-g">консервативно</span></td></tr>
@@ -490,7 +533,7 @@ ul.compact li{margin:4px 0}
   <div class="insight-text">
     Redemption виявився на 34% вищим, ніж закладено, а середній зароблений кешбек — на 24% нижчим.
     Ці дві помилки працюють у протилежних напрямках і майже повністю гасяться:
-    факт витрати на юзера 96 ₴ проти 85 ₴ у моделі. Застосовано до Base-сценарію (844 нових юзери)
+    факт витрати на юзера 96 ₴ проти 91 ₴ у моделі. Застосовано до Base-сценарію (844 нових юзери)
     оцінка витрати зміщується з <strong>71 757 ₴</strong> лише до <strong>~81 000 ₴</strong> —
     усе ще втричі нижче за апрувлену стелю 294 319 ₴.
   </div>
@@ -526,11 +569,11 @@ ul.compact li{margin:4px 0}
   </div>
 </div>
 <div class="insight warn" style="margin-top:14px">
-  <div class="insight-title">Безкоштовна доставка вже працює на тому самому порозі 600 ₴</div>
+  <div class="insight-title">Безкоштовна доставка частково накладається на кешбек-кампанію</div>
   <div class="insight-text">
-    Найбільша стаття витрат (45.5%) — безкоштовна доставка з мінімальним чеком 600 ₴, тобто
-    <strong>той самий поріг, що й у моделі кешбеку для нових юзерів</strong>. Якщо запустити кешбек поверх неї,
-    атрибутувати ефект буде неможливо, а юзер отримає подвійний стимул на одному чеку.
+    Найбільша стаття витрат (45.5%) — безкоштовна доставка з мінімальним чеком 600 ₴. Це нижче за
+    <strong>700 ₴ у кешбек-кампанії</strong>, але аудиторії та чеки частково перетинаються. Якщо запускати
+    кешбек поверх неї, атрибутувати ефект буде складніше, а частина юзерів отримає подвійний стимул.
     Кампанії треба розводити в часі або в аудиторії.
   </div>
 </div>
@@ -583,7 +626,7 @@ ul.compact li{margin:4px 0}
     <li><strong>Уточнити базу нарахування кешбеку.</strong> 129 ₴ на чеку 996 ₴ — це 13%, а не 20%. Модель рахує 20% від усього food price; якщо нарахування йде на звужений кошик, оцінка видачі завищена.</li>
     <li><strong>Зберегти 70.6% повернення у VARUS, але позначити як неперевірене.</strong> 23.3% зміряні на активних ресторанних юзерях — інша когорта. Для нових юзерів, залучених саме у VARUS, 70.6% лишається кращою оцінкою, але її треба переміряти постфактум, а не приймати на віру.</li>
     <li><strong>Закласти холдаут 10% і міряти проти нього.</strong> Цей тест пішов без контрольної групи, тому довелося відновлювати базу порівняння постфактум, і оцінка +12 п.п. лишається верхньою межею.</li>
-    <li><strong>Розвести з безкоштовною доставкою.</strong> Вона вже працює на MOV 600 ₴ — тому самому порозі. Послідовно, а не одночасно.</li>
+    <li><strong>Контролювати перетин із безкоштовною доставкою.</strong> Вона працює на MOV 600 ₴, кешбек — від 700 ₴. Кампанії не мають однаковий поріг, але частково накладаються за чеками та аудиторією.</li>
     <li><strong>Очікувати, що темп набору триматиметься.</strong> За 15 днів втоми аудиторії не було (32–60 замовлень/день рівно), тож 7-денне вікно моделі обмежить набір радше розміром сегмента, ніж вигасанням інтересу.</li>
   </ol>
 </div>
