@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VARUS — Кешбек-тест, вересень 2026: результати</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#F8F9FA;--card:#fff;--border:#e5e7eb;--text:#1A1A2E;--muted:#6b7280;--green:#34D186;--red:#dc2626;--yellow:#ca8a04;--blue:#2563eb;--purple:#7c3aed;--cyan:#0891b2;--orange:#ea580c;--accent:#34D186;--accent-dark:#1A1A2E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,system-ui,sans-serif;line-height:1.65}
+.container{max-width:1240px;margin:0 auto;padding:28px}
+.header{display:flex;align-items:center;gap:20px;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border)}
+.logo-dot{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#34D186,#1A1A2E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+h1{font-size:24px;font-weight:700;color:var(--accent-dark)}
+.subtitle{color:var(--muted);font-size:13px;margin-top:2px}
+.report-meta{margin-left:auto;text-align:right;color:var(--muted);font-size:12px}
+.btn-pdf{display:inline-flex;align-items:center;gap:7px;background:var(--accent-dark);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:8px}
+.btn-pdf:hover{opacity:.85}
+h2{font-size:18px;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--accent-dark)}
+h3{font-size:14px;font-weight:600;margin-bottom:10px}
+.section{margin-bottom:36px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.kpi{text-align:center;padding:16px 12px}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;line-height:1.3}
+.kpi-value{font-size:26px;font-weight:700}
+.kpi-sub{font-size:11px;margin-top:4px;font-weight:600}
+.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--yellow)}.stable{color:var(--muted)}
+.chart-box{position:relative;height:300px}
+.chart-box-sm{position:relative;height:240px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f3f4f6}
+tr:hover{background:#f9fafb}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:700}
+.badge-g{background:#dcfce7;color:#166534}.badge-r{background:#fee2e2;color:#991b1b}.badge-y{background:#fef9c3;color:#854d0e}.badge-b{background:#dbeafe;color:#1e40af}
+.cell-crit{background:#fee2e2!important;color:#991b1b;font-weight:700}
+.cell-warn{background:#fef9c3!important;color:#854d0e;font-weight:600}
+.cell-good{background:#dcfce7!important;color:#166534}
+.insight{border-left:3px solid var(--blue);background:#eff6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:13px}
+.insight.warn{border-color:var(--orange);background:#fff7ed}
+.insight.good{border-color:var(--green);background:#f0fdf4}
+.insight.action{border-color:var(--purple);background:#f5f3ff}
+.insight.crit{border-color:var(--red);background:#fef2f2}
+.insight-title{font-weight:700;margin-bottom:3px}
+.insight-text{color:#374151;font-size:12.5px}
+.divider{height:1px;background:var(--border);margin:28px 0}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:28px}
+.toc a{color:var(--blue);text-decoration:none;font-size:13px}
+.toc a:hover{text-decoration:underline}
+.toc li{margin:4px 0}
+ul.compact{padding-left:18px;font-size:13px;color:#374151}
+ul.compact li{margin:4px 0}
+.better{color:#166534;font-weight:600}.worse{color:#991b1b;font-weight:600}.inline{color:var(--muted);font-size:10px}
+.glossary{background:#fafafa;border:1px dashed var(--border);border-radius:8px;padding:14px 16px;font-size:12.5px;margin-top:12px}
+.glossary dt{font-weight:700;margin-top:8px;color:var(--accent-dark)}
+.glossary dt:first-child{margin-top:0}
+.glossary dd{color:#374151;margin-left:0;margin-top:2px}
+.verdict{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:6px}
+.verdict-bad{background:#fee2e2;color:#991b1b}.verdict-good{background:#dcfce7;color:#166534}.verdict-mid{background:#fef9c3;color:#854d0e}
+.flowbar{display:flex;height:38px;border-radius:8px;overflow:hidden;margin:10px 0 6px}
+.flowbar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.flowlegend{display:flex;gap:18px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.flowlegend span{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+@media print{body{background:#fff}.card{box-shadow:none}.btn-pdf{display:none}}
+</style>
+</head>
+<body>
+<div class="container" id="report">
+
+<div class="header">
+  <div class="logo-dot">V</div>
+  <div>
+    <h1>VARUS — Кешбек-тест, вересень 2026</h1>
+    <div class="subtitle">20% кешбеку, кеп 200 UAH · Активні юзери Food без адопції продуктів · 15–30.09.2026</div>
+  </div>
+  <div class="report-meta">
+    Період кампанії: 15.09 – 30.09.2026<br>
+    Сформовано: 05.10.2026<br>
+    Джерело: Databricks · group_name = VARUS
+    <br>
+    <button class="btn-pdf" onclick="downloadPDF()">⬇ Завантажити PDF</button>
+  </div>
+</div>
+
+<nav class="toc">
+  <strong>Зміст:</strong>
+  <ol>
+    <li><a href="#summary">Executive Summary</a></li>
+    <li><a href="#setup">Налаштування кампанії</a></li>
+    <li><a href="#flow">Що сталося з виданим кешбеком</a></li>
+    <li><a href="#pacing">Денна динаміка</a></li>
+    <li><a href="#audience">Кого кампанія дійсно зачепила</a></li>
+    <li><a href="#incremental">Інкрементальність: порівняння з контрольною базою</a></li>
+    <li><a href="#roi">Віддача на витрату</a></li>
+    <li><a href="#model">Модель сайн-офу проти факту</a></li>
+    <li><a href="#budget">Місце кешбеку у вересневому бюджеті</a></li>
+    <li><a href="#context">Контекст: вересень у VARUS</a></li>
+    <li><a href="#actions">Що змінити в моделі для нових юзерів</a></li>
+    <li><a href="#method">Методологія та застереження</a></li>
+  </ol>
+</nav>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<section class="section" id="summary">
+<h2>1. Executive Summary</h2>
+<div class="grid-5">
+  <div class="card kpi"><div class="kpi-label">Юзерів з кешбеком</div><div class="kpi-value">648</div><div class="kpi-sub stable">648 замовлень · 1 на юзера</div></div>
+  <div class="card kpi"><div class="kpi-label">Видано кешбеку</div><div class="kpi-value">83 541 ₴</div><div class="kpi-sub stable">€1 628 · 129 ₴ на юзера</div></div>
+  <div class="card kpi"><div class="kpi-label">Викуплено</div><div class="kpi-value neutral">66.9%</div><div class="kpi-sub neutral">55 856 ₴ · вище Base (50%)</div></div>
+  <div class="card kpi"><div class="kpi-label">Факт витрати Bolt</div><div class="kpi-value">62 091 ₴</div><div class="kpi-sub stable">€1 210 · 96 ₴ на юзера</div></div>
+  <div class="card kpi"><div class="kpi-label">Віддача за 7 днів</div><div class="kpi-value up">2.8x</div><div class="kpi-sub up">€3 438 комісії</div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="insight good">
+  <div class="insight-title">✅ Ключова механіка моделі підтвердилася на реальних даних</div>
+  <div class="insight-text">
+    Bolt заплатив <strong>62 091 ₴</strong> при <strong>83 541 ₴</strong> виданого кешбеку — рівно «викуплений + ще в обробці».
+    Ті <strong>21 449 ₴ (25.7%)</strong>, що згоріли невикористаними, не коштували нічого.
+    Це найважливіше припущення сайн-офу: платимо лише за фактичний викуп, а не за видачу.
+  </div>
+</div>
+
+<div class="insight warn">
+  <div class="insight-title">⚠️ Redemption rate 66.9% — на третину вище за Base-сценарій</div>
+  <div class="insight-text">
+    Модель закладала 50% у Base і 65% в Optimistic. Факт — 66.9%, тобто навіть вище оптимістичного.
+    Але середній зароблений кешбек вийшов 129 ₴ проти 170 ₴ у моделі, тому дві помилки взаємно погасилися:
+    витрата на юзера склала 96 ₴ проти 85 ₴ закладених — розбіжність лише 13%.
+    <strong>Бюджет у сайн-офі чіпати не треба, саме припущення redemption — треба.</strong>
+  </div>
+</div>
+
+<div class="insight crit">
+  <div class="insight-title">🔴 Інкрементальність значно скромніша, ніж здається на перший погляд</div>
+  <div class="insight-text">
+    66.1% учасників повернулися за 7 днів. Але таргетинг відбирав активних юзерів Food, які й без кешбеку
+    повертаються часто: порівнянна база з тим самим складом когорт дає <strong>54.1%</strong>.
+    Чистий ефект — <strong>+12.0 п.п.</strong>, тобто близько <strong>78 додаткових</strong> юзерів, що повернулися,
+    по <strong>796 ₴ (€15.5)</strong> за кожного. Це не A/B-тест, і залишковий відбір можливий.
+  </div>
+</div>
+
+<div class="insight">
+  <div class="insight-title">ℹ️ Це був тест на адопцію продуктів, а не на залучення нових юзерів</div>
+  <div class="insight-text">
+    Жоден з 648 учасників не був новим для Bolt delivery. Натомість <strong>268 (41%)</strong> зробили
+    перше в житті замовлення продуктів. Параметри (20%, кеп 200 ₴, 100% за рахунок Bolt, одне використання)
+    майже один в один із моделлю для нових юзерів — різниться лише аудиторія.
+  </div>
+</div>
+</section>
+
+<!-- 2. SETUP -->
+<section class="section" id="setup">
+<h2>2. Налаштування кампанії</h2>
+<div class="grid-2">
+  <div class="card">
+    <h3>Параметри з кампейн-тулу</h3>
+    <table>
+      <tbody>
+        <tr><td>Назва</td><td class="num" style="font-size:11px">UA, (CW), 2026W38, Provider Targeting,<br>Stores — Cashback Test: Active Food users, no grocery adoption</td></tr>
+        <tr><td>Тип</td><td class="num">targeted_campaign</td></tr>
+        <tr><td>Target</td><td class="num">item_cashback</td></tr>
+        <tr><td>Spend objective</td><td class="num">provider_campaign_retail_growth</td></tr>
+        <tr><td>Рівень кешбеку</td><td class="num"><strong>20%</strong></td></tr>
+        <tr><td>Максимум на юзера</td><td class="num"><strong>200 ₴</strong> <span class="inline">(кеп досягався)</span></td></tr>
+        <tr><td>Частка партнера у витраті</td><td class="num"><strong>0%</strong> <span class="inline">(100% Bolt)</span></td></tr>
+        <tr><td>Старт</td><td class="num">15.09.2026, 21:00 UTC</td></tr>
+        <tr><td>Фініш</td><td class="num">30.09.2026, 20:59 UTC</td></tr>
+        <tr><td>Тривалість</td><td class="num">15 днів</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Наскільько це відповідає моделі сайн-офу</h3>
+    <table>
+      <thead><tr><th>Параметр</th><th class="num">Модель</th><th class="num">Факт</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Кешбек</td><td class="num">20%</td><td class="num">20%</td><td><span class="badge badge-g">збіг</span></td></tr>
+        <tr><td>Кеп</td><td class="num">200 ₴</td><td class="num">200 ₴</td><td><span class="badge badge-g">збіг</span></td></tr>
+        <tr><td>Фінансує</td><td class="num">Bolt, 100%</td><td class="num">Bolt, 100%</td><td><span class="badge badge-g">збіг</span></td></tr>
+        <tr><td>Використань на юзера</td><td class="num">1</td><td class="num">1</td><td><span class="badge badge-g">збіг</span></td></tr>
+        <tr><td>Термін згорання</td><td class="num">7 днів</td><td class="num">7 днів</td><td><span class="badge badge-g">збіг</span></td></tr>
+        <tr><td>Тривалість</td><td class="num">7 днів</td><td class="num">15 днів</td><td><span class="badge badge-y">довше</span></td></tr>
+        <tr><td>Аудиторія</td><td class="num">Нові юзери</td><td class="num">Активні Food,<br>без продуктів</td><td><span class="badge badge-r">інша</span></td></tr>
+        <tr><td>Мін. чек</td><td class="num">600 ₴</td><td class="num">не заданий</td><td><span class="badge badge-y">відкрито</span></td></tr>
+      </tbody>
+    </table>
+    <div class="insight" style="margin-top:12px;margin-bottom:0">
+      <div class="insight-text">
+        Середній зароблений кешбек 129 ₴ на середньому чеку 996 ₴ — це 13%, а не 20%.
+        Отже кешбек нараховувався не на весь чек (найімовірніше, лише на частину товарних позицій).
+        <strong>Це варто уточнити перед наступним запуском</strong> — модель рахує 20% від усього food price.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 3. FLOW -->
+<section class="section" id="flow">
+<h2>3. Що сталося з виданим кешбеком</h2>
+
+<div class="card">
+  <h3>83 541 ₴ видано → 62 091 ₴ фактично списано з Bolt</h3>
+  <div class="flowbar">
+    <div style="width:66.9%;background:#2563eb">Викуплено 66.9%</div>
+    <div style="width:7.5%;background:#ca8a04">7.5%</div>
+    <div style="width:25.7%;background:#9ca3af">Згоріло 25.7%</div>
+  </div>
+  <div class="flowlegend">
+    <span><i class="dot" style="background:#2563eb"></i> Викуплено юзером — 55 856 ₴ (€1 089)</span>
+    <span><i class="dot" style="background:#ca8a04"></i> В обробці на момент зрізу — 6 235 ₴ (€122)</span>
+    <span><i class="dot" style="background:#9ca3af"></i> Згоріло невикористаним — 21 449 ₴ (€418), <strong>коштувало 0</strong></span>
+  </div>
+</div>
+
+<div class="grid-3" style="margin-top:16px">
+  <div class="card kpi"><div class="kpi-label">Видано на юзера</div><div class="kpi-value">129 ₴</div><div class="kpi-sub stable">при кепі 200 ₴</div></div>
+  <div class="card kpi"><div class="kpi-label">Коштувало на юзера</div><div class="kpi-value">96 ₴</div><div class="kpi-sub stable">€1.87</div></div>
+  <div class="card kpi"><div class="kpi-label">Зекономлено на згоранні</div><div class="kpi-value up">21 449 ₴</div><div class="kpi-sub up">25.7% видачі</div></div>
+</div>
+
+<div class="insight good" style="margin-top:16px">
+  <div class="insight-title">Чому це важливо для сайн-офу</div>
+  <div class="insight-text">
+    Уся логіка моделі побудована на тому, що стеля бюджету (видача × 100%) — це не реальна витрата,
+    а реальна витрата дорівнює викупу. Факт це підтвердив з точністю до гривні:
+    55 856 + 6 235 = 62 091 ₴ = <code>bolt_spend_local</code>. Тож апрув під стелю безпечний —
+    фактичне списання буде на чверть-третину нижчим.
+  </div>
+</div>
+</section>
+
+<!-- 4. PACING -->
+<section class="section" id="pacing">
+<h2>4. Денна динаміка</h2>
+<div class="grid-2">
+  <div class="card">
+    <h3>Видача і викуп кешбеку по днях, ₴</h3>
+    <div class="chart-box"><canvas id="chartDaily"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Замовлення з кешбеком по днях</h3>
+    <div class="chart-box"><canvas id="chartOrders"></canvas></div>
+  </div>
+</div>
+<div class="insight" style="margin-top:14px">
+  <div class="insight-title">Втоми аудиторії за 15 днів не було</div>
+  <div class="insight-text">
+    Потік тримався рівно: 32–60 замовлень на день без спадного тренду до кінця кампанії.
+    Отже 648 юзерів — це не вичерпана аудиторія, а темп, обмежений розміром сегмента й конверсією.
+    Нулі у «згоріло» за 28–30.09 — технічні: 7-денний термін на ці купони ще не вийшов на момент зрізу
+    (саме вони й складають 6 235 ₴ «в обробці»).
+  </div>
+</div>
+</section>
+
+<!-- 5. AUDIENCE -->
+<section class="section" id="audience">
+<h2>5. Кого кампанія дійсно зачепила</h2>
+<div class="grid-2">
+  <div class="card">
+    <h3>Профіль 648 учасників</h3>
+    <table>
+      <tbody>
+        <tr><td>Нових для Bolt delivery</td><td class="num cell-crit">0</td></tr>
+        <tr><td>Перше в житті замовлення продуктів</td><td class="num cell-good">268 (41.4%)</td></tr>
+        <tr><td>Вже купували продукти раніше</td><td class="num">380 (58.6%)</td></tr>
+        <tr><td>Середній чек</td><td class="num"><strong>996 ₴</strong></td></tr>
+        <tr><td>Медіанний чек</td><td class="num">821 ₴</td></tr>
+        <tr><td>Чеків вище 600 ₴</td><td class="num cell-good">84.1%</td></tr>
+        <tr><td>Замовлень на юзера</td><td class="num">1.0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Чек учасників проти звичайного чека VARUS</h3>
+    <div class="chart-box-sm"><canvas id="chartBasket"></canvas></div>
+    <div class="insight good" style="margin-top:12px;margin-bottom:0">
+      <div class="insight-text">
+        Середній чек учасників — <strong>996 ₴</strong> проти <strong>720 ₴</strong> звичайного вересневого чека VARUS,
+        тобто <strong>+38%</strong>. Частина цього — ефект самого кешбеку (20% від чека мотивує добирати корзину
+        до кепу 200 ₴, тобто до 1 000 ₴), частина — відбір більш платоспроможної аудиторії.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="insight warn" style="margin-top:14px">
+  <div class="insight-title">Для моделі нових юзерів це означає обережність із перенесенням цифр</div>
+  <div class="insight-text">
+    Ця когорта вже знала Bolt і мала платіжні дані в застосунку — бар'єр до першого замовлення продуктів
+    у них набагато нижчий, ніж у людини, яка вперше відкриває застосунок. Redemption rate 66.9% переноситься
+    на нових юзерів з ризиком завищення; чек 996 ₴ — тим паче (перший чек нових юзерів VARUS у серпні був 682 ₴).
+  </div>
+</div>
+</section>
+
+<!-- 6. INCREMENTALITY -->
+<section class="section" id="incremental">
+<h2>6. Інкрементальність: порівняння з контрольною базою</h2>
+
+<div class="insight crit">
+  <div class="insight-title">Контрольної групи в кампанії не було — тому будуємо порівнянну базу</div>
+  <div class="insight-text">
+    Порівнювати 66.1% повернень учасників із 27.7% «органічного» повтору нових юзерів — некорректно:
+    це різні люди. Чесніше порівняння — покупці VARUS того ж періоду (15–30.09), які <em>не</em> були
+    в кампанії, з розбивкою на ті самі дві підгрупи, і далі зважити їх за складом когорти кампанії.
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>Повтор за 7 днів: кампанія проти не-кампанії</h3>
+    <table>
+      <thead><tr><th>Когорта</th><th class="num">Юзерів</th><th class="num">Повтор 7д</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Учасники кампанії</strong></td><td class="num">648</td><td class="num cell-good"><strong>66.1%</strong></td></tr>
+        <tr style="background:#f8fafc"><td colspan="3" class="bench-label" style="padding-top:10px">Не в кампанії, VARUS, 15–30.09</td></tr>
+        <tr><td>Вже купували продукти</td><td class="num">2 002</td><td class="num">65.9%</td></tr>
+        <tr><td>Перше замовлення продуктів</td><td class="num">817</td><td class="num cell-warn">37.3%</td></tr>
+        <tr><td>Разом не-кампанія</td><td class="num">2 819</td><td class="num">57.6%</td></tr>
+        <tr style="background:#f5f3ff"><td><strong>Очікуваний повтор за складом когорти кампанії</strong><br><span class="inline">41.4% × 37.3% + 58.6% × 65.9%</span></td><td class="num">—</td><td class="num"><strong>54.1%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Чистий ефект кешбеку на повтор</h3>
+    <div class="chart-box-sm"><canvas id="chartRepeat"></canvas></div>
+    <div class="grid-3" style="margin-top:12px">
+      <div class="kpi" style="padding:8px"><div class="kpi-label">Чистий лифт</div><div class="kpi-value up" style="font-size:20px">+12.0 п.п.</div></div>
+      <div class="kpi" style="padding:8px"><div class="kpi-label">Дод. юзерів</div><div class="kpi-value" style="font-size:20px">~78</div></div>
+      <div class="kpi" style="padding:8px"><div class="kpi-label">Ціна одного</div><div class="kpi-value" style="font-size:20px">796 ₴</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="insight action" style="margin-top:14px">
+  <div class="insight-title">Як це читати</div>
+  <div class="insight-text">
+    Учасники показали 66.1% повтору — майже те саме, що досвідчені покупці продуктів без кешбеку (65.9%).
+    Тобто кешбек підтягнув першопокупців продуктів до поведінки досвідчених, а не створив аномально високу лояльність.
+    Чистий лифт <strong>+12.0 п.п.</strong> дає близько <strong>78 додаткових</strong> юзерів, що повернулися,
+    за <strong>796 ₴ (€15.5)</strong> кожен. Застереження: це квазі-експеримент, не A/B. Таргетинг відбирав
+    активних юзерів Food, і ця підвищена залученість частково може лишатися в оцінці навіть після вирівнювання
+    за складом когорт — тобто <strong>+12 п.п. варто вважати верхньою межею</strong>.
+  </div>
+</div>
+</section>
+
+<!-- 7. ROI -->
+<section class="section" id="roi">
+<h2>7. Віддача на витрату</h2>
+<div class="grid-4">
+  <div class="card kpi"><div class="kpi-label">Витрата Bolt</div><div class="kpi-value">€1 210</div><div class="kpi-sub stable">62 091 ₴</div></div>
+  <div class="card kpi"><div class="kpi-label">Комісія за 7 днів</div><div class="kpi-value up">€3 438</div><div class="kpi-sub up">активація + follow-on</div></div>
+  <div class="card kpi"><div class="kpi-label">Віддача</div><div class="kpi-value up">2.8x</div><div class="kpi-sub up">модель: 3.0x за 60 днів</div></div>
+  <div class="card kpi"><div class="kpi-label">Повернулось у VARUS</div><div class="kpi-value down">23.3%</div><div class="kpi-sub down">модель: 70.6%</div></div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>Складові віддачі</h3>
+  <table>
+    <thead><tr><th>Компонент</th><th class="num">Замовлень</th><th class="num">GMV</th><th class="num">Комісія</th><th class="num">Take rate</th></tr></thead>
+    <tbody>
+      <tr><td>Замовлення з нарахуванням кешбеку (VARUS)</td><td class="num">648</td><td class="num">€14 214</td><td class="num">€823</td><td class="num">5.8%</td></tr>
+      <tr><td>Наступні замовлення, 7 днів</td><td class="num">1 009</td><td class="num">€16 706</td><td class="num">€2 615</td><td class="num cell-good">15.7%</td></tr>
+      <tr style="background:#f0fdf4"><td><strong>Разом</strong></td><td class="num"><strong>1 657</strong></td><td class="num"><strong>€30 920</strong></td><td class="num"><strong>€3 438</strong></td><td class="num"><strong>11.1%</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="insight warn" style="margin-top:14px">
+  <div class="insight-title">⚠️ Лише 23% витраченого кешбеку повернулося у VARUS — і для Bolt це вигідніше</div>
+  <div class="insight-text">
+    Модель закладала 70.6%. Юзери витрачали кешбек по всьому Bolt Food, а оскільки комісія в ресторанах
+    утричі вища за VARUS, take rate на follow-on склав <strong>15.7% проти 5.6%</strong> у VARUS —
+    тобто для P&L Bolt це плюс. Але для партнерської розмови це слабша історія: VARUS бачить мало
+    прямої віддачі від кампанії, яку фінансував Bolt. Варто підготувати цей аргумент заздалегідь.
+    Водночас цю когорту відбирали саме як активних ресторанних юзерів, тому дрейф назад у ресторани —
+    частково властивість таргетингу, а не кешбеку.
+  </div>
+</div>
+
+<div class="insight" style="margin-top:4px">
+  <div class="insight-text">
+    <strong>Чого тут немає:</strong> комісія — це gross take Bolt на GMV, без вирахування кур'єрської собівартості,
+    плати юзера, рефандів і процесингу. Віддача 2.8x — не внесок у contribution margin.
+    Крім того, follow-on GMV не скоригований на інкрементальність: частина цих замовлень відбулася б і без кешбеку
+    (див. розділ 6 — чистий лифт лише +12 п.п.).
+  </div>
+</div>
+</section>
+
+<!-- 8. MODEL VS ACTUAL -->
+<section class="section" id="model">
+<h2>8. Модель сайн-офу проти факту</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Припущення</th><th class="num">Модель (Base)</th><th class="num">Факт, вересень</th><th>Вердикт</th></tr></thead>
+    <tbody>
+      <tr><td>Згорілий кешбек не коштує нічого</td><td class="num">припущення</td><td class="num">підтверджено</td><td><span class="badge badge-g">тримається</span> 21 449 ₴ безкоштовно</td></tr>
+      <tr><td>Redemption rate</td><td class="num">50%</td><td class="num cell-warn">66.9%</td><td><span class="badge badge-y">підняти</span> до 65–70%</td></tr>
+      <tr><td>Середній зароблений кешбек</td><td class="num">170 ₴</td><td class="num cell-warn">129 ₴</td><td><span class="badge badge-y">знизити</span></td></tr>
+      <tr><td>Витрата на юзера</td><td class="num">85 ₴</td><td class="num cell-good">96 ₴</td><td><span class="badge badge-g">лишити</span> помилки погасилися</td></tr>
+      <tr><td>Повтор за 7 днів</td><td class="num">27.7% органіка</td><td class="num">66.1% факт<br><span class="inline">база 54.1%</span></td><td><span class="badge badge-y">+12 п.п.</span> чистий лифт</td></tr>
+      <tr><td>Повернення GMV у партнера</td><td class="num">70.6%</td><td class="num cell-crit">23.3%</td><td><span class="badge badge-r">когортна</span> різниця</td></tr>
+      <tr><td>Віддача на витрату</td><td class="num">3.0x / 60 днів</td><td class="num cell-good">2.8x / 7 днів</td><td><span class="badge badge-g">консервативно</span></td></tr>
+      <tr><td>Кеп 200 ₴ досягається</td><td class="num">частково</td><td class="num">так, максимум = 200 ₴</td><td><span class="badge badge-g">тримається</span></td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="insight good" style="margin-top:14px">
+  <div class="insight-title">Головне: бюджет у сайн-офі перераховувати не потрібно</div>
+  <div class="insight-text">
+    Redemption виявився на 34% вищим, ніж закладено, а середній зароблений кешбек — на 24% нижчим.
+    Ці дві помилки працюють у протилежних напрямках і майже повністю гасяться:
+    факт витрати на юзера 96 ₴ проти 85 ₴ у моделі. Застосовано до Base-сценарію (844 нових юзери)
+    оцінка витрати зміщується з <strong>71 757 ₴</strong> лише до <strong>~81 000 ₴</strong> —
+    усе ще втричі нижче за апрувлену стелю 294 319 ₴.
+  </div>
+</div>
+</section>
+
+<!-- 9. BUDGET -->
+<section class="section" id="budget">
+<h2>9. Місце кешбеку у вересневому бюджеті</h2>
+<div class="grid-2">
+  <div class="card">
+    <h3>Витрати Bolt у VARUS, вересень 2026</h3>
+    <table>
+      <thead><tr><th>Кампанія</th><th class="num">Витрата, ₴</th><th class="num">Частка</th><th class="num">Замовлень</th></tr></thead>
+      <tbody>
+        <tr><td>Безкоштовна доставка, до 50 ₴, MOV 600 ₴</td><td class="num">154 035</td><td class="num">45.5%</td><td class="num">4 255</td></tr>
+        <tr style="background:#dbeafe"><td><strong>Кешбек-тест, 20%, кеп 200 ₴</strong></td><td class="num"><strong>62 091</strong></td><td class="num"><strong>18.4%</strong></td><td class="num">648</td></tr>
+        <tr><td>Bolt Plus</td><td class="num">49 345</td><td class="num">14.6%</td><td class="num">912</td></tr>
+        <tr><td>User-lifecycle активація</td><td class="num">34 504</td><td class="num">10.2%</td><td class="num">733</td></tr>
+        <tr><td>Маркетинг-партнерство 3rd party</td><td class="num">31 808</td><td class="num">9.4%</td><td class="num">358</td></tr>
+        <tr><td>Партнерський маркетинг та інше</td><td class="num">6 559</td><td class="num">1.9%</td><td class="num">57</td></tr>
+        <tr style="background:#f8fafc"><td><strong>Разом Bolt</strong></td><td class="num"><strong>338 342</strong></td><td class="num">100%</td><td class="num">—</td></tr>
+        <tr><td>Фінансував VARUS (supplier discounts)</td><td class="num">621 577</td><td class="num inline">×1.84 від Bolt</td><td class="num">6 329</td></tr>
+      </tbody>
+    </table>
+    <div class="inline" style="margin-top:8px">
+      Витрати додаються, замовлення — ні: одне замовлення може входити в кілька кампаній одночасно.
+    </div>
+  </div>
+  <div class="card">
+    <h3>Структура витрат Bolt</h3>
+    <div class="chart-box"><canvas id="chartSpend"></canvas></div>
+  </div>
+</div>
+<div class="insight warn" style="margin-top:14px">
+  <div class="insight-title">Безкоштовна доставка вже працює на тому самому порозі 600 ₴</div>
+  <div class="insight-text">
+    Найбільша стаття витрат (45.5%) — безкоштовна доставка з мінімальним чеком 600 ₴, тобто
+    <strong>той самий поріг, що й у моделі кешбеку для нових юзерів</strong>. Якщо запустити кешбек поверх неї,
+    атрибутувати ефект буде неможливо, а юзер отримає подвійний стимул на одному чеку.
+    Кампанії треба розводити в часі або в аудиторії.
+  </div>
+</div>
+</section>
+
+<!-- 10. CONTEXT -->
+<section class="section" id="context">
+<h2>10. Контекст: вересень у VARUS</h2>
+<div class="grid-2">
+  <div class="card">
+    <h3>Місячна динаміка</h3>
+    <table>
+      <thead><tr><th>Місяць</th><th class="num">Замовлень</th><th class="num">GMV</th><th class="num">Комісія</th><th class="num">Нових</th><th class="num">Магазинів</th></tr></thead>
+      <tbody>
+        <tr><td>Червень</td><td class="num">7 479</td><td class="num">€101 330</td><td class="num">€5 734</td><td class="num">368</td><td class="num">54</td></tr>
+        <tr><td>Липень</td><td class="num">9 844</td><td class="num">€156 189</td><td class="num">€8 644</td><td class="num">413</td><td class="num">54</td></tr>
+        <tr><td>Серпень</td><td class="num">14 519</td><td class="num cell-good">€233 133</td><td class="num">€13 015</td><td class="num cell-good">688</td><td class="num">55</td></tr>
+        <tr><td>Вересень</td><td class="num cell-warn">12 055</td><td class="num cell-warn">€192 590</td><td class="num">€10 955</td><td class="num cell-crit">446</td><td class="num">56</td></tr>
+      </tbody>
+    </table>
+    <div class="inline" style="margin-top:8px">
+      Вересень віддав 17% серпневих замовлень і GMV при зростанні покриття з 55 до 56 магазинів —
+      отже спад на боці попиту, а не доступності.
+    </div>
+  </div>
+  <div class="card">
+    <h3>Нові юзери: VARUS проти ринку в тих самих містах</h3>
+    <div class="chart-box"><canvas id="chartNew"></canvas></div>
+  </div>
+</div>
+<div class="insight crit" style="margin-top:14px">
+  <div class="insight-title">🔴 Спад залучення — ринковий, а не партнерський</div>
+  <div class="insight-text">
+    Нові юзери в тих самих 11 містах впали з 3 989 до 2 663 на тиждень (−33%), і VARUS весь цей час
+    тримав стабільну частку близько 3%. Тобто проблема не у VARUS.
+    <strong>Практичний висновок для сайн-офу:</strong> будь-яка кампанія, запущена зараз, покаже «зростання»
+    проти пригніченої бази. Без холдауту відновлення ринку зарахується як ефект кампанії —
+    контрольна група обов'язкова.
+  </div>
+</div>
+</section>
+
+<!-- 11. ACTIONS -->
+<section class="section" id="actions">
+<h2>11. Що змінити в моделі для нових юзерів</h2>
+<div class="card">
+  <ol style="padding-left:20px;font-size:13px;line-height:1.9">
+    <li><strong>Підняти redemption до 65–70%</strong> замість 50% у Base. Факт — 66.9%, вище навіть за оптимістичний сценарій. Стелю апруву (294 319 ₴) лишити без змін.</li>
+    <li><strong>Знизити середній зароблений кешбек до ~130–150 ₴.</strong> Факт 129 ₴ при кепі 200 ₴. Разом із п.1 витрата на юзера майже не зміниться, тож загальний бюджет перераховувати не потрібно.</li>
+    <li><strong>Уточнити базу нарахування кешбеку.</strong> 129 ₴ на чеку 996 ₴ — це 13%, а не 20%. Модель рахує 20% від усього food price; якщо нарахування йде на звужений кошик, оцінка видачі завищена.</li>
+    <li><strong>Зберегти 70.6% повернення у VARUS, але позначити як неперевірене.</strong> 23.3% зміряні на активних ресторанних юзерях — інша когорта. Для нових юзерів, залучених саме у VARUS, 70.6% лишається кращою оцінкою, але її треба переміряти постфактум, а не приймати на віру.</li>
+    <li><strong>Закласти холдаут 10% і міряти проти нього.</strong> Цей тест пішов без контрольної групи, тому довелося відновлювати базу порівняння постфактум, і оцінка +12 п.п. лишається верхньою межею.</li>
+    <li><strong>Розвести з безкоштовною доставкою.</strong> Вона вже працює на MOV 600 ₴ — тому самому порозі. Послідовно, а не одночасно.</li>
+    <li><strong>Очікувати, що темп набору триматиметься.</strong> За 15 днів втоми аудиторії не було (32–60 замовлень/день рівно), тож 7-денне вікно моделі обмежить набір радше розміром сегмента, ніж вигасанням інтересу.</li>
+  </ol>
+</div>
+</section>
+
+<!-- 12. METHOD -->
+<section class="section" id="method">
+<h2>12. Методологія та застереження</h2>
+<div class="card">
+  <div class="glossary">
+    <dl>
+      <dt>Джерела даних</dt>
+      <dd><code>main.ng_public.etl_delivery_campaign_order_metrics</code> — кампанії та потоки кешбек-купонів (видано / викуплено / згоріло / в обробці, <code>bolt_spend_local</code>). <code>main.ng_delivery.fact_order_delivery</code> — замовлення, GMV, комісія. <code>main.ng_delivery.dim_provider_v2</code> — партнер за <code>group_name='VARUS'</code>, <code>country_code='ua'</code>. Усі фінансові метрики — лише <code>order_state='delivered'</code>.</dd>
+
+      <dt>Чому ця кампанія не була видна раніше</dt>
+      <dd>Перша перевірка вересня йшла через <code>dim_order_campaign_delivery</code>, де рядків цієї кампанії немає, через що було зроблено хибний висновок, що кешбек не запускався. Авторитетне джерело для кешбек-потоків — <code>etl_delivery_campaign_order_metrics</code>. Звірка підтверджує: раніше названі €5 366 витрат Bolt + €1 210 кешбеку = €6 576 ≈ €6 595 повної суми.</dd>
+
+      <dt>Витрата Bolt</dt>
+      <dd><code>bolt_spend_local</code> = викуплений + «в обробці» кешбек. Згорілі купони у витрату не входять — перевірено арифметично: 55 856 + 6 235 = 62 091 ₴.</dd>
+
+      <dt>Контрольна база (розділ 6)</dt>
+      <dd>Покупці VARUS 15–30.09, що <em>не</em> були в кампанії, розбиті за <code>is_first_market_order</code>. Очікуваний повтор = зважене середнє цих двох ставок за складом когорти кампанії (41.4% першопокупців / 58.6% досвідчених). Це квазі-експеримент, не рандомізований A/B: таргетинг відбирав активних юзерів Food, тому залишковий відбір можливий і +12 п.п. слід читати як верхню межу.</dd>
+
+      <dt>Вікно спостереження</dt>
+      <dd>Follow-on — 7 днів від дати замовлення з кешбеком по кожному юзеру. Відповідає терміну згорання, але коротше за 60-денний горизонт моделі, тому віддача 2.8x не порівнюється напряму з 3.0x моделі — вона досягнута швидше.</dd>
+
+      <dt>Комісія</dt>
+      <dd>Gross take Bolt на GMV. Не вираховано кур'єрську собівартість, плату юзера, рефанди, процесинг. Не є contribution margin і не скоригована на інкрементальність.</dd>
+
+      <dt>Курс</dt>
+      <dd>51.3 ₴/€ — для перерахунку гривневих сум у євро по всьому звіту.</dd>
+
+      <dt>Адитивність</dt>
+      <dd>Витрати по кампаніях додаються. Замовлення та GMV по кампаніях — ні: одне замовлення може належати кільком кампаніям одночасно, тому сума замовлень по рядках перевищує фактичну кількість.</dd>
+    </dl>
+  </div>
+</div>
+</section>
+
+<div style="text-align:center;color:var(--muted);font-size:11px;padding:20px 0 8px;border-top:1px solid var(--border)">
+  VARUS · Bolt Food UA · Кешбек-тест вересня 2026 · Сформовано 05.10.2026 · Джерело: Databricks
+</div>
+
+</div>
+
+<script>
+const FONT = "'Inter',-apple-system,system-ui,sans-serif";
+Chart.defaults.font.family = FONT;
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6b7280';
+
+const DAYS = ['16.09','17.09','18.09','19.09','20.09','21.09','22.09','23.09','24.09','25.09','26.09','27.09','28.09','29.09','30.09'];
+const ISSUED   = [6032,6255,4681,6005,6357,4477,3925,4946,8407,6571,4955,7392,4452,4116,4970];
+const REDEEMED = [3809,4515,3917,4100,4850,3037,2735,3638,5658,4745,2944,4606,2366,1969,2968];
+const CB_ORDERS= [41,40,33,49,59,40,37,45,60,48,35,56,33,32,40];
+
+const money = v => v.toLocaleString('uk-UA').replace(/,/g,' ');
+
+// 4a. Daily issued vs redeemed
+new Chart(document.getElementById('chartDaily'), {
+  type: 'bar',
+  data: {
+    labels: DAYS,
+    datasets: [
+      { label: 'Видано', data: ISSUED, backgroundColor: 'rgba(37,99,235,0.25)', borderColor: '#2563eb', borderWidth: 1 },
+      { label: 'Викуплено', data: REDEEMED, backgroundColor: '#2563eb' }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: c => c.dataset.label + ': ' + money(c.parsed.y) + ' ₴' } }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: '₴ на день' }, ticks: { callback: v => money(v) }, grid: { color: '#f3f4f6' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 4b. Daily orders
+new Chart(document.getElementById('chartOrders'), {
+  type: 'line',
+  data: {
+    labels: DAYS,
+    datasets: [{
+      label: 'Замовлень з кешбеком', data: CB_ORDERS,
+      borderColor: '#34D186', backgroundColor: 'rgba(52,209,134,0.12)',
+      fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => c.parsed.y + ' замовлень' } } },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: 'замовлень на день' }, grid: { color: '#f3f4f6' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 5. Basket comparison
+new Chart(document.getElementById('chartBasket'), {
+  type: 'bar',
+  data: {
+    labels: ['Учасники\nкешбеку', 'Звичайний чек\nVARUS, вересень', 'Перший чек нових\nюзерів, серпень'],
+    datasets: [{
+      label: 'Середній чек, ₴', data: [996, 720, 682],
+      backgroundColor: ['#2563eb', '#9ca3af', '#9ca3af'], borderRadius: 4
+    }]
+  },
+  options: {
+    maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => money(c.parsed.x) + ' ₴' } } },
+    scales: {
+      x: { beginAtZero: true, title: { display: true, text: 'середній чек, ₴' }, ticks: { callback: v => money(v) }, grid: { color: '#f3f4f6' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// 6. Repeat rate
+new Chart(document.getElementById('chartRepeat'), {
+  type: 'bar',
+  data: {
+    labels: ['Учасники\nкампанії', 'Очікувано без\nкешбеку', 'Першопокупці\nбез кешбеку', 'Досвідчені\nбез кешбеку'],
+    datasets: [{
+      label: 'Повтор за 7 днів', data: [66.1, 54.1, 37.3, 65.9],
+      backgroundColor: ['#34D186', '#7c3aed', '#9ca3af', '#9ca3af'], borderRadius: 4
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => c.parsed.y + '%' } } },
+    scales: {
+      y: { beginAtZero: true, max: 80, title: { display: true, text: '% повернулися за 7 днів' }, ticks: { callback: v => v + '%' }, grid: { color: '#f3f4f6' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 9. Spend split
+new Chart(document.getElementById('chartSpend'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Безкоштовна доставка', 'Кешбек-тест', 'Bolt Plus', 'Активація', '3rd party маркетинг', 'Інше'],
+    datasets: [{
+      data: [154035, 62091, 49345, 34504, 31808, 6559],
+      backgroundColor: ['#9ca3af', '#2563eb', '#7c3aed', '#0891b2', '#ea580c', '#d1d5db'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    maintainAspectRatio: false, cutout: '52%',
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+      tooltip: { callbacks: { label: c => c.label + ': ' + money(c.parsed) + ' ₴ (' + (c.parsed / 338342 * 100).toFixed(1) + '%)' } }
+    }
+  }
+});
+
+// 10. New users VARUS vs market
+new Chart(document.getElementById('chartNew'), {
+  type: 'line',
+  data: {
+    labels: ['03.08','10.08','17.08','24.08','31.08','07.09','14.09','21.09','28.09'],
+    datasets: [
+      { label: 'Нові юзери VARUS', data: [120,230,150,136,114,135,91,95,79], borderColor: '#34D186', backgroundColor: 'rgba(52,209,134,0.1)', yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3 },
+      { label: 'Нові юзери ринку (ті самі міста)', data: [3588,8583,5019,3932,3989,3591,3007,3015,2663], borderColor: '#9ca3af', borderDash: [5,4], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3 }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } } },
+    scales: {
+      y:  { beginAtZero: true, position: 'left', title: { display: true, text: 'VARUS, нових/тиждень' }, grid: { color: '#f3f4f6' } },
+      y1: { beginAtZero: true, position: 'right', title: { display: true, text: 'ринок, нових/тиждень' }, grid: { display: false }, ticks: { callback: v => money(v) } },
+      x:  { grid: { display: false } }
+    }
+  }
+});
+
+function downloadPDF() {
+  const el = document.getElementById('report');
+  html2pdf().set({
+    margin: 6,
+    filename: 'VARUS_cashback_september_2026.pdf',
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
+  }).from(el).save();
+}
+</script>
+</body>
+</html>
