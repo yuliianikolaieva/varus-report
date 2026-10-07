@@ -92,7 +92,9 @@ details.glossary summary{cursor:pointer;font-weight:700}
   <div class="nav-title">Просування та інвестиції</div>
   <a class="sub" href="#investments">Інвестиції</a>
   <a class="sub" href="#banners">Банери</a>
-  <a href="#next">Наступні кроки</a>
+  <div class="nav-title">Наступні кроки</div>
+  <a class="sub" href="#next-ops">Налагодження операцій</a>
+  <a class="sub" href="#next-mkt">Планування маркетингу</a>
 </nav>
 <div class="main">
 
@@ -102,7 +104,9 @@ details.glossary summary{cursor:pointer;font-weight:700}
   <details class="glossary"><summary>Глосарій — Результат</summary>
     <div class="gloss-item"><b>GMV товарів</b>Сума вартості товарів у доставлених замовленнях. Збори клієнта не входять: це те, що заробив магазин на кошику.</div>
     <div class="gloss-item"><b>AOV</b>GMV товарів / кількість доставлених замовлень.</div>
-    <div class="gloss-item"><b>Рамп</b>Робочий план 3 → 5 → 8 → 10 млн грн на травень–серпень. % плану = факт товарів / план.</div>
+    <div class="gloss-item"><b>Договір</b>Квартальний GMV у євро з контракту, переведений у гривні за курсом 1 € = 50,5333 і розділений на 3 місяці. 1–3-й місяці (травень–липень) — 60 000 €, 4–6-й (серпень–жовтень) — 100 000 €, 7–9-й (листопад–січень) — 160 000 €.</div>
+    <div class="gloss-item"><b>План продажів</b>Робочий рамп травень–серпень: 3, 5, 8 і 10 млн грн. Q4: жовтень 195,3 тис. €, листопад 199,1 тис. €, грудень 197,7 тис. € за тим самим курсом.</div>
+    <div class="gloss-item"><b>% перевиконання</b>(факт − план) / план. Додатне значення — план перевищено.</div>
     <div class="gloss-item"><b>Дельта</b>Зелена — показник виріс там, де ріст бажаний. Червона — погіршення. Біля грошей і замовлень ріст зелений.</div>
     <div class="gloss-item"><b>Повернулись ≥2 рази</b>Частка клієнтів із двома і більше доставленими замовленнями за весь період з квітня.</div>
   </details>
@@ -441,90 +445,15 @@ details.glossary summary{cursor:pointer;font-weight:700}
   <!-- ============ 7. Інвестиції Bolt і VARUS ============ -->
   <section class="slide" id="investments">
     <div class="section-kicker">Інвестиції в промо</div>
-    <h2>Спільні інвестиції масштабують GMV: +131% за два місяці</h2>
-    <p class="lead">Закритий факт травень–серпень 2026. Знижки VARUS на товари + інвестиції Bolt у доступну доставку.</p>
-
-    <div class="kpis">
-      <div class="kpi good"><div class="v"><span data-fee-eur="101" data-prefix="€" data-suffix="k" data-digits="0">101</span> → <span data-fee-eur="233" data-prefix="€" data-suffix="k" data-digits="0">233</span></div><div class="l">GMV · червень → серпень</div></div>
-      <div class="kpi good"><div class="v">62%</div><div class="l">Замовлень серпня з промо на доставку</div></div>
-      <div class="kpi good"><div class="v">+50%</div><div class="l">AOV з промо-доставкою · <span data-fee-eur="18.4" data-prefix="€" data-digits="1">18.4</span> проти <span data-fee-eur="12.3" data-prefix="€" data-digits="1">12.3</span></div></div>
-      <div class="kpi good"><div class="v">€74.7k</div><div class="l">Сукупні промо-інвестиції за період</div></div>
-    </div>
-
-    <h3>GMV зростає разом із покриттям промо · закритий факт</h3>
-    <div class="chart" id="ch-investment-impact"></div>
-
-    <table>
-      <thead><tr>
-        <th>Місяць</th><th class="r">GMV, €</th><th class="r">Ріст GMV</th>
-        <th class="r">Промо VARUS на товари</th><th class="r">% GMV</th>
-        <th class="r">Замовлення з промо-доставкою</th><th class="r">GMV з промо-доставкою</th>
-      </tr></thead>
-      <tbody>
-        <tr><td>Травень · public launch</td><td class="r" data-fee-eur="72612" data-prefix="" data-digits="0">72 612</td><td class="r">—</td><td class="r">€4 616</td><td class="r">6.4%</td><td class="r">36%</td><td class="r">34%</td></tr>
-        <tr><td>Червень · без промо-доставки</td><td class="r" data-fee-eur="101330" data-prefix="" data-digits="0">101 330</td><td class="r">+40%</td><td class="r">€6 679</td><td class="r">6.6%</td><td class="r">0%</td><td class="r">0%</td></tr>
-        <tr><td>Липень · промо відновлено</td><td class="r" data-fee-eur="156189" data-prefix="" data-digits="0">156 189</td><td class="r"><b>+54%</b></td><td class="r">€18 386</td><td class="r">11.8%</td><td class="r">49%</td><td class="r">67%</td></tr>
-        <tr class="hl"><td>Серпень · повний масштаб</td><td class="r"><b data-fee-eur="233133" data-prefix="" data-digits="0">233 133</b></td><td class="r"><b>+49%</b></td><td class="r"><b>€30 150</b></td><td class="r"><b>12.9%</b></td><td class="r"><b>62%</b></td><td class="r"><b>71%</b></td></tr>
-      </tbody>
-    </table>
-
-    <div class="cols3" style="margin-top:18px">
-      <div class="callout good" style="margin:0">
-        <div class="ttl">Знижки VARUS стимулюють вибір</div>
-        Частка промо на товари зросла з 6.6% GMV у червні до 12.9% у серпні. За той самий
-        період GMV виріс із €101k до €233k.
-      </div>
-      <div class="callout good" style="margin:0">
-        <div class="ttl">Доступна доставка збільшує кошик</div>
-        Середній чек замовлення з промо на доставку у серпні — <span data-fee-eur="18.4" data-prefix="€" data-digits="1">18.4</span>, без нього — <span data-fee-eur="12.3" data-prefix="€" data-digits="1">12.3</span>:
-        різниця +50%.
-      </div>
-      <div class="callout good" style="margin:0">
-        <div class="ttl">Спільна механіка масштабується</div>
-        У серпні 62% замовлень із промо на доставку сформували 71% GMV. Це підтримує
-        пропозицію перейти до моделі фінансування доставки 50/50.
-      </div>
-    </div>
-    <p class="note">Дані показують сильний позитивний зв'язок між промо-покриттям і GMV.
-      Це спостережуваний результат, а не контрольований причинно-наслідковий тест.</p>
-
-    <h3>Розподіл промо-інвестицій · квітень–серпень</h3>
-    <table>
-      <thead><tr>
-        <th>Тип кампанії</th><th class="r">Cost share мерчанта</th><th class="r">Знижка, ₴</th><th class="r">Частка</th><th>Платить</th>
-      </tr></thead>
-      <tbody>
-        <tr class="hl"><td>Bolt Market supplier · промо мерчанта на товари</td><td class="r">100%</td><td class="r">2 644 874</td><td class="r">66.2%</td><td><span class="status green">VARUS</span></td></tr>
-        <tr><td>Provider campaign · retail growth</td><td class="r">0%</td><td class="r">889 245</td><td class="r">22.2%</td><td><span class="status amber">Bolt</span></td></tr>
-        <tr><td>Marketing · 3rd party partnership</td><td class="r">0%</td><td class="r">227 928</td><td class="r">5.7%</td><td><span class="status amber">Bolt</span></td></tr>
-        <tr><td>Provider campaign · 3rd party partnership</td><td class="r">0%</td><td class="r">165 475</td><td class="r">4.1%</td><td><span class="status amber">Bolt</span></td></tr>
-        <tr><td>Activation · перше замовлення</td><td class="r">0%</td><td class="r">51 732</td><td class="r">1.3%</td><td><span class="status amber">Bolt</span></td></tr>
-        <tr><td>Інше · ELC, Bolt Plus, решта</td><td class="r">0–100%</td><td class="r">18 743</td><td class="r">0.5%</td><td><span class="status amber">Bolt</span></td></tr>
-      </tbody>
-    </table>
-
-    <div class="cols2" style="margin-top:18px">
-      <div class="callout good" style="margin:0">
-        <div class="ttl">Інвестиція VARUS</div>
-        €59.8k знижок на товари за період. Це створює сильну цінову пропозицію та підтримує
-        зростання замовлень і повторних покупок.
-      </div>
-      <div class="callout good" style="margin:0">
-        <div class="ttl">Інвестиція Bolt</div>
-        €14.8k компенсації доставки плюс фінансування growth-, marketing- та activation-кампаній.
-        У серпні лише знижка на доставку становила €8.4k.
-      </div>
-    </div>
-    <p class="note">Знижки на товари — <span class="num">total_order_item_discount_eur</span>,
-      промо на доставку — різниця <span class="num">delivery_price_before/after_discount_eur</span>,
-      cost share — <span class="num">etl_delivery_order_campaign</span> × <span class="num">dim_campaign_delivery_v2</span>.
-      Розподіл — розрахунок по order-level даних з campaign cost share.</p>
-  </section>
+    <div id="invest-body"></div>
 <details class="glossary"><summary>Глосарій — Інвестиції</summary>
-<div class="gloss-item"><b>GMV у євро</b>Перераховано з повної суми замовлення на частку товарів: збори клієнта прибрані тим самим співвідношенням, що в блоці Результат за травень–серпень.</div>
-<div class="gloss-item"><b>Промо на товари</b>Знижка, яку фінансує VARUS на позиції кошика.</div>
-<div class="gloss-item"><b>Промо на доставку</b>Різниця між ціною доставки до і після знижки.</div>
+<div class="gloss-item"><b>GMV</b>Вартість товарів у доставлених замовленнях, без зборів клієнта.</div>
+<div class="gloss-item"><b>Промо VARUS на товари</b>Сума знижки на позиції кошика, яку фінансує VARUS.</div>
+<div class="gloss-item"><b>% замовлень з промо VARUS</b>Частка доставлених замовлень, у яких була знижка на товари.</div>
+<div class="gloss-item"><b>Знижки на доставку від Bolt</b>Різниця між ціною доставки до і після знижки. Цю знижку фінансує Bolt.</div>
+<div class="gloss-item"><b>Інвестиції Bolt на графіку</b>Те саме, що знижка на доставку: гроші Bolt у доступну доставку.</div>
 </details>
+</section>
 
 <section class="slide" id="stores">
   <div class="section-kicker">Магазини</div>
@@ -549,18 +478,10 @@ details.glossary summary{cursor:pointer;font-weight:700}
   </details>
 </section>
 
-<section class="slide" id="next">
+<section class="slide" id="next-ops">
   <div class="section-kicker">Наступні кроки</div>
-  <h2>Зміни, які варто провести</h2>
-  <p class="lead">Головний акцент — операційка. Далі комерційні кроки, які вже були в плані.</p>
-  <div class="cols2">
-    <div class="box"><div class="hd">1. Робота над операційкою</div>Скасовані та невдалі замовлення: збірка, залишки, години видачі, автоприйняття.</div>
-    <div class="box"><div class="hd">2. Участь у глобальних івентах</div>Halloween, Black Friday, Christmas, New Year's і Store Deal Days з плейсментами і спецпропозицією.</div>
-    <div class="box"><div class="hd">3. Доставка 50/50</div>Спільне фінансування промо на доставку, щоб зберегти ціну для клієнта і масштаб.</div>
-    <div class="box"><div class="hd">4. Комісія 7% → 9%</div>Зафіксувати дату вступу в силу і підписати додаток.</div>
-  </div>
-
-  <h3>Операційка: на що звернути увагу</h3>
+  <h2>Налагодження операцій</h2>
+  <p class="lead">Головний акцент зустрічі: скасовані та невдалі замовлення, збірка, залишки і час видачі.</p>
   <div class="box">
     <ul>
       <li><b>Високий Late Pickup.</b> Чи може партнер збирати замовлення швидше? Запізнення видачі курʼєру тягне і час до клієнта, і невдалі замовлення.</li>
@@ -571,7 +492,20 @@ details.glossary summary{cursor:pointer;font-weight:700}
       <li><b>5 хвилин на прийняття часто замало.</b> Проговорити автоприйняття, коли до кінця вікна лишається близько 1 хвилини.</li>
     </ul>
   </div>
+  <details class="glossary"><summary>Глосарій — Налагодження операцій</summary>
+    <div class="gloss-item"><b>Late Pickup</b>Частка замовлень, де видача курʼєру запізнилась. Дивитись в Операційному Overview.</div>
+  </details>
+</section>
 
+<section class="slide" id="next-mkt">
+  <div class="section-kicker">Наступні кроки</div>
+  <h2>Планування маркетингу</h2>
+  <div class="cols2">
+    <div class="box"><div class="hd">Участь у глобальних івентах</div>Halloween, Black Friday, Christmas, New Year's і Store Deal Days з плейсментами і спецпропозицією.</div>
+    <div class="box"><div class="hd">Доставка 50/50</div>Спільне фінансування промо на доставку, щоб зберегти ціну для клієнта і масштаб.</div>
+    <div class="box"><div class="hd">Комісія 7% → 9%</div>Згідно контракту комісія змінюється на 7-ий місяць співпраці, починаючи з листопада.</div>
+    <div class="box"><div class="hd">Налаштування банерів у розділі Магазини та Головна</div>Узгодити процес створення банерів і надання візуалів та іншої інфо для них.</div>
+  </div>
   <h3>Глобальні івенти</h3>
   <div class="table-wrap"><table>
     <thead><tr><th>Івент</th><th>Дати</th><th>Плейсменти</th><th>Що потрібно від VARUS</th></tr></thead>
@@ -585,17 +519,17 @@ details.glossary summary{cursor:pointer;font-weight:700}
     </tbody>
   </table></div>
   <p class="note">Hero Banner — лише для однієї обраної кампанії. Умова участі: знижки або спецпропозиція і окрема категорія на час івента.</p>
-
   <h3>Доставка 50/50</h3>
   <div class="callout good"><div class="ttl">Чому це вже працює</div>
     У червні промо на доставку майже не було — і це найслабший місяць за темпом. У липні промо повернули: 49% замовлень і 67% GMV, у серпні — 62% і 71%. Середній чек із промо на доставку в серпні €18.4 проти €12.3 без нього. Зараз знижку на доставку в серпні (€8.4k) повністю несе Bolt. 50/50 на тому обсязі — близько €4.2k на місяць від VARUS.
   </div>
-
-  <details class="glossary"><summary>Глосарій — Наступні кроки</summary>
-    <div class="gloss-item"><b>Late Pickup</b>Частка замовлень, де видача курʼєру запізнилась. Дивитись в Операційному Overview.</div>
+  <details class="glossary"><summary>Глосарій — Планування маркетингу</summary>
     <div class="gloss-item"><b>50/50</b>VARUS і Bolt ділять знижку на доставку порівну. Зараз у серпні її повністю закривав Bolt.</div>
+    <div class="gloss-item"><b>Комісія</b>7-й місяць співпраці — листопад 2026. З цього місяця ставка за контрактом переходить з 7% на 9%.</div>
+    <div class="gloss-item"><b>Банери</b>Плейсменти в розділах Магазини та Головна. Потрібен узгоджений процес: хто дає візуал, офер і дату.</div>
   </details>
 </section>
+
 
 </div>
 </div>
@@ -757,60 +691,75 @@ details.glossary summary{cursor:pointer;font-weight:700}
 
   function renderResults() {
     const h = D.headline || {};
+    const RATE = 50.5333;
     const ramp = (D.ramp || []).slice().sort((a, b) => String(a.period).localeCompare(String(b.period)));
-    const closed = ramp.filter(r => PLAN[r.period]);
-    const items = closed.reduce((s, r) => s + Number(r.items_gmv || 0), 0);
-    const plan = Object.values(PLAN).reduce((s, v) => s + v, 0);
-    const placed = closed.reduce((s, r) => s + Number(r.placed || 0), 0);
-    const delivered = closed.reduce((s, r) => s + Number(r.delivered || 0), 0);
-    const aov = delivered ? items / delivered : null;
-    const repeat = h.users ? Number(h.repeat_users || 0) * 100 / Number(h.users) : null;
-    let itemsEur = 0;
-    closed.forEach(r => {
-      if (Number(r.full_gmv)) itemsEur += Number(r.full_gmv_eur || 0) * Number(r.items_gmv || 0) / Number(r.full_gmv);
+    const rampMap = byPeriod(ramp);
+    const months = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
+    const labels = ['Тра','Чер','Лип','Сер','Вер','Жов','Лис','Гру'];
+    const contractEurQ = { '2026-05': 60000, '2026-06': 60000, '2026-07': 60000, '2026-08': 100000, '2026-09': 100000, '2026-10': 100000, '2026-11': 160000, '2026-12': 160000 };
+    const salesPlan = { '2026-05': 3, '2026-06': 5, '2026-07': 8, '2026-08': 10, '2026-10': 195300 * RATE / 1e6, '2026-11': 199100 * RATE / 1e6, '2026-12': 197700 * RATE / 1e6 };
+    const planOrders = { '2026-10': 13469, '2026-11': 13731, '2026-12': 13634 };
+    const planAov = 14.5 * RATE;
+    const contractMln = p => contractEurQ[p] / 3 * RATE / 1e6;
+    const names = { '2026-05':'Травень','2026-06':'Червень','2026-07':'Липень','2026-08':'Серпень','2026-09':'Вересень','2026-10':'Жовтень','2026-11':'Листопад','2026-12':'Грудень' };
+
+    const fact = months.map(p => {
+      const r = rampMap[p];
+      if (!r) return null;
+      return Number(r.items_gmv || 0) / 1e6;
     });
-    const eurBit = itemsEur ? ' · €' + n(itemsEur / 1000, 1) + 'k' : '';
-    const lastClosed = [...ramp].reverse().find(r => !isInc(r.period, 'month') && r.period >= '2026-05');
-    const lastClosedPeriod = lastClosed ? lastClosed.period : '';
+
     let rows = '';
-    ramp.forEach((r, i) => {
-      const prev = ramp[i - 1];
-      const fact = Number(r.items_gmv || 0) / 1e6;
-      const planV = PLAN[r.period];
-      const aovR = Number(r.delivered) ? Number(r.items_gmv) / Number(r.delivered) : null;
-      const prevAov = prev && Number(prev.delivered) ? Number(prev.items_gmv) / Number(prev.delivered) : null;
-      const planPct = planV ? fact * 100 / planV : null;
-      rows += `<tr class="${r.period === lastClosedPeriod ? 'hl' : ''}"><td>${labelPeriod(r.period, 'month')}${isInc(r.period, 'month') ? ' · неповний' : ''}</td>
-        <td class="r">${planV ? n(planV, 1) : '—'}</td>
-        ${cell(n(fact, 2), fact, prev ? Number(prev.items_gmv) / 1e6 : null, 'pct')}
-        <td class="r">${planPct == null ? '—' : n(planPct, 0) + '%'}</td>
-        ${cell(fmt(r.placed), r.placed, prev && prev.placed, 'pct')}
-        ${cell(aovR == null ? '—' : fmt(aovR), aovR, prevAov, 'pct')}</tr>`;
+    let prevFact = null, prevOrders = null, prevAov = null;
+    months.forEach(p => {
+      const r = rampMap[p];
+      const inc = r ? isInc(p, 'month') : false;
+      const plan = salesPlan[p];
+      const factM = r ? Number(r.items_gmv || 0) / 1e6 : null;
+      const orders = r ? Number(r.placed || 0) : (planOrders[p] || null);
+      const aov = r && Number(r.delivered) ? Number(r.items_gmv) / Number(r.delivered) : (p >= '2026-11' ? planAov : null);
+      const over = plan && factM != null && !inc ? (factM - plan) / plan * 100 : null;
+      const orderText = !r
+        ? (planOrders[p] ? fmt(planOrders[p]) : '—')
+        : fmt(orders) + (inc && planOrders[p] ? '* · план ' + fmt(planOrders[p]) : '');
+      const aovText = aov == null ? '—' : fmt(aov);
+      rows += `<tr class="${p === '2026-09' ? 'hl' : ''}"><td>${names[p]}${inc ? '*' : ''}${!r && planOrders[p] ? ' · план' : ''}</td>
+        <td class="r">${plan == null ? '—' : n(plan, 2)}</td>
+        ${cell(factM == null ? '—' : n(factM, 2), factM, prevFact, !inc && factM != null && prevFact != null ? 'pct' : null)}
+        <td class="r">${over == null ? '—' : (over > 0 ? '+' : '') + n(over, 0) + '%'}</td>
+        ${cell(orderText, r && !inc ? orders : null, r && !inc ? prevOrders : null, r && !inc && prevOrders != null ? 'pct' : null)}
+        ${cell(aovText, r && !inc ? aov : null, r && !inc ? prevAov : null, r && !inc && prevAov != null ? 'pct' : null)}</tr>`;
+      if (r && !inc) { prevFact = factM; prevOrders = orders; prevAov = aov; }
     });
-    const totalPlanPct = plan ? items / 1e6 * 100 / plan : null;
+    const repeat = h.users ? Number(h.repeat_users || 0) * 100 / Number(h.users) : null;
     document.getElementById('results-body').innerHTML = `
-      <h1>Від нуля до ${n(items / 1e6, 1)} млн грн за травень–серпень</h1>
-      <p class="lead">Вартість товарів партнера, без зборів клієнта · план рампу без змін</p>
-      <div class="kpis">
-        <div class="kpi good"><div class="v">${n(items / 1e6, 1)} млн грн</div><div class="l">GMV товарів · травень–серпень${eurBit}</div></div>
-        <div class="kpi good"><div class="v">${totalPlanPct == null ? '—' : n(totalPlanPct, 0) + '%'}</div><div class="l">Сукупного рампу (план ${n(plan, 0)} млн)</div></div>
-        <div class="kpi"><div class="v">${fmt(placed)}</div><div class="l">Замовлень · ${fmt(delivered)} доставлено</div></div>
-        <div class="kpi"><div class="v">${aov == null ? '—' : '₴' + fmt(aov)}</div><div class="l">Середній чек товарів</div></div>
-      </div>
+      <h2>Темп виконання плану</h2>
+      <p class="lead">Ціль договору — гривневий еквівалент квартального GMV за курсом 1 € = 50,5333 грн, рівномірно на місяць. План продажів — робочий рамп травень–серпень і план Q4. Факт — вартість товарів партнера без зборів клієнта.</p>
+      <div class="chart-box"><canvas id="cPlan"></canvas></div>
+      <h3>GMV товарів vs ramp plan, млн грн</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Місяць</th><th class="r">План, млн</th><th class="r">Факт, млн</th><th class="r">% перевиконання плану</th><th class="r">Замовлення</th><th class="r">AOV, грн</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      <p class="note">% перевиконання = (факт − план) / план. Жовтень* неповний, тож його не порівнюємо з планом місяця. Для листопада і грудня замовлення та AOV — план при середньому чеку 14,5 € (733 грн). У жовтні в замовленнях факт із позначкою, план — 13 469.</p>
       <div class="kpis" style="margin-top:12px">
         <div class="kpi"><div class="v">${fmt(h.users)}</div><div class="l">Унікальних клієнтів з квітня</div></div>
         <div class="kpi good"><div class="v">${repeat == null ? '—' : n(repeat, 0) + '%'}</div><div class="l">Повернулись ≥2 рази</div></div>
         <div class="kpi"><div class="v">${fmt(h.cities)} / ${fmt(h.stores)}</div><div class="l">Міст / магазинів із замовленнями</div></div>
         <div class="kpi"><div class="v">€58.5k</div><div class="l">Промо-інвестиції · 73% від VARUS</div></div>
-      </div>
-      <h3>GMV товарів vs ramp plan, млн грн</h3>
-      <div class="table-wrap"><table>
-        <thead><tr><th>Місяць</th><th class="r">План, млн</th><th class="r">Факт, млн</th><th class="r">% плану</th><th class="r">Замовлення</th><th class="r">AOV, грн</th></tr></thead>
-        <tbody>${rows}
-          <tr class="hl"><td><b>Травень–серпень</b></td><td class="r">${n(plan, 1)}</td><td class="r"><b>${n(items / 1e6, 2)}</b></td><td class="r"><b>${totalPlanPct == null ? '—' : n(totalPlanPct, 0) + '%'}</b></td><td class="r"><b>${fmt(placed)}</b></td><td class="r"><b>${aov == null ? '—' : fmt(aov)}</b></td></tr>
-        </tbody>
-      </table></div>
-      <p class="note">GMV і AOV — сума вартості товарів у доставлених замовленнях. Збори клієнта (доставка, сервіс) не входять. Замовлення в таблиці — усі створені. Неповний місяць позначено * і не входить у підсумок рампу. План рампу є лише на травень–серпень.</p>`;
+      </div>`;
+    chart('cPlan', {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Договір, млн грн', data: months.map(contractMln), backgroundColor: '#1A1A2E', borderRadius: 4 },
+          { label: 'План продажів, млн грн', data: months.map(p => salesPlan[p] == null ? null : Number(salesPlan[p].toFixed(2))), backgroundColor: '#2563eb', borderRadius: 4 },
+          { label: 'Факт, млн грн', data: fact, backgroundColor: 'rgba(52,209,134,.85)', borderRadius: 4 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend }, scales: { y: { beginAtZero: true, title: { display: true, text: 'млн грн' } } } }
+    });
   }
 
   function renderGrowth() {
@@ -1401,8 +1350,59 @@ details.glossary summary{cursor:pointer;font-weight:700}
     });
   }
 
+  function renderInvest() {
+    const el = document.getElementById('invest-body');
+    if (!el) return;
+    const promo = [
+      { period: '2026-05', name: 'Травень', gmv: 3162499.88, delivered: 6168, item: 224059.20, itemOrders: 3646, df: 105833.80, dfOrders: 2243 },
+      { period: '2026-06', name: 'Червень', gmv: 4567593.02, delivered: 7479, item: 343775.99, itemOrders: 4378, df: 86.90, dfOrders: 4 },
+      { period: '2026-07', name: 'Липень', gmv: 7016508.11, delivered: 9844, item: 929121.43, itemOrders: 7815, df: 200016.70, dfOrders: 4854 },
+      { period: '2026-08', name: 'Серпень', gmv: 10633986.55, delivered: 14519, item: 1515059.08, itemOrders: 12177, df: 389909.20, dfOrders: 8992 },
+      { period: '2026-09', name: 'Вересень', gmv: 8681063.93, delivered: 12055, item: 897828.31, itemOrders: 8590, df: 238374.60, dfOrders: 5910 }
+    ];
+    let rows = '';
+    promo.forEach((r, i) => {
+      const prev = promo[i - 1];
+      const itemPct = r.itemOrders * 100 / r.delivered;
+      const dfPct = r.dfOrders * 100 / r.delivered;
+      const prevItemPct = prev ? prev.itemOrders * 100 / prev.delivered : null;
+      const prevDfPct = prev ? prev.dfOrders * 100 / prev.delivered : null;
+      rows += `<tr class="${r.period === '2026-09' ? 'hl' : ''}"><td>${r.name}</td>
+        ${cell(uah(r.gmv), r.gmv, prev && prev.gmv, i ? 'pct' : null)}
+        ${cell(uah(r.item), r.item, prev && prev.item, i ? 'pct' : null)}
+        ${cell(pct(itemPct), itemPct, prevItemPct, i ? 'pp' : null)}
+        ${cell(uah(r.df), r.df, prev && prev.df >= 1000 ? prev.df : null, prev && prev.df >= 1000 ? 'pct' : null)}
+        ${cell(pct(dfPct), dfPct, prevDfPct, i ? 'pp' : null)}</tr>`;
+    });
+    el.innerHTML = `
+      <h2>Інвестиції в промо</h2>
+      <p class="lead">Травень–вересень, доставлені замовлення, гривні. Знижки на товари фінансує VARUS. Знижку на доставку фінансує Bolt.</p>
+      <div class="chart-box"><canvas id="cInvest"></canvas></div>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th>Місяць</th><th class="r">GMV</th><th class="r">Промо VARUS на товари</th>
+          <th class="r">% замовлень з Промо VARUS на товари</th><th class="r">Знижки на доставку від Болт</th>
+          <th class="r">% замовлень зі знижкою на доставку від Болт</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      <p class="note">GMV — вартість товарів партнера без зборів клієнта. % рахується від доставлених замовлень. Дельта — до попереднього місяця.</p>`;
+    chart('cInvest', {
+      type: 'bar',
+      data: {
+        labels: promo.map(r => r.name),
+        datasets: [
+          { label: 'Знижки на товари від Варус', data: promo.map(r => r.item), backgroundColor: '#34D186', stack: 's' },
+          { label: 'Інвестиції Болт', data: promo.map(r => r.df), backgroundColor: '#1A1A2E', stack: 's' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, title: { display: true, text: 'грн' } } } }
+    });
+  }
+
   function boot() {
     renderResults();
+    renderInvest();
     renderGrowth();
     renderOps();
     renderFailed();
