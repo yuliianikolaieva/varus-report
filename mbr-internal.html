@@ -30,6 +30,8 @@ h1{font-size:30px;line-height:1.15;margin:0 0 8px}h2{font-size:22px;margin:0 0 8
 .callout.good{background:#f3faf6}.callout.warn{background:#fff8eb}.callout.bad{background:#fff5f5}
 .callout .ttl,.box .hd{font-weight:700;margin-bottom:6px}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.equal-cols{table-layout:fixed;width:100%}
+table.equal-cols th,table.equal-cols td{width:14.28%;white-space:normal;overflow-wrap:anywhere;vertical-align:bottom}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 th,td{padding:8px 10px;border-bottom:1px solid #f0f2f1;text-align:left;white-space:nowrap}
 th{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:#fafafa;position:sticky;top:0;z-index:3}
@@ -104,9 +106,9 @@ details.glossary summary{cursor:pointer;font-weight:700}
   <details class="glossary"><summary>Глосарій — Результат</summary>
     <div class="gloss-item"><b>GMV товарів</b>Сума вартості товарів у доставлених замовленнях. Збори клієнта не входять: це те, що заробив магазин на кошику.</div>
     <div class="gloss-item"><b>AOV</b>GMV товарів / кількість доставлених замовлень.</div>
-    <div class="gloss-item"><b>Договір</b>Квартальний GMV у євро з контракту, переведений у гривні за курсом 1 € = 50,5333 і розділений на 3 місяці. 1–3-й місяці (травень–липень) — 60 000 €, 4–6-й (серпень–жовтень) — 100 000 €, 7–9-й (листопад–січень) — 160 000 €.</div>
-    <div class="gloss-item"><b>План продажів</b>Робочий рамп травень–серпень: 3, 5, 8 і 10 млн грн. Q4: жовтень 195,3 тис. €, листопад 199,1 тис. €, грудень 197,7 тис. € за тим самим курсом.</div>
-    <div class="gloss-item"><b>% перевиконання</b>(факт − план) / план. Додатне значення — план перевищено.</div>
+    <div class="gloss-item"><b>План згідно договору</b>Квартальний GMV у євро з контракту, переведений у гривні за курсом 1 € = 50,5333 і розділений на 3 місяці. 1–3-й місяці (травень–липень) — 60 000 €, 4–6-й (серпень–жовтень) — 100 000 €, 7–9-й (листопад–січень) — 160 000 €.</div>
+    <div class="gloss-item"><b>Внутрішній план Болт</b>План Q4: жовтень 195,3 тис. €, листопад 199,1 тис. €, грудень 197,7 тис. € за курсом 1 € = 50,5333.</div>
+    <div class="gloss-item"><b>% перевиконання</b>(факт − план згідно договору) / план згідно договору. Додатне значення — план договору перевищено.</div>
     <div class="gloss-item"><b>Дельта</b>Зелена — показник виріс там, де ріст бажаний. Червона — погіршення. Біля грошей і замовлень ріст зелений.</div>
     <div class="gloss-item"><b>Повернулись ≥2 рази</b>Частка клієнтів із двома і більше доставленими замовленнями за весь період з квітня.</div>
   </details>
@@ -697,7 +699,7 @@ details.glossary summary{cursor:pointer;font-weight:700}
     const months = ['2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12'];
     const labels = ['Тра','Чер','Лип','Сер','Вер','Жов','Лис','Гру'];
     const contractEurQ = { '2026-05': 60000, '2026-06': 60000, '2026-07': 60000, '2026-08': 100000, '2026-09': 100000, '2026-10': 100000, '2026-11': 160000, '2026-12': 160000 };
-    const salesPlan = { '2026-05': 3, '2026-06': 5, '2026-07': 8, '2026-08': 10, '2026-10': 195300 * RATE / 1e6, '2026-11': 199100 * RATE / 1e6, '2026-12': 197700 * RATE / 1e6 };
+    const internalPlan = { '2026-10': 195300 * RATE / 1e6, '2026-11': 199100 * RATE / 1e6, '2026-12': 197700 * RATE / 1e6 };
     const planOrders = { '2026-10': 13469, '2026-11': 13731, '2026-12': 13634 };
     const planAov = 14.5 * RATE;
     const contractMln = p => contractEurQ[p] / 3 * RATE / 1e6;
@@ -713,35 +715,38 @@ details.glossary summary{cursor:pointer;font-weight:700}
     let prevFact = null, prevOrders = null, prevAov = null;
     months.forEach(p => {
       const r = rampMap[p];
-      const inc = r ? isInc(p, 'month') : false;
-      const plan = salesPlan[p];
-      const factM = r ? Number(r.items_gmv || 0) / 1e6 : null;
-      const orders = r ? Number(r.placed || 0) : (planOrders[p] || null);
-      const aov = r && Number(r.delivered) ? Number(r.items_gmv) / Number(r.delivered) : (p >= '2026-11' ? planAov : null);
-      const over = plan && factM != null && !inc ? (factM - plan) / plan * 100 : null;
-      const orderText = !r
-        ? (planOrders[p] ? fmt(planOrders[p]) : '—')
-        : fmt(orders) + (inc && planOrders[p] ? '* · план ' + fmt(planOrders[p]) : '');
+      const planOnly = p >= '2026-10';
+      const showFact = !!(r && !planOnly);
+      const contract = contractMln(p);
+      const internal = internalPlan[p];
+      const factM = showFact ? Number(r.items_gmv || 0) / 1e6 : null;
+      const orders = showFact ? Number(r.placed || 0) : (planOrders[p] || null);
+      const aov = showFact && Number(r.delivered)
+        ? Number(r.items_gmv) / Number(r.delivered)
+        : (planOrders[p] ? planAov : null);
+      const over = showFact ? (factM - contract) / contract * 100 : null;
+      const orderText = orders == null ? '—' : fmt(orders);
       const aovText = aov == null ? '—' : fmt(aov);
-      rows += `<tr class="${p === '2026-09' ? 'hl' : ''}"><td>${names[p]}${inc ? '*' : ''}${!r && planOrders[p] ? ' · план' : ''}</td>
-        <td class="r">${plan == null ? '—' : n(plan, 2)}</td>
-        ${cell(factM == null ? '—' : n(factM, 2), factM, prevFact, !inc && factM != null && prevFact != null ? 'pct' : null)}
+      rows += `<tr class="${p === '2026-09' ? 'hl' : ''}"><td>${names[p]}${planOnly ? ' · план' : ''}</td>
+        <td class="r">${n(contract, 2)}</td>
+        <td class="r">${internal == null ? '—' : n(internal, 2)}</td>
+        ${cell(factM == null ? '—' : n(factM, 2), factM, prevFact, showFact && prevFact != null ? 'pct' : null)}
         <td class="r">${over == null ? '—' : (over > 0 ? '+' : '') + n(over, 0) + '%'}</td>
-        ${cell(orderText, r && !inc ? orders : null, r && !inc ? prevOrders : null, r && !inc && prevOrders != null ? 'pct' : null)}
-        ${cell(aovText, r && !inc ? aov : null, r && !inc ? prevAov : null, r && !inc && prevAov != null ? 'pct' : null)}</tr>`;
-      if (r && !inc) { prevFact = factM; prevOrders = orders; prevAov = aov; }
+        ${cell(orderText, showFact ? orders : null, showFact ? prevOrders : null, showFact && prevOrders != null ? 'pct' : null)}
+        ${cell(aovText, showFact ? aov : null, showFact ? prevAov : null, showFact && prevAov != null ? 'pct' : null)}</tr>`;
+      if (showFact) { prevFact = factM; prevOrders = orders; prevAov = aov; }
     });
     const repeat = h.users ? Number(h.repeat_users || 0) * 100 / Number(h.users) : null;
     document.getElementById('results-body').innerHTML = `
       <h2>Темп виконання плану</h2>
-      <p class="lead">Ціль договору — гривневий еквівалент квартального GMV за курсом 1 € = 50,5333 грн, рівномірно на місяць. План продажів — робочий рамп травень–серпень і план Q4. Факт — вартість товарів партнера без зборів клієнта.</p>
+      <p class="lead">План згідно договору — гривневий еквівалент квартального GMV за курсом 1 € = 50,5333 грн, рівномірно на місяць. Внутрішній план Болт — лише Q4. Факт — вартість товарів партнера без зборів клієнта.</p>
       <div class="chart-box"><canvas id="cPlan"></canvas></div>
       <h3>GMV товарів vs ramp plan, млн грн</h3>
-      <div class="table-wrap"><table>
-        <thead><tr><th>Місяць</th><th class="r">План, млн</th><th class="r">Факт, млн</th><th class="r">% перевиконання плану</th><th class="r">Замовлення</th><th class="r">AOV, грн</th></tr></thead>
+      <div class="table-wrap"><table class="equal-cols">
+        <thead><tr><th>Місяць</th><th class="r">План згідно договору</th><th class="r">Внутрішній план Болт</th><th class="r">Факт, млн</th><th class="r">% перевиконання плану</th><th class="r">Замовлення</th><th class="r">AOV, грн</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
-      <p class="note">% перевиконання = (факт − план) / план. Жовтень* неповний, тож його не порівнюємо з планом місяця. Для листопада і грудня замовлення та AOV — план при середньому чеку 14,5 € (733 грн). У жовтні в замовленнях факт із позначкою, план — 13 469.</p>
+      <p class="note">% перевиконання = (факт − план згідно договору) / план згідно договору. Жовтень у таблиці лише з планом, без факту. Замовлення та AOV на жовтень–грудень — внутрішній план при середньому чеку 14,5 € (733 грн).</p>
       <div class="kpis" style="margin-top:12px">
         <div class="kpi"><div class="v">${fmt(h.users)}</div><div class="l">Унікальних клієнтів з квітня</div></div>
         <div class="kpi good"><div class="v">${repeat == null ? '—' : n(repeat, 0) + '%'}</div><div class="l">Повернулись ≥2 рази</div></div>
@@ -753,8 +758,8 @@ details.glossary summary{cursor:pointer;font-weight:700}
       data: {
         labels,
         datasets: [
-          { label: 'Договір, млн грн', data: months.map(contractMln), backgroundColor: '#1A1A2E', borderRadius: 4 },
-          { label: 'План продажів, млн грн', data: months.map(p => salesPlan[p] == null ? null : Number(salesPlan[p].toFixed(2))), backgroundColor: '#2563eb', borderRadius: 4 },
+          { label: 'План згідно договору', data: months.map(p => Number(contractMln(p).toFixed(2))), backgroundColor: '#1A1A2E', borderRadius: 4 },
+          { label: 'Внутрішній план Болт', data: months.map(p => internalPlan[p] == null ? null : Number(internalPlan[p].toFixed(2))), backgroundColor: '#2563eb', borderRadius: 4 },
           { label: 'Факт, млн грн', data: fact, backgroundColor: 'rgba(52,209,134,.85)', borderRadius: 4 }
         ]
       },
@@ -1381,8 +1386,8 @@ details.glossary summary{cursor:pointer;font-weight:700}
       <div class="table-wrap"><table>
         <thead><tr>
           <th>Місяць</th><th class="r">GMV</th><th class="r">Промо VARUS на товари</th>
-          <th class="r">% замовлень з Промо VARUS на товари</th><th class="r">Знижки на доставку від Болт</th>
-          <th class="r">% замовлень зі знижкою на доставку від Болт</th>
+          <th class="r">% замовлень з Промо VARUS на товари</th><th class="r">Знижки від Болт</th>
+          <th class="r">% замовлень зі знижками від Болт</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
