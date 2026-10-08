@@ -5,187 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VARUS × Bolt — Знижки на доставку</title>
 <style>
-:root{--ink:#1A1A2E;--muted:#5c6560;--faint:#8b948e;--line:#e6ebe7;--green:#34D186;--page:#F8F9FA;--red:#dc2626}
+:root{--ink:#1A1A2E;--muted:#5c6560;--faint:#8b948e;--line:#e6ebe7;--green:#34D186;--page:#F8F9FA}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--page);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif}
-.deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.slide{min-height:100vh;scroll-snap-align:start;padding:28px 28px 48px;display:flex;flex-direction:column}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-h1{font-size:34px;line-height:1.15;margin:18px 0 8px}
-h2{font-size:26px;line-height:1.2;margin:12px 0 8px}
-.lead{color:var(--muted);font-size:15px;max-width:920px}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.kpi .v{font-size:26px;font-weight:800}
-.kpi .l{color:var(--muted);font-size:13px;margin-top:4px}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif}
+main{max-width:1280px;margin:0 auto;padding:28px 28px 48px}
+.top{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h2{font-size:26px;line-height:1.2;margin:8px 0}
+.lead,.note{color:var(--muted);font-size:14px;margin:0}
+.block{margin-top:28px}
+.block + .block{margin-top:36px}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin-top:12px}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
-th,td{padding:8px 8px;border-bottom:1px solid #f0f2f1;text-align:left;vertical-align:top}
-th{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:#fafafa;white-space:normal}
+th,td{padding:7px 8px;border-bottom:1px solid #f0f2f1;text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:#fafafa}
 td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 tr.total td{font-weight:800;background:#f3faf6}
-tr.alt td{background:#fff}
-.note{color:var(--muted);font-size:13px;margin-top:12px;max-width:980px}
-.page{margin-top:auto;padding-top:16px;color:var(--faint);font-size:12px;font-weight:700}
+tr.opt50 td{background:#e7f8ef}
+tr.opt75 td{background:#eceef4}
+tr.gap td{border-top:10px solid #F8F9FA}
+.note{margin-top:12px}
+.foot{margin-top:20px;color:var(--faint);font-size:12px;font-weight:700}
 a{color:#0f9d58;font-weight:700}
-@media(max-width:900px){.slide{padding:20px 16px 48px}.kpis{grid-template-columns:1fr}h1{font-size:26px}}
+@media(max-width:900px){main{padding:16px}h2{font-size:22px}}
 </style>
 </head>
 <body>
-<div class="deck">
-
-<section class="slide" id="s1">
+<main>
   <div class="top">VARUS × Bolt Food UA · Знижки на доставку</div>
-  <h1>Завершені кампанії і пропозиції на кінець року</h1>
-  <p class="lead">Доставлені замовлення з травня по вересень 2026 і орієнтир витрат на чорну п’ятницю та різдвяний період. ПДВ — 20% зверху до суми без ПДВ. У червні знижки VARUS на доставку не було.</p>
-  <div class="kpis">
-    <div class="kpi"><div class="v">842 653,8 грн</div><div class="l">Витрати завершених кампаній без ПДВ</div></div>
-    <div class="kpi"><div class="v">1 011 184,6 грн</div><div class="l">Ті самі витрати у т.ч. ПДВ</div></div>
-    <div class="kpi"><div class="v">19 805</div><div class="l">Замовлень зі знижкою на доставку</div></div>
-  </div>
-  <p class="note">Три кампанії оплатив Bolt. Кампанію з кошиком від 300 грн у серпні в цьому розрахунку повністю несе VARUS. Майбутні вікна рахуються окремо, як два варіанти стелі: до 50 грн і до 75 грн, кожен з кофінансуванням 50/50.</p>
-  <div class="page">1 / 3</div>
-</section>
 
-<section class="slide" id="s2">
-  <div class="top">Завершені кампанії</div>
-  <h2>Завершені кампанії по знижці на доставку</h2>
-  <p class="lead">% замовлень зі знижкою — частка доставлених замовлень VARUS у тих самих містах і в ті самі дати, коли кампанія була увімкнена.</p>
-  <div class="table-wrap"><table>
-    <thead><tr>
-      <th>Знижка</th>
-      <th>Необхідний розмір кошика</th>
-      <th>Частка фінансування між сторонами</th>
-      <th>Період</th>
-      <th class="r">Витрати, грн без ПДВ</th>
-      <th class="r">Витрати, грн у т.ч. ПДВ</th>
-      <th class="r">Замовлення</th>
-      <th class="r">% замовлень зі знижкою</th>
-    </tr></thead>
-    <tbody>
-      <tr>
-        <td>Повна безкоштовна доставка</td>
-        <td>Немає</td>
-        <td>Bolt 100% / VARUS 0%</td>
-        <td>1–12 травня</td>
-        <td class="r">103 560,0</td>
-        <td class="r">124 272,0</td>
-        <td class="r">2 164</td>
-        <td class="r">90,7%</td>
-      </tr>
-      <tr>
-        <td>Знижка на доставку до 50 грн</td>
-        <td>600 грн</td>
-        <td>Bolt 100% / VARUS 0%</td>
-        <td>1–14 липня, 1–16 серпня, вересень</td>
-        <td class="r">375 788,0</td>
-        <td class="r">450 945,6</td>
-        <td class="r">10 285</td>
-        <td class="r">43,2%</td>
-      </tr>
-      <tr>
-        <td>Знижка на доставку до 75 грн</td>
-        <td>600 грн</td>
-        <td>Bolt 100% / VARUS 0%</td>
-        <td>15–31 липня</td>
-        <td class="r">129 533,0</td>
-        <td class="r">155 439,6</td>
-        <td class="r">2 905</td>
-        <td class="r">52,0%</td>
-      </tr>
-      <tr>
-        <td>Повна безкоштовна доставка від 300 грн</td>
-        <td>300 грн</td>
-        <td>VARUS 100% / Bolt 0%</td>
-        <td>17–31 серпня</td>
-        <td class="r">233 772,8</td>
-        <td class="r">280 527,4</td>
-        <td class="r">4 451</td>
-        <td class="r">64,5%</td>
-      </tr>
-      <tr class="total">
-        <td>Разом</td>
-        <td></td>
-        <td></td>
-        <td>Травень–вересень, без червня</td>
-        <td class="r">842 653,8</td>
-        <td class="r">1 011 184,6</td>
-        <td class="r">19 805</td>
-        <td class="r">—</td>
-      </tr>
-    </tbody>
-  </table></div>
-  <p class="note">Рядок до 50 грн об’єднує retail-growth і тиждень partnership 10–16 серпня: механіка однакова, кошик від 600 грн і стеля 50 грн. Сума без ПДВ для кампанії від 300 грн задана як 233 772,8 грн, ПДВ додано 20%.</p>
-  <div class="page">2 / 3</div>
-</section>
+  <section class="block">
+    <h2>Завершені кампанії по знижці на доставку</h2>
+    <p class="lead">% замовлень зі знижкою — частка доставлених замовлень VARUS у тих самих містах і в ті самі дати, коли кампанія була увімкнена.</p>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>Знижка</th>
+        <th>Необхідний розмір кошика</th>
+        <th>Частка фінансування між сторонами</th>
+        <th>Період</th>
+        <th class="r">Витрати, грн без ПДВ</th>
+        <th class="r">Витрати, грн у т.ч. ПДВ</th>
+        <th class="r">Замовлення</th>
+        <th class="r">% замовлень зі знижкою</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>Повна безкоштовна доставка</td>
+          <td>Немає</td>
+          <td>Bolt 100% / VARUS 0%</td>
+          <td>1–12 травня</td>
+          <td class="r">103 560,0</td>
+          <td class="r">124 272,0</td>
+          <td class="r">2 164</td>
+          <td class="r">90,7%</td>
+        </tr>
+        <tr>
+          <td>Знижка на доставку до 50 грн</td>
+          <td>600 грн</td>
+          <td>Bolt 100% / VARUS 0%</td>
+          <td>1–14 липня, 1–16 серпня, вересень</td>
+          <td class="r">375 788,0</td>
+          <td class="r">450 945,6</td>
+          <td class="r">10 285</td>
+          <td class="r">43,2%</td>
+        </tr>
+        <tr>
+          <td>Знижка на доставку до 75 грн</td>
+          <td>600 грн</td>
+          <td>Bolt 100% / VARUS 0%</td>
+          <td>15–31 липня</td>
+          <td class="r">129 533,0</td>
+          <td class="r">155 439,6</td>
+          <td class="r">2 905</td>
+          <td class="r">52,0%</td>
+        </tr>
+        <tr>
+          <td>Повна безкоштовна доставка від 300 грн</td>
+          <td>300 грн</td>
+          <td>VARUS 100% / Bolt 0%</td>
+          <td>17–31 серпня</td>
+          <td class="r">233 772,8</td>
+          <td class="r">280 527,4</td>
+          <td class="r">4 451</td>
+          <td class="r">64,5%</td>
+        </tr>
+        <tr class="total">
+          <td>Разом</td>
+          <td></td>
+          <td></td>
+          <td>Травень–вересень, без червня</td>
+          <td class="r">842 653,8</td>
+          <td class="r">1 011 184,6</td>
+          <td class="r">19 805</td>
+          <td class="r">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="note">Рядок до 50 грн об’єднує retail-growth і тиждень partnership 10–16 серпня: механіка однакова, кошик від 600 грн і стеля 50 грн. Сума без ПДВ для кампанії від 300 грн задана як 233 772,8 грн, ПДВ додано 20%.</p>
+  </section>
 
-<section class="slide" id="s3">
-  <div class="top">Пропозиції</div>
-  <h2>Пропозиції знижок на доставку на майбутні періоди</h2>
-  <p class="lead">Два окремі варіанти на кожне вікно, не сума. Кофінансування 50/50. Замовлення — очікувана кількість зі знижкою: план Q4 у вікні × історична частка такої кампанії.</p>
-  <div class="table-wrap"><table>
-    <thead><tr>
-      <th>Знижка</th>
-      <th>Необхідний розмір кошика</th>
-      <th>Частка фінансування між сторонами</th>
-      <th>Період</th>
-      <th class="r">Витрати, грн без ПДВ</th>
-      <th class="r">Витрати, грн у т.ч. ПДВ</th>
-      <th class="r">Замовлення</th>
-      <th class="r">% замовлень зі знижкою</th>
-      <th class="r">Частина VARUS, грн у т.ч. ПДВ</th>
-    </tr></thead>
-    <tbody>
-      <tr>
-        <td>Знижка на доставку до 50 грн</td>
-        <td>600 грн</td>
-        <td>VARUS 50% / Bolt 50%</td>
-        <td>16.11–30.11 · чорна п’ятниця</td>
-        <td class="r">108 470,6</td>
-        <td class="r">130 164,7</td>
-        <td class="r">2 969</td>
-        <td class="r">43,2%</td>
-        <td class="r">65 082,3</td>
-      </tr>
-      <tr>
-        <td>Знижка на доставку до 75 грн</td>
-        <td>600 грн</td>
-        <td>VARUS 50% / Bolt 50%</td>
-        <td>16.11–30.11 · чорна п’ятниця</td>
-        <td class="r">159 231,7</td>
-        <td class="r">191 078,0</td>
-        <td class="r">3 571</td>
-        <td class="r">52,0%</td>
-        <td class="r">95 539,0</td>
-      </tr>
-      <tr>
-        <td>Знижка на доставку до 50 грн</td>
-        <td>600 грн</td>
-        <td>VARUS 50% / Bolt 50%</td>
-        <td>14.12–03.01 · Різдво і Новий рік</td>
-        <td class="r">145 922,0</td>
-        <td class="r">175 106,3</td>
-        <td class="r">3 994</td>
-        <td class="r">43,2%</td>
-        <td class="r">87 553,2</td>
-      </tr>
-      <tr>
-        <td>Знижка на доставку до 75 грн</td>
-        <td>600 грн</td>
-        <td>VARUS 50% / Bolt 50%</td>
-        <td>14.12–03.01 · Різдво і Новий рік</td>
-        <td class="r">214 209,2</td>
-        <td class="r">257 051,1</td>
-        <td class="r">4 804</td>
-        <td class="r">52,0%</td>
-        <td class="r">128 525,5</td>
-      </tr>
-    </tbody>
-  </table></div>
-  <p class="note">План замовлень Q4: листопад 13 731, грудень 13 634. Вікно 16–30 листопада — 15 з 30 днів, 6 866 замовлень. Вікно 14 грудня – 3 січня — 21 день за добовим планом грудня (13 634 / 31), 9 236 замовлень: окремого плану на січень немає. Середня знижка на замовлення зі знижкою: 36,54 грн для стелі 50 грн і 44,59 грн для стелі 75 грн. Витрати без ПДВ = план у вікні × історичний % × ця середня знижка.</p>
-  <div class="page">3 / 3 · <a href="mbr-internal.html#investments">Повернутись до MBR</a></div>
-</section>
+  <section class="block">
+    <h2>Пропозиції знижок на доставку на майбутні періоди</h2>
+    <p class="lead">На кожен період два варіанти на вибір, не сума. Кошик від 700 грн, кофінансування 50/50. Зелені рядки — стеля 50 грн, сірі — стеля 75 грн.</p>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>Знижка</th>
+        <th>Необхідний розмір кошика</th>
+        <th>Частка фінансування між сторонами</th>
+        <th>Період</th>
+        <th class="r">Витрати, грн без ПДВ</th>
+        <th class="r">Витрати, грн у т.ч. ПДВ</th>
+        <th class="r">Замовлення</th>
+        <th class="r">% замовлень зі знижкою</th>
+        <th class="r">Частина VARUS, грн у т.ч. ПДВ</th>
+      </tr></thead>
+      <tbody>
+        <tr class="opt50">
+          <td>Знижка на доставку до 50 грн</td>
+          <td>700 грн</td>
+          <td>VARUS 50% / Bolt 50%</td>
+          <td>16.11–30.11 · чорна п’ятниця</td>
+          <td class="r">76 230,0</td>
+          <td class="r">91 476,0</td>
+          <td class="r">2 086</td>
+          <td class="r">30,4%</td>
+          <td class="r">45 738,0</td>
+        </tr>
+        <tr class="or"><td colspan="9">АБО</td></tr>
+        <tr class="opt75">
+          <td>Знижка на доставку до 75 грн</td>
+          <td>700 грн</td>
+          <td>VARUS 50% / Bolt 50%</td>
+          <td>16.11–30.11 · чорна п’ятниця</td>
+          <td class="r">122 781,0</td>
+          <td class="r">147 337,2</td>
+          <td class="r">2 754</td>
+          <td class="r">40,1%</td>
+          <td class="r">73 668,6</td>
+        </tr>
+        <tr class="opt50 gap">
+          <td>Знижка на доставку до 50 грн</td>
+          <td>700 грн</td>
+          <td>VARUS 50% / Bolt 50%</td>
+          <td>14.12–03.01 · Різдво і Новий рік</td>
+          <td class="r">102 549,7</td>
+          <td class="r">123 059,7</td>
+          <td class="r">2 807</td>
+          <td class="r">30,4%</td>
+          <td class="r">61 529,8</td>
+        </tr>
+        <tr class="or"><td colspan="9">АБО</td></tr>
+        <tr class="opt75">
+          <td>Знижка на доставку до 75 грн</td>
+          <td>700 грн</td>
+          <td>VARUS 50% / Bolt 50%</td>
+          <td>14.12–03.01 · Різдво і Новий рік</td>
+          <td class="r">165 173,4</td>
+          <td class="r">198 208,0</td>
+          <td class="r">3 704</td>
+          <td class="r">40,1%</td>
+          <td class="r">99 104,0</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="note">Поріг піднято з 600 до 700 грн. Із замовлень, які вже отримали знижку при кошику від 600 грн, кошик від 700 грн мали 70,3% для стелі 50 грн і 77,1% для стелі 75 грн. Цю частку застосовано до плану вікна: 16–30 листопада — 6 866 замовлень, 14 грудня – 3 січня — 9 236. Витрати перераховані від нової кількості замовлень зі знижкою і тієї самої середньої знижки: 36,54 грн і 44,59 грн.</p>
+  </section>
 
-</div>
+  <div class="foot"><a href="mbr-internal.html#investments">Повернутись до MBR</a></div>
+</main>
 </body>
 </html>
