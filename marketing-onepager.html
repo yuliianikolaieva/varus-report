@@ -35,6 +35,12 @@ tr.total td{font-weight:800;background:#f3faf6}
 .bar.dark span{background:var(--ink)}
 .pending{color:var(--muted);font-style:italic}
 a{color:#0f9d58;font-weight:700}
+.shots{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+.shots figure{margin:0;width:240px}
+.shots img{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;display:block}
+.shots figcaption{margin-top:6px;font-size:12px;font-weight:700;color:var(--muted)}
+.creative{margin-top:12px;max-width:640px}
+.creative img{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;display:block}
 @media(max-width:800px){.who{grid-template-columns:1fr}h1{font-size:24px}}
 </style>
 </head>
@@ -109,6 +115,20 @@ a{color:#0f9d58;font-weight:700}
         </tbody>
       </table></div>
       <p class="note">GMV сесій — сума кошиків до знижки в сесіях із переходом, не доставлений GMV товарів. Джерело: <a href="mbr-internal.html#banners">MBR, банери</a>.</p>
+      <div class="shots">
+        <figure>
+          <img src="assets/hero-banner.jpeg" alt="Hero Banner VARUS на головній: Up to 50% off VARUS">
+          <figcaption>Hero Banner</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/regular-banner-home.jpeg" alt="Regular Banner VARUS на вкладці Головна">
+          <figcaption>Regular Banner · Головна</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/regular-banner-stores.jpeg" alt="Regular Banner VARUS на вкладці Магазини">
+          <figcaption>Regular Banner · Магазини</figcaption>
+        </figure>
+      </div>
     </article>
 
     <article class="card">
@@ -133,6 +153,9 @@ a{color:#0f9d58;font-weight:700}
     <article class="card">
       <h2>Кешбек · перший раунд, 15–30 вересня</h2>
       <p>20% кешбеку від чека, стеля 200 грн на клієнта, мінімальний чек 600 грн, одне використання. Аудиторія — активні клієнти Bolt Food, які ще не замовляли у VARUS. Фінансував Bolt.</p>
+      <figure class="creative">
+        <img src="https://images.bolt.eu/delivery_provider/UAA_VARUS_Cashback_.png" alt="Банер кешбеку VARUS: повертаємо до 20% кешбеку">
+      </figure>
       <div class="table-wrap"><table>
         <thead><tr><th>Показник</th><th class="r">Факт</th></tr></thead>
         <tbody>
