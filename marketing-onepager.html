@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VARUS × Bolt — Маркетинг</title>
+<style>
+:root{--ink:#1A1A2E;--muted:#5c6560;--line:#e6ebe7;--green:#34D186;--page:#F8F9FA;--red:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 24px 56px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:30px;line-height:1.15;margin:8px 0}
+h2{font-size:20px;margin:0 0 8px}
+.lead{color:var(--muted);font-size:14px;margin:0 0 16px}
+.tabs{display:flex;gap:8px;margin:18px 0}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;color:var(--muted)}
+.tabs button.on{background:var(--green);color:#123;border-color:var(--green)}
+.panel{display:none}
+.panel.on{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 12px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p,.note{color:var(--muted);font-size:13px;margin:6px 0 0}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.who div{background:var(--page);border-radius:10px;padding:8px 10px;font-size:13px}
+.who b{display:block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid #f0f2f1;text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:#fafafa}
+td.r,th.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total td{font-weight:800;background:#f3faf6}
+.bar{height:10px;border-radius:99px;background:#e6ebe7;overflow:hidden;min-width:80px}
+.bar span{display:block;height:100%;background:var(--green)}
+.bar.dark span{background:var(--ink)}
+.pending{color:var(--muted);font-style:italic}
+a{color:#0f9d58;font-weight:700}
+@media(max-width:800px){.who{grid-template-columns:1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">VARUS × Bolt Food UA</div>
+  <h1>Маркетингові ініціативи</h1>
+  <p class="lead">План на найближчі місяці і те, що вже профінансовано. Вартість банерів додамо окремо, коли вона буде погоджена.</p>
+  <div class="tabs">
+    <button type="button" class="on" data-tab="plan">Найближче майбутнє</button>
+    <button type="button" data-tab="past">Що вже зробили</button>
+  </div>
+
+  <section class="panel on" id="plan">
+    <article class="card">
+      <h3>1. Глобальні івенти</h3>
+      <p>Участь VARUS у сезонних кампаніях Bolt.</p>
+      <div class="who">
+        <div><b>Від VARUS</b>Унікальна пропозиція для клієнта і окрема категорія в асортименті на час івенту.</div>
+        <div><b>Від Bolt</b>Банери в застосунку, включно з Hero Banner, email-розсилки і пуші клієнтам.</div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Івент</th><th>Дати</th><th>Де показуємо</th></tr></thead>
+        <tbody>
+          <tr><td>Halloween</td><td>26.10 – 01.11</td><td>Головна і Магазини</td></tr>
+          <tr><td>Black Friday</td><td>23.11 – 29.11</td><td>Hero, Головна, Магазини, модальні вікна</td></tr>
+          <tr><td>Christmas</td><td>07.12 – 27.12</td><td>Головна і Магазини</td></tr>
+          <tr><td>New Year</td><td>28.12 – 03.01</td><td>Головна і Магазини</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Дати з розділу планування маркетингу у <a href="mbr-internal.html#next-mkt">MBR</a>. Hero Banner на 21–25.10 описаний окремо нижче.</p>
+    </article>
+
+    <article class="card">
+      <h3>2. Регулярні банери лише про VARUS</h3>
+      <p>Постійне розміщення у вкладках Головна та Магазини. Креатив рекламує тільки VARUS, без спільного пакета з іншими мережами.</p>
+      <p class="pending">Вартість Regular Banner буде додана.</p>
+    </article>
+
+    <article class="card">
+      <h3>3. Hero Banner на Головній · 21–25.10</h3>
+      <p>Один слот максимального охоплення перед Halloween. Умова участі та сама: окрема пропозиція і добірка товарів.</p>
+      <p class="pending">Вартість Hero Banner буде додана.</p>
+    </article>
+
+    <article class="card">
+      <h3>4. Знижки на доставку</h3>
+      <p>Розмір стелі і тривалість залежать від кофінансування VARUS. Без участі партнера Bolt не тримає знижку на доставку постійно: це вже б’є по прибутковості. Пропозиції на чорну п’ятницю і різдвяне вікно — у <a href="delivery-discounts.html">окремій презентації</a>.</p>
+    </article>
+
+    <article class="card">
+      <h3>5. Другий раунд кешбеку · листопад</h3>
+      <p>Повтор кампанії після вересневого тесту. Перший раунд: 20% кешбеку, стеля 200 грн, мінімальний чек 600 грн, один раз на клієнта, фінансував Bolt. Дати листопада узгодимо окремо.</p>
+    </article>
+
+    <article class="card">
+      <h3>6. Підписка Bolt+</h3>
+      <p>Програму підключили 10.09.2026 за рахунок Bolt. Продовжуємо підтримку: підписники Bolt+ бачать знижку на доставку VARUS без окремого рахунку для мережі.</p>
+    </article>
+  </section>
+
+  <section class="panel" id="past">
+    <article class="card">
+      <h2>Банери</h2>
+      <p>У серпні банери вже працювали на VARUS. Переходи з банера і Hero Banner разом: 3 029, у 9,1 раза більше, ніж у липні. З них 285 замовлень. У червні було 13 переходів, у липні — 333.</p>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th>Формат</th><th class="r">Переходи</th><th class="r">Додали товар</th><th class="r">Замовлення</th><th class="r">GMV сесій, €</th><th class="r">Вартість</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Regular Banner</td><td class="r">1 578</td><td class="r">552</td><td class="r">174</td><td class="r">2 908</td><td class="r pending">буде додано</td></tr>
+          <tr><td>Hero Banner</td><td class="r">1 451</td><td class="r">266</td><td class="r">111</td><td class="r">2 099</td><td class="r pending">буде додано</td></tr>
+          <tr class="total"><td>Разом · серпень</td><td class="r">3 029</td><td class="r">818</td><td class="r">285</td><td class="r">5 007</td><td class="r">—</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">GMV сесій — сума кошиків до знижки в сесіях із переходом, не доставлений GMV товарів. Джерело: <a href="mbr-internal.html#banners">MBR, банери</a>.</p>
+    </article>
+
+    <article class="card">
+      <h2>Знижки на доставку, які вже були</h2>
+      <p>Чотири завершені формати. Суми без ПДВ. Рядок до 50 грн об’єднує звичайні тижні і тиждень partnership 10–16 серпня.</p>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th>Кампанія</th><th>Кошик</th><th>Хто платив</th><th>Період</th>
+          <th class="r">Витрати без ПДВ</th><th class="r">Замовлення</th><th class="r">% замовлень</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Повна безкоштовна доставка</td><td>Немає</td><td>Bolt 100%</td><td>1–12 травня</td><td class="r">103 560</td><td class="r">2 164</td><td class="r">90,7%</td></tr>
+          <tr><td>Знижка до 50 грн</td><td>600 грн</td><td>Bolt 100%</td><td>1–14 липня, 1–16 серпня, вересень</td><td class="r">375 788</td><td class="r">10 285</td><td class="r">43,2%</td></tr>
+          <tr><td>Знижка до 75 грн</td><td>600 грн</td><td>Bolt 100%</td><td>15–31 липня</td><td class="r">129 533</td><td class="r">2 905</td><td class="r">52,0%</td></tr>
+          <tr><td>Повна безкоштовна доставка</td><td>300 грн</td><td>VARUS 100%</td><td>17–31 серпня</td><td class="r">233 773</td><td class="r">4 451</td><td class="r">64,5%</td></tr>
+          <tr class="total"><td>Разом</td><td></td><td></td><td>Травень–вересень, без червня</td><td class="r">842 654</td><td class="r">19 805</td><td class="r">—</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Джерело: <a href="delivery-discounts.html">звіт по знижках на доставку</a>. У червні такої знижки майже не було.</p>
+    </article>
+
+    <article class="card">
+      <h2>Кешбек · перший раунд, 15–30 вересня</h2>
+      <p>20% кешбеку від чека, стеля 200 грн на клієнта, мінімальний чек 600 грн, одне використання. Аудиторія — активні клієнти Bolt Food, які ще не замовляли продукти. Фінансував Bolt.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Показник</th><th class="r">Факт</th></tr></thead>
+        <tbody>
+          <tr><td>Перше замовлення продуктів у VARUS</td><td class="r">268 клієнтів</td></tr>
+          <tr><td>Інвестиція Bolt</td><td class="r">62 091 грн</td></tr>
+          <tr><td>Середній чек учасників</td><td class="r">996 грн</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">У кампанії було 648 замовлень, по одному на клієнта. 268 із них — перше в житті замовлення продуктів. Звичайний вересневий чек VARUS — близько 720 грн. Джерело: <a href="cashback-september-analysis.html#share-summary">звіт по кешбеку</a>.</p>
+    </article>
+
+    <article class="card">
+      <h2>Bolt+ з 10 вересня</h2>
+      <p>Підписку підключили за рахунок Bolt. З 10 вересня по 13 жовтня знижку Bolt+ отримали <b>1 638</b> доставлених замовлень — <b>11,6%</b> від 14 137 доставлених за цей період. Витрати на цю знижку — <b>87 387 грн</b>, частка VARUS у них 0%.</p>
+    </article>
+
+    <article class="card">
+      <h2>3rd party маркетинг</h2>
+      <p>Окремі кампанії банків і Visa на замовлення VARUS. Це знижка на товари для клієнтів конкретного банку, не знижка на доставку мережі. Платив Bolt.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Кампанія</th><th>Період</th><th class="r">Замовлення</th><th class="r">Інвестиція Bolt, грн</th></tr></thead>
+        <tbody>
+          <tr><td>Visa · PrivatBank, 50% на товари</td><td>10.07 – 15.08</td><td class="r">774</td><td class="r">93 266</td></tr>
+          <tr><td>Visa · ПУМБ</td><td>01.09 – 29.09</td><td class="r">201</td><td class="r">23 922</td></tr>
+          <tr><td>Visa · А-Банк</td><td>08.08 – 13.10</td><td class="r">308</td><td class="r">13 339</td></tr>
+          <tr><td>Ukrsibbank</td><td>08.08 – 13.10</td><td class="r">130</td><td class="r">9 351</td></tr>
+          <tr class="total"><td>Разом</td><td></td><td class="r">1 413</td><td class="r">139 878</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+
+    <article class="card">
+      <h2>Частка кожної ініціативи</h2>
+      <p>Разом відомих витрат — <b>1 132 010 грн</b>. Банери в цю суму не входять: їхню вартість додамо пізніше.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Ініціатива</th><th class="r">Сума, грн</th><th class="r">Частка</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Знижки на доставку</td><td class="r">842 654</td><td class="r">74,4%</td><td><div class="bar"><span style="width:74.4%"></span></div></td></tr>
+          <tr><td>3rd party маркетинг</td><td class="r">139 878</td><td class="r">12,4%</td><td><div class="bar dark"><span style="width:12.4%"></span></div></td></tr>
+          <tr><td>Bolt+</td><td class="r">87 387</td><td class="r">7,7%</td><td><div class="bar dark"><span style="width:7.7%"></span></div></td></tr>
+          <tr><td>Кешбек</td><td class="r">62 091</td><td class="r">5,5%</td><td><div class="bar dark"><span style="width:5.5%"></span></div></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Знижка на доставку — найбільша і найчастіша для клієнта: 19 805 замовлень проти 1 413 у банківських кампаніях, 1 638 у Bolt+ і 648 у кешбеку. Її видно в ціні майже кожного другого замовлення, коли вона увімкнена. У червні її майже не було, і це був найслабший повний місяць за темпом. Банери, кешбек і Bolt+ додають контакт і окремі аудиторії, але не замінюють ціну доставки. Тому знижку варто продовжувати на ключові періоди, уже з кофінансуванням: Bolt не закриває її самостійно на постійній основі.</p>
+    </article>
+
+    <article class="card">
+      <h2>Втрати через операційні процеси</h2>
+      <p>Failed — замовлення, яке не дійшло до доставки. Співвідношення нижче — кількість Failed на кожне доставлене замовлення.</p>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th>Місяць</th><th class="r">Delivered</th><th class="r">Failed</th><th class="r">Failed / Delivered</th><th class="r">Втрачений GMV товарів, грн</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Травень</td><td class="r">6 168</td><td class="r">566</td><td class="r">9,2%</td><td class="r">267 048</td></tr>
+          <tr><td>Червень</td><td class="r">7 479</td><td class="r">460</td><td class="r">6,2%</td><td class="r">282 112</td></tr>
+          <tr><td>Липень</td><td class="r">9 844</td><td class="r">490</td><td class="r">5,0%</td><td class="r">353 677</td></tr>
+          <tr><td>Серпень</td><td class="r">14 519</td><td class="r">1 651</td><td class="r">11,4%</td><td class="r">1 448 972</td></tr>
+          <tr><td>Вересень</td><td class="r">12 080</td><td class="r">2 089</td><td class="r">17,3%</td><td class="r">1 760 135</td></tr>
+          <tr class="total"><td>Травень–вересень</td><td class="r">50 090</td><td class="r">5 256</td><td class="r">10,5%</td><td class="r">4 111 944</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Маркетинг приводить клієнта, який уже обрав VARUS. Скасування після цього — втрачений продаж: за травень–вересень це 5 256 замовлень і 4,1 млн грн вартості товарів. У липні відношення було 5,0%, у вересні — 17,3%, хоча промо в ці місяці якраз працювало. Поки замовлення не збирається і не видається вчасно, додатковий трафік частково згорає. Налагодження прийняття, залишків, замін і часу видачі перетворює той самий попит на доставлені замовлення. Це органічне зростання без нового бюджету на охоплення.</p>
+    </article>
+  </section>
+</main>
+<script>
+function show(tab) {
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === tab));
+}
+document.querySelectorAll('.tabs button').forEach(btn => { btn.onclick = () => show(btn.dataset.tab); });
+if (location.hash === '#past') show('past');
+</script>
+</body>
+</html>
